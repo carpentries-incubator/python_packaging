@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.2.1",
+    "Version": "4.2.2",
     "Repositories": [
       {
         "Name": "carpentries",
@@ -72,7 +72,7 @@
       "Package": "evaluate",
       "Version": "0.15",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Hash": "699a7a93d08c962d9f8950b2d7a227f1",
       "Requirements": []
     },
@@ -145,7 +145,7 @@
       "Package": "knitr",
       "Version": "1.39",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Hash": "029ab7c4badd3cf8af69016b2ba27493",
       "Requirements": [
         "evaluate",
@@ -186,7 +186,7 @@
       "Package": "renv",
       "Version": "0.15.5",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Hash": "6a38294e7d12f5d8e656b08c5bd8ae34",
       "Requirements": []
     },
@@ -194,7 +194,7 @@
       "Package": "rlang",
       "Version": "1.0.4",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Hash": "6539dd8c651e67e3b55b5ffea106362b",
       "Requirements": []
     },
@@ -202,7 +202,7 @@
       "Package": "rmarkdown",
       "Version": "2.14",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Hash": "31b60a882fabfabf6785b8599ffeb8ba",
       "Requirements": [
         "bslib",
@@ -243,7 +243,7 @@
       "Package": "stringr",
       "Version": "1.4.0",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Hash": "0759e6b6c0957edb1311028a49a35e76",
       "Requirements": [
         "glue",
@@ -255,7 +255,7 @@
       "Package": "tinytex",
       "Version": "0.40",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Hash": "e7b654da5e77bc4e5435a966329cd25f",
       "Requirements": [
         "xfun"
@@ -265,7 +265,7 @@
       "Package": "xfun",
       "Version": "0.31",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Hash": "a318c6f752b8dcfe9fb74d897418ab2b",
       "Requirements": []
     },
