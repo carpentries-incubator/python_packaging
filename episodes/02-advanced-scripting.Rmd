@@ -1,0 +1,33 @@
+---
+title: "Advanced Scripting"
+teaching: 10
+exercises: 2
+---
+
+:::::::::::::::::::::::::::::::::::::: questions 
+
+- What is a 'module' in Python? How does this differ from a 'script'?
+- What are the benefits of modularising our Python code?
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: objectives
+
+- Introduce the example library used in this lesson.
+- Understand the limitations of scripts.
+- Learn how to convert a simple script into a reusable module.
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+## Advanced Scripting
+
+### Better data organisation with Pandas
+
+### Command line arguments with argparse
+
+### Giving the user control with plotting functions
+
+but in this case we'll include an optional argument so that users can choose whether to
+show a plot immediately. The reason for this is that showing the plot in a new window
+and halting the program might interupt a user's workflow. A good way to handle the
+competing requirements of our potential users is to 
