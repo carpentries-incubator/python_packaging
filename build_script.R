@@ -4,8 +4,8 @@
 # See https://carpentries.github.io/sandpaper-docs/
 
 rmarkdown::pandoc_version()
-site_dir <- tempfile(tmpdir = "./build")
+tmp <- tempfile()
 sandpaper::no_package_cache()
-sandpaper::create_lesson(site_dir, open = FALSE)
-sandpaper::build_lesson(site_dir, preview = FALSE)
+sandpaper::create_lesson(tmp, open = FALSE)
+sandpaper::build_lesson(tmp, preview = FALSE)
 sandpaper::serve()
