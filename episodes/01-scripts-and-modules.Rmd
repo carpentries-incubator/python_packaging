@@ -33,7 +33,7 @@ solves a SIR model, which models the number of Susceptible, Infected, and Recove
 individuals as a pathogen spreads through a population. It isn't necessary to
 understand how this works in detail, but the general pattern of the code -- set up
 inputs, solve a problem, plot the results -- should be familiar to those working in a
-data-oriented field. It uses the popular plotting library [Matplotlib](matplotlib) to
+data-oriented field. It uses the popular plotting library [Matplotlib][matplotlib] to
 generate a figure.
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: instructor

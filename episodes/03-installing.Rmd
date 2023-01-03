@@ -14,6 +14,7 @@ exercises: 0
 ::::::::::::::::::::::::::::::::::::: objectives
 
 - Use `venv` to manage Python environments
+- Understand the history of Python packaging
 - Use `setuptools` to install packages to our local environment
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
@@ -166,7 +167,7 @@ to see how best to install/build Python packages today.
 
 First introduced with Python 2.2, `distutils` is the official Python package that allows
 users to install and distribute their own packages. However, it was
-deprecated in [PEP 632](PEP 632), having been superceded by `setuptools`. The primary
+deprecated in [PEP 632][PEP 632], having been superceded by `setuptools`. The primary
 issue with `distutils` is that it is strongly coupled to the user's Python version,
 so the developers found they could not implement some features or fixes without
 breaking inter-version compatibility. There were further complaints that `distutils`
@@ -180,7 +181,7 @@ To use `distutils` to install a package, the user would create a file `setup.py`
 
 
 <code>
-&#128193; my_project<br>
+&#128193; epi\_models<br>
 |<br>
 |\_\_\_\_&#128220; setup.py<br>
 |\_\_\_\_&#128220; requirements.txt<br>
@@ -205,7 +206,11 @@ To use `distutils` to install a package, the user would create a file `setup.py`
 \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SIS.py<br>
 </code>
 
-`setup.py` would then be run as a script:
+Note that the project directory name is the same as the package name -- this is a common
+project layout for Python projects, but we will see later how to achieve alternative
+layouts.
+
+To install, `setup.py` can be run as a script with the argument `install`:
 
 ```bash
 $ python3 setup.py install
@@ -313,7 +318,7 @@ $ # See what's inside
 $ ls test
 ```
 
-```result
+```output
 EGG-INFO epi_models
 ```
 
@@ -370,9 +375,238 @@ using an additional file `setup.cfg`, and in time this became the preferred meth
 
 ### `setup.cfg` as a 'Declarative Config'
 
+Instead of using `setup.py` to define our package metadata, it is preferable to instead
+use the file `setup.cfg`. Instead of being a runnable Python module, this file is
+simply a config file that can be read using Python's built-in `configparser` tool. Its
+format is very similar to INI files commonly used on Windows systems. It should be
+included at the very top of a project, just like `setup.py`:
+
+<code>
+&#128193; epi\_models<br>
+|<br>
+|\_\_\_\_&#128220; setup.cfg<br>
+|\_\_\_\_&#128220; setup.py<br>
+|\_\_\_\_&#128230; epi\_models<br>
+\ \ \ \ \ |<br>
+\ \ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
+\ \ \ \ \ |\_\_\_\_&#128220; \_\_main\_\_.py<br>
+\ \ \ \ \ |\_\_\_\_&#128193; models<br>
+\ \ \ \ \ |\_\_\_\_&#128193; plotting<br>
+</code>
+
+`setup.py` is still present, but it can be reduced to a very simple form:
+
+```python
+# file: setup.py
+from setuptools import setup
+
+setup()
+```
+The `setup.py` files we used earlier can be easily adapted to a corresponding
+`setup.cfg`:
+
+```ini
+; file: setup.cfg
+
+[metadata]
+name = epi_models
+version = 1.0
+description = Epidemiology modelling tools in Python
+author = Jordan Smith
+author_email = jsmith@email.net
+url = "https://github.com/jsmith1234/epi_models"
+
+[options]
+packages = find:
+install_requires =
+    matplotlib >= 3.6
+    pyyaml >= 6.0
+```
+
+Note that the values on the right hand side of each equals sign are all intepretted as
+strings by default, and double quotes are only needed to escape certain special
+characters. Values can stretch over a line break by indenting the next line down.
+Comment lines start with either `;` or `#`, and inline comments are not allowed.
+
+The benefit of using this file over `setup.py` is that the number of possible operations
+is restricted. This prevents users from writing overly complex `setup.py` files that
+include arbitrary and potentially dangerous computations. This is also beneficial from
+an automation standpoint, as it is easy for tools besides `setuptools` to read
+`setup.cfg` and deduce useful information about a package.
+
+Note that in converting our `setup.py` to a `setup.cfg`, we are no longer listing each
+package and subpackage, and instead we are using the line:
+
+```ini
+packages = find:
+```
+
+This instructs `setuptools` to detect packages itself. We could instead specify this
+manually using:
+
+```ini
+packages =
+    epi_models
+    epi_models.models
+    epi_models.plotting
+```
+
+A common alternative project layout is to place the top-level package in a directory
+`src`:
+
+<code>
+&#128193; epi_models<br>
+|<br>
+|\_\_\_\_&#128220; setup.py<br>
+|\_\_\_\_&#128220; setup.cfg<br>
+|\_\_\_\_&#128193; src<br>
+\ \ \ \ \ |<br>
+\ \ \ \ \ |\_\_\_\_&#128230; epi_models<br>
+\ \ \ \ \ \ \ \ \ |<br>
+\ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
+\ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; \_\_main\_\_.py<br>
+\ \ \ \ \ \ \ \ \ |\_\_\_\_&#128193; models<br>
+\ \ \ \ \ \ \ \ \ |\_\_\_\_&#128193; plotting<br>
+</code>
+
+This project layout may be preferred when one project contains multiple packages.
+
+::::::::::::::::::::: callout
+
+Some Python library authors prefer to reserve the directories `include` and `src` for
+compiled extensions written in languages such as C or C++.
+
+:::::::::::::::::::::::::::::
+
+Our `setup.cfg` file should be rewritten as follows:
+
+```ini
+[options]
+package_dir =
+    =src
+packages =
+    epi_models
+    epi_models.models
+    epi_models.plotting
+```
+
+We can also continue using `packages = find:` by adding an extra heading to our config
+file:
+
+```ini
+[options]
+package_dir =
+    =src
+packages = find:
+
+[options.packages.find]
+where = src
+```
+
+There are many additional ways to organise a project, and it is possible to set package
+names to something other than the corresponding directory name, but it is recommended to
+keep the directory structure of your projects as close as possible to that of the Python
+package. See the documentation for `setuptools` [keywords][setuptools-keywords] for more
+information.
+
 ###  `pyproject.toml` and Circular Build Requirements
 
+We saw in the previous sections that `setuptools` allows library writers to specify the
+requirements of their packages and allow users to automatically download and install
+dependencies. However, there is always one requirement missing from this list:
+`setuptools` itself! It would be useful if we could add `setuptools` to our
+`install_requires`, but the user already needs to have `setuptools` installed in order
+to parse this field!
+
+The resolution to this problem came in [PEP 518][PEP 518], which specifies how to set
+build system requires within a new config file, `pyproject.toml`.  `setup.cfg` is
+understood by `setuptools` (and possibly `distutils`), but `pyproject.toml` is intended
+to be understood by _any_ Python build tool, current or future. This includes `pip` and
+alternatives such as `poetry`.
+
+The file format chosen is a TOML file, which is simply an alternative to the INI format
+used by `setup.cfg`, and is designed to be easy to read and write by humans (in contrast
+to formats such as JSON and YAML, which are better optimised for inter-machine
+communication).
+
+To specify our build system, `pyproject.toml` should be added to our project at the
+same level as `setup.py` and `setup.cfg`:
+
+<code>
+&#128193; epi_models<br>
+|<br>
+|\_\_\_\_&#128220; pyproject.toml<br>
+|\_\_\_\_&#128220; setup.py<br>
+|\_\_\_\_&#128220; setup.cfg<br>
+|\_\_\_\_&#128230; epi_models<br>
+\ \ \ \ \ |<br>
+\ \ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
+\ \ \ \ \ |\_\_\_\_&#128220; \_\_main\_\_.py<br>
+\ \ \ \ \ |\_\_\_\_&#128193; models<br>
+\ \ \ \ \ |\_\_\_\_&#128193; plotting<br>
+</code>
+
+At a minimum, it should contain the following:
+
+```toml
+# file: pyproject.toml
+
+[build-system]
+requires = ["setuptools >= 61"]
+```
+
+Following this, we may install our package using `pip` without first having `setuptools`
+installed. If we have an older version of `setuptools` installed, `pip` will now fetch
+the latest version in an isolated virtual environment prior to building our project.
+
+If we try installing however, we may find the following warnings:
+
+```bash
+$ python3 -m pip install .
+```
+
+```result
+WARNING: Missing build requirements in pyproject.toml for file:///my/file/path.
+WARNING: The project does not specify a build backend, and pip cannot fall back to setuptools without 'wheel'.
+```
+
+This means that `pip` is falling back on default behaviour, as we have not fully
+specified our build system. By default, `pip` will use `setuptools`, and it requires
+the additional package `wheel` (which we'll discuss further in the next lesson). To
+explicitly set our build system, we must also provide a `build-backend`:
+
+```toml
+# file: pyproject.toml
+
+[build-system]
+requires = [
+    "setuptools >= 65",
+    "wheel >= 0.38,
+]
+build-backend = "setuptools.build_meta"
+```
+
+Some users may prefer to use an alternative build system, such as `poetry` or `flit`,
+though these are beyond the scope of this lesson.
+
+Alongside [PEP 518][PEP 518], which specified how to overcome the circular build
+system dependency problem, the Python community also adopted [PEP 517][PEP 517], which
+specifies the usage of `pyproject.toml` to also define the project itself, and
+therefore newer builds need not include `setup.cfg` or `setup.py` at all! The following
+sections will focus on the use of `pyproject.toml` alone, but most of the features
+discussed can also be achieved using `setup.cfg` and the minimal `pyproject.toml` above.
+
 ## Installing our package with `pyproject.toml`
+
+### Simple install
+
+### Installing from `src`
+
+### Package data
+
+### Entrypoints
+
+### Additional tools
 
 ::::::::::::::::::::::::::::: keypoints
 

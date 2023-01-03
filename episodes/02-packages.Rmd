@@ -70,7 +70,7 @@ Since Python 3.3, if you omit `__init__.py`, you may find that the following cod
 snippets continue to work. This is because directories without `__init__.py` act as
 _namespace packages_, which can be used to build a package using multiple 'portions'
 spread across your system. The specification for namespace packages can be found in
-[PEP 420](PEP 420).
+[PEP 420][PEP 420].
 
 Unless you're intending to create a namespace package, it is good practice to include
 `__init__.py`, even if you choose to leave it empty, as this makes your intentions
@@ -401,7 +401,7 @@ We can also add script-like behaviour to packages by adding a `__main__.py` file
 As the module name of this file is already `__main__`, there's no need to use the
 `if __name__ == "__main__"` idiom, and we may write this file as if it were a simple
 script. Consider the following example `__main__.py` file, which uses `argparse` to
-read arguments from the command line, and uses the library [PyYAML](PyYAML)  to read
+read arguments from the command line, and uses the library [PyYAML][PyYAML] to read
 YAML files to determine inputs (it isn't necessary to understand how these tools work
 at this stage -- this is simply an example of what a more advanced scripting interface
 might look like):
