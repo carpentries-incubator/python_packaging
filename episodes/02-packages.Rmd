@@ -1,7 +1,7 @@
 ---
 title: "From Modules to Packages"
-teaching: 15
-exercises: 2
+teaching: 20
+exercises: 0
 ---
 
 :::::::::::::::::::::::::::::::::::::: questions 
@@ -202,9 +202,8 @@ from .SEIR import SEIR_model
 from .SIS import SIS_model
 ```
 
-By bringing `SIR_model`, `SEIR_model` and `SIS_model` are brought into the local
-namespace in `models/__init__.py`, they are brought into the namespace of
-`epi_models.models` too:
+When `SIR_model`, `SEIR_model` and `SIS_model` are brought into the local namespace in
+`models/__init__.py`, they are brought into the namespace of `epi_models.models` too:
 
 ```python
 >>> from epi_models.models import SIR_model
@@ -255,9 +254,9 @@ including functions, classes, constants and variables -- that we wish to be cons
 import all objects within the namespace of `module`, and bring them into the current
 namespace. This may not be desirable, as this may bring utility
 functions/classes/variables into the current scope, including any objects we explicitly
-mark as private using a preceeding underscore. If we set `__all__`, only those objects
-with names matching the strings contained within `__all__` will be loaded. For example,
-if we wrote the following:
+mark as private using a preceeding underscore, and even anything we've imported.
+If we set `__all__`, only those objects with names matching the strings contained
+within `__all__` will be loaded. For example, if we wrote the following:
 
 ```python
 # file: epi_models/__init__.py
@@ -375,7 +374,30 @@ $ python3 -m epi_models.plotting.plot_SIR
 Note that we use dots rather than slashes to separate the names of each
 sub-package/module, and we don't include `.py` at the end.
 
-We can also add script-like behaviour to packages by adding a `__main__.py` file.
+We can also add script-like behaviour to packages by adding a `__main__.py` file:
+
+<code>
+&#128230; epi\_models<br>
+|<br>
+|\_\_\_\_&#128220; \_\_init\_\_.py<br>
+|\_\_\_\_&#128220; \_\_main\_\_.py<br>
+|<br>
+|\_\_\_\_&#128193; models<br>
+|\ \ \ \ |<br>
+|\ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
+|\ \ \ \ |\_\_\_\_&#128220; SIR.py<br>
+|\ \ \ \ |\_\_\_\_&#128220; SEIR.py<br>
+|\ \ \ \ |\_\_\_\_&#128220; SIS.py<br>
+|\ \ \ \ |\_\_\_\_&#128220; utils.py<br>
+|<br>
+|\_\_\_\_&#128193; plotting<br>
+\ \ \ \ \ |<br>
+\ \ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
+\ \ \ \ \ |\_\_\_\_&#128220; plot\_SIR.py<br>
+\ \ \ \ \ |\_\_\_\_&#128220; plot\_SEIR.py<br>
+\ \ \ \ \ |\_\_\_\_&#128220; plot\_SIS.py<br>
+</code>
+
 As the module name of this file is already `__main__`, there's no need to use the
 `if __name__ == "__main__"` idiom, and we may write this file as if it were a simple
 script. Consider the following example `__main__.py` file, which uses `argparse` to
