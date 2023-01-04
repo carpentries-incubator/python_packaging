@@ -1,5 +1,5 @@
 ---
-title: "Installing Packages using setuptools"
+title: "Building and Installing Packages using setuptools"
 teaching: 20
 exercises: 0
 ---
@@ -15,6 +15,7 @@ exercises: 0
 
 - Use `venv` to manage Python environments
 - Understand the history of Python packaging
+- Understand what happens when we install a package
 - Use `setuptools` to install packages to our local environment
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
@@ -210,26 +211,6 @@ Note that the project directory name is the same as the package name -- this is 
 project layout for Python projects, but we will see later how to achieve alternative
 layouts.
 
-To install, `setup.py` can be run as a script with the argument `install`:
-
-```bash
-$ python3 setup.py install
-```
-
-:::::::::::::::::::::::::: callout
-
-Installing by running `setup.py` as a script is highly discouraged. Use `pip` instead!
-
-::::::::::::::::::::::::::::::::::
-
-This creates  a 'source distribution' in a new directory `./build`, and adds it to the
-current environment (we can see if it worked by running `pip list` from the command
-line). We could instead build this without installing by calling:
-
-```bash
-$ python3 setup.py build
-```
-
 The file `setup.py` should contain a script that describes the package and some metadata
 about the author. A very simple one might look like this:
 
@@ -247,6 +228,77 @@ setup(
     packages=["epi_models", "epi_models.models", "epi_models.plotting"],
 )
 ```
+
+To install, `setup.py` can be run as a script with the argument `install`:
+
+```bash
+$ python3 setup.py install
+```
+
+:::::::::::::::::::::::::: callout
+
+Installing by running `setup.py` as a script is highly discouraged. Use `pip` instead!
+
+::::::::::::::::::::::::::::::::::
+
+This creates  a 'source distribution' in a new directory `./build`, and adds it to the
+current environment. We can see how this works by reading the output written to the
+terminal:
+
+```result
+creating /path/to/my/env/lib/python3.8/site-packages/epi_models
+copying build/lib/epi_models/__init__.py -> /path/to/my/env/lib/python3.8/site-packages/epi_models
+creating /path/to/my/env/lib/python3.8/site-packages/epi_models/models
+copying build/lib/epi_models/models/utils.py -> /path/to/my/env/lib/python3.8/site-packages/epi_models/models
+copying build/lib/epi_models/models/__init__.py -> /path/to/my/env/lib/python3.8/site-packages/epi_models/models
+copying build/lib/epi_models/models/SEIR.py -> /path/to/my/env/lib/python3.8/site-packages/epi_models/models
+copying build/lib/epi_models/models/SIR.py -> /path/to/my/env/lib/python3.8/site-packages/epi_models/models
+copying build/lib/epi_models/models/SIS.py -> /path/to/my/env/lib/python3.8/site-packages/epi_models/models
+creating /path/to/my/env/lib/python3.8/site-packages/epi_models/plotting
+copying build/lib/epi_models/plotting/__init__.py -> /path/to/my/env/lib/python3.8/site-packages/epi_models/plotting
+copying build/lib/epi_models/plotting/plot_SIS.py -> /path/to/my/env/lib/python3.8/site-packages/epi_models/plotting
+copying build/lib/epi_models/plotting/plot_SEIR.py -> /path/to/my/env/lib/python3.8/site-packages/epi_models/plotting
+copying build/lib/epi_models/plotting/plot_SIR.py -> /path/to/my/env/lib/python3.8/site-packages/epi_models/plotting
+copying build/lib/epi_models/__main__.py -> /path/to/my/env/lib/python3.8/site-packages/epi_models
+byte-compiling /path/to/my/env/lib/python3.8/site-packages/epi_models/__init__.py to __init__.cpython-38.pyc
+byte-compiling /path/to/my/env/lib/python3.8/site-packages/epi_models/models/utils.py to utils.cpython-38.pyc
+byte-compiling /path/to/my/env/lib/python3.8/site-packages/epi_models/models/__init__.py to __init__.cpython-38.pyc
+byte-compiling /path/to/my/env/lib/python3.8/site-packages/epi_models/models/SEIR.py to SEIR.cpython-38.pyc
+byte-compiling /path/to/my/env/lib/python3.8/site-packages/epi_models/models/SIR.py to SIR.cpython-38.pyc
+byte-compiling /path/to/my/env/lib/python3.8/site-packages/epi_models/models/SIS.py to SIS.cpython-38.pyc
+byte-compiling /path/to/my/env/lib/python3.8/site-packages/epi_models/plotting/__init__.py to __init__.cpython-38.pyc
+byte-compiling /path/to/my/env/lib/python3.8/site-packages/epi_models/plotting/plot_SIS.py to plot_SIS.cpython-38.pyc
+byte-compiling /path/to/my/env/lib/python3.8/site-packages/epi_models/plotting/plot_SEIR.py to plot_SEIR.cpython-38.pyc
+byte-compiling /path/to/my/env/lib/python3.8/site-packages/epi_models/plotting/plot_SIR.py to plot_SIR.cpython-38.pyc
+byte-compiling /path/to/my/env/lib/python3.8/site-packages/epi_models/__main__.py to __main__.cpython-38.pyc
+```
+
+After building a package in the `./build` directory, which simply requires copying
+over all of our Python files into a special directory structure, each file and directory
+is copied into the `site-packages` directory in our virtual environment. This directory
+is located on Python's import path, which we can view by calling:
+
+```python
+>>> import sys
+>>> print(sys.path)
+```
+
+```result
+['', '/usr/lib/python38.zip', '/usr/lib/python3.8', '/usr/lib/python3.8/lib-dynload', '/path/to/my/env/lib/python3.8/site-packages']
+```
+
+We therefore do not need to modify the `PYTHONPATH` environment variable in order to
+import these modules from anywhere on our system.
+
+The second stage of installing our package is to compile each file into Python bytecode.
+This is a low-level representation of our code which is understood by the Python virtual
+machine on our system, and ultimately all Python code is reduced to this form before
+being imported or run. By pre-compiling each of our modules, any future imports will be
+much faster.
+
+A significant downside of `distutils` is that there is no way to safely uninstall a
+project once it has been installed, and instead the user must manually remove the
+package from their `site-packages` folder.
 
 `distutils` also contains many other tools for adding language extensions written in
 C. However, it does not allow users to specify dependencies, and these are instead
@@ -329,8 +381,41 @@ inside, meaning each file has been pre-compiled. This is done to optimise the eg
 as they are intended to be directly importable. However, it also means the egg file
 is only compatible with some Python versions, so projects written to be compatible with
 both Python 2 and Python 3 must have separate `.egg` files for each Python version.
-
 Egg files have been superseded by 'wheel' files, which we'll discuss in the next lesson.
+
+So what happens when we install with `setuptools` as opposed to `distutils`? A clue can
+be found in some of the text outputted when we installed:
+
+```result
+Adding epi-models 1.0 to easy-install.pth file
+```
+
+If we look in our `site-packages` directory, we'll see a file `easy-install.pth`. This
+is a path configuration file, denoted by the extension `*.pth`, and if any are found
+within `site-packages` (or a number of other Python configuration directories), any
+additional items listed in it will be added to `sys.path` whenever Python is loaded
+up. If we look into this file, we find:
+
+```bash
+$ cat /path/to/my/env/lib/python3.8/site-packages/easy-install.pth
+```
+
+```result
+./epi_models-1.0-py3.8.egg
+```
+
+If we again check our `sys.path` variable in an interactive session, we'll see that
+this is located on the path. Python is capable of running/importing zipped directories, 
+so the egg file that was created in `./dist` and copied to `site-packages` will be used
+for any future imports.
+
+Although there is still no way to uninstall using `setup.py`, it is possible to remove
+a package installed this way using pip:
+
+```bash
+$ pip uninstall epi_models
+```
+
 
 ### Using `pip` instead of running `setup.py`
 
@@ -359,12 +444,37 @@ uninstalled using:
 $ python3 -m pip uninstall epi_models
 ```
 
+When installing with `pip` instead of running `setup.py`, no `./build` or `./dist`
+directories are created, nor are any `.egg` files. Two lines which are printed to screen
+during the install process explain what is happening instead:
+
+```result
+Created wheel for epi-models: filename=epi_models-1.0-py3-none-any.whl size=4968 sha256=f876a8ce10a3b6a6d0261f4d739b1d78904153b4feaf2b37f83de60e4b9c2d36
+Stored in directory: /tmp/pip-ephem-wheel-cache-_og4ywxd/wheels/d9/4d/ac/bbc1437fd83635787dd0fb8c3df8da61fc7b57f6eaa2b0d17b
+```
+
+Instead of creating an egg file, a 'wheel' is created instead. We'll cover wheel files
+in more detail in the next lesson, but to summarise, a wheel is very similar to an egg
+file except for two major differences:
+
+- The code within is not compiled to Python bytecode.
+- The name of the file contains more information regarding its compatibility.
+
+The wheel is created in a temporary directory (`/tmp` on most Linux systems) so that it
+doesn't clutter up our workspace, and when installing from a wheel, the file is unzipped
+within `site-packages` and the code within is compiled to bytecode. This is in contrast
+to egg files, which remain zipped at all times and come with their code pre-compiled.
+
 To aid code development, we can also create _editable installs_, in which the user's
 changes to the code are automatically picked up and there is no need to reinstall:
 
 ```bash
 $ python3 -m pip install -e .
 ```
+
+This works simply by adding the path of our working directory into `easy-install.pth`
+within the `site-packages` directory. It will also install any dependencies of the
+project as normal.
 
 As  the usage of `setup.py` gained further criticism, even when used alonside `pip`.
 As library writers were able to add arbitrary code to this file, setup scripts often
@@ -596,18 +706,175 @@ therefore newer builds need not include `setup.cfg` or `setup.py` at all! The fo
 sections will focus on the use of `pyproject.toml` alone, but most of the features
 discussed can also be achieved using `setup.cfg` and the minimal `pyproject.toml` above.
 
+
+
 ## Installing our package with `pyproject.toml`
 
-### Simple install
+For modern Python projects, it is recommended to write just a single config file in
+order to build and install our packages: `pyproject.toml`. This was introduced by
+[PEP 517][PEP 517] and [PEP 518][PEP 518] as a standard way to define a Python project.
+All tools that build, install, and publish Python packages are expected to use it, but
+as of the time of writing, some (including `setuptools`) have yet to fully implement the
+proposals.
 
-### Installing from `src`
+`pyproject.toml` is a TOML file, which stands for 'Tom's Obvious Minimal Langauge'
+(named for its developer, Thomas Preston-Werner, who cofounded GitHub). There are many
+configuration file formats in common usage, such as YAML, JSON, and INI, but the Python
+community chose TOML as it provides some benefits over the competition:
 
-### Package data
+- Designed to be human writable and human readable.
+- Can map unambiguously to a hash table (i.e. a `dict` in Python).
+- It has a formal specification, so has an unambiguous set of rules.
+
+A TOML file contains a series of `key = value` pairs, which may be grouped into sections
+using a header enclosed in square brackets (i.e. `[section name]`). The values are
+typed, unlike some other formats where all values are strings, and may be strings,
+integers, floats, booleans, dates, arrays or tables.
+
+First, we will show how to write a relatively minimal `pyproject.toml` file so that
+we can install our projects using `pip`. We will then cover some additional tricks that
+allow us to use alternative directory structures, include any data files needed by our
+code, generate an executable so that our scripts can be run directly from the command
+line, and configure our development tools.
+
+### Making a Package `pip`-Installable
+
+To make our package `pip`-installable, we should add the file `pyproject.toml` to the
+directory that contains our package. It is common for this directory to have the same
+name as the package itself:
+
+
+<code>
+&#128193; epi\_models<br>
+|<br>
+|\_\_\_\_&#128220; pyproject.toml<br>
+|\_\_\_\_&#128230; epi\_models<br>
+\ \ \ \ \ |<br>
+\ \ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
+\ \ \ \ \ |\_\_\_\_&#128220; \_\_main\_\_.py<br>
+\ \ \ \ \ |<br>
+\ \ \ \ \ |\_\_\_\_&#128193; models<br>
+\ \ \ \ \ |\ \ \ \ |<br>
+\ \ \ \ \ |\ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
+\ \ \ \ \ |\ \ \ \ |\_\_\_\_&#128220; SIR.py<br>
+\ \ \ \ \ |\ \ \ \ |\_\_\_\_&#128220; SEIR.py<br>
+\ \ \ \ \ |\ \ \ \ |\_\_\_\_&#128220; SIS.py<br>
+\ \ \ \ \ |\ \ \ \ |\_\_\_\_&#128220; utils.py<br>
+\ \ \ \ \ |<br>
+\ \ \ \ \ |\_\_\_\_&#128193; plotting<br>
+\ \ \ \ \ \ \ \ \ |<br>
+\ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
+\ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SIR.py<br>
+\ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SEIR.py<br>
+\ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SIS.py<br>
+</code>
+
+
+The first section in our `pyproject.toml` file should specify which build system we
+wish to use, and additionally specify any version requirements for packages used to
+build our code. This is necessary to avoid a circular dependecy problem that occurred
+with earlier Python build systems, in which the user had to run an install program to
+determine the project's dependencies, but needed to already have the correct build
+tool installed to run the install program -- see
+[the previous section][#pyprojecttoml-and-circular-build-requirements] for more detail.
+We will choose to use `setuptools`, which requires the following:
+
+```toml
+# file: pyproject.toml
+
+[build-system]
+requires = [
+    "setuptools >= 65",
+    "wheel >= 0.38,
+]
+build-backend = "setuptools.build_meta"
+```
+
+- `requires` is set to a list of strings, each of which names a dependency of the build
+  system and its minimum version. This uses the same version syntax as `pip`.
+- `build-backend` is set to a sub-module of `setuptools` which implements the
+  [PEP 517][PEP 517] build interface.
+
+With our build system determined, we can add some metadata that defines our project.
+At a minimum, we should specify the name of the package, its version, and our
+dependencies:
+
+
+```toml
+# file: pyproject.toml
+
+[build-system]
+requires = [
+    "setuptools >= 65",
+    "wheel >= 0.38,
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "epi_models"
+version = "0.1.0"
+dependencies = [
+    "matplotlib",
+    "pyyaml",
+]
+```
+
+That's all we need! We can then install our package using:
+
+```bash
+$ pip install .
+```
+
+This will automatically download and install our dependencies, and our package will be
+importable regardless of which directory we're in. The installed package can be found
+in the directory `/path/to/my/env/lib/python3.8/site-packages/` along with a new
+directory, `epi_models-0.1.0.dist-info`. The latter contains metadata describing our
+project, while the former contains a copy of all of our files. The top-level package
+and all subpackages also contain `__pycache__` directories, containing Python bytecode.
+When installing, all of our code is pre-compiled so that later imports are much faster.
+If we wish to uninstall, we may call:
+
+```bash
+$ pip uninstall epi_models
+```
+
+We can also create an 'editable install', in which any changes we make to our code are
+instantly recognised by any codes importing it -- this mode can be very useful when
+developing our code, especially when working on documentation or tests. However, as
+of writing, `setuptools` require us to add an additional file `setup.py` to achieve
+this:
+
+```python
+# file: setup.py
+
+from setuptools import setup
+
+setup()
+```
+
+This should be added to the same directory that contains `pyproject.toml`. It is likely
+that a future version of `setuptools` will not require this file.
+
+There are many other options we can add to our `pyproject.toml` to better describe our
+project. [PEP 621][PEP 621] defines a minimum list of possible metadata that all build
+tools should support, so we'll stick to that list. Each build tool will also define
+synonyms for some metadata entries, and additional tool-specific metadata.
+
+
+
+### Alternative Directory Structures
+
+### Package Data
 
 ### Entrypoints
 
-### Additional tools
+### Setting Dependency Versions
 
+### Optional Dependencies
+
+### Additional Tools
+
+ 
 ::::::::::::::::::::::::::::: keypoints
 
 - hello

@@ -4,3 +4,11 @@ requires = [
     "wheel >= 0.38",
 ]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "epi_models"
+version = "0.1.0"
+dependencies = [
+    "matplotlib",
+    "pyyaml",
+]
