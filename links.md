@@ -8,6 +8,8 @@ any links that you are not going to use.
 [pandas]: https://pandas.pydata.org/docs/getting_started/index.html
 [PyYAML]: https://pyyaml.org/wiki/PyYAMLDocumentation
 [PEP 420]: https://peps.python.org/pep-0420/
+[PEP 440]: https://peps.python.org/pep-0420/
+[PEP 508]: https://peps.python.org/pep-0508/
 [PEP 517]: https://peps.python.org/pep-0517/
 [PEP 518]: https://peps.python.org/pep-0518/
 [PEP 621]: https://peps.python.org/pep-0621/

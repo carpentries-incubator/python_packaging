@@ -1,0 +1,31 @@
+---
+title: "Publishing our Python Packages"
+teaching: 30
+exercises: 0
+---
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::: questions 
+
+- hello
+- world
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: objectives
+
+- hello
+- world
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+## Hello World 
+
+See PEP 440 for versioning info
+Discuss keywords and classifiers in pyproject.toml
+
+::::::::::::::::::::::::::::::::::::: keypoints
+
+- hello
+- world
+
+::::::::::::::::::::::::::::::::::::::::::::::::
