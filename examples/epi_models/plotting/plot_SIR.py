@@ -26,9 +26,11 @@ def plot_SIR_model(S, I, R):
     plt.legend()
     plt.show()
 
-
-if __name__ == "__main__":
+def main():
     S, I, R = SIR_model(
         pop_size=8000000, beta=0.5, gamma=0.1, days=150, I_0=10
     )
     plot_SIR_model(S, I, R)
+
+if __name__ == "__main__":
+    main()

@@ -29,19 +29,19 @@ lesson.
 ## Introduction
 
 In the previous lesson, we showed how to install Python packages using the file
-`prproject.toml`, and optionally `setup.py`. However, if you ever find yourself looking
-for online help on a Python packaging topic, you'll likely find a large number of
-alternative methods being recommended. Some say you should only use `setup.py`, while
-others recommend a combination of `setup.cfg` and `setup.py` -- some even say to use
-both these and `pyproject.toml`! 
+`prproject.toml`. However, if you ever find yourself looking for online help on
+a Python packaging topic, you'll likely find a large number of alternative
+methods being recommended. Some say you should use a file `setup.py`, while
+others recommend a combination of `setup.cfg` and `setup.py` -- some even say
+to use both these and `pyproject.toml`! 
 
 The reason for this conflicting information is that the Python packaging 'best
 practices', as decided by the Python community, have changed a number of times over
 the years. This lesson is optional, but it will explain why some older tutorials
 recommend some methods over the ones we've covered here. The intention here is not to
 present alternative methods so that you can use them in new projects, but rather to
-provide some context to the often confusing information out there, and to you help if 
-you ever find yourself working on a legacy project that hasn't yet updated to the latest
+provide some context to the often confusing information out there, and to help if 
+you ever find yourself working on a project that hasn't yet updated to the latest
 systems.
 
 ### In the beginning, there was `distutils`
@@ -452,21 +452,12 @@ A common alternative project layout is to place the top-level package in a direc
 |\_\_\_\_&#128193; src<br>
 \ \ \ \ \ |<br>
 \ \ \ \ \ |\_\_\_\_&#128230; epi_models<br>
-\ \ \ \ \ \ \ \ \ |<br>
-\ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
-\ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; \_\_main\_\_.py<br>
-\ \ \ \ \ \ \ \ \ |\_\_\_\_&#128193; models<br>
-\ \ \ \ \ \ \ \ \ |\_\_\_\_&#128193; plotting<br>
+\ \ \ \ \ \ \ \ \ \ |<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; \_\_main\_\_.py<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128193; models<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128193; plotting<br>
 </code>
-
-This project layout may be preferred when one project contains multiple packages.
-
-::::::::::::::::::::: callout
-
-Some Python library authors prefer to reserve the directories `include` and `src` for
-compiled extensions written in languages such as C or C++.
-
-:::::::::::::::::::::::::::::
 
 Our `setup.cfg` file should be rewritten as follows:
 
@@ -493,10 +484,17 @@ packages = find:
 where = src
 ```
 
+::::::::::::::::::::::::: callout
+
+Recent versions of `setuptools` can handle either the 'flat' layout or the `src`-layout
+using just `packages = find:`.
+
+:::::::::::::::::::::::::::::::::
+
 There are many additional ways to organise a project, and it is possible to set package
 names to something other than the corresponding directory name, but it is recommended to
 keep the directory structure of your projects as close as possible to that of the Python
-package. See the documentation for `setuptools` [keywords][setuptools-keywords] for more
+package. See the [documentation for `setuptools` keywords][setuptools-keywords] for more
 information.
 
 ###  `pyproject.toml` and Circular Build Requirements
@@ -589,6 +587,20 @@ build tool should recognise, such as `name`, `version`, `description`, `authors`
 Tools may choose to use their own synonyms for this metadata, and they may provide many
 more options than the core set, but to be standards compliant they must recognise the
 metadata of [PEP 621][PEP 621] at a minimum.
+
+### The end of `setup.py`
+
+With [PEP 621][PEP 621] removing the need for `setup.cfg`, one might expect that the
+older `setup.py` could be removed too. However, `setuptools` still required this file
+for some features to work, including editable installs. With [PEP 660][PEP 660], the
+Python community standardised a way to use wheel files to create editable installs,
+and therefore the use of `setup.py` is no longer required. However, this feature
+was only recently implemented in `pip`, so users may need to upgrade if they wish
+to use this feature:
+
+```bash
+$ pip install --upgrade pip
+```
 
  
 ::::::::::::::::::::::::::::: keypoints

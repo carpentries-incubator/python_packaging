@@ -48,9 +48,9 @@ ERROR: Directory '.' is not installable. Neither 'setup.py' nor 'pyproject.toml'
 In order to make our project installable, we need to add the file `pyproject.toml` to
 our project. But what is this file, and what should it contain?
 
-In the next lesson, we'll cover some further advantages to making our project 
-`pip`-installable. We'll show how to build a distributable Python package known as
-a 'wheel', and how to publish this on a public repository. After doing this, our
+By making our project `pip`-installable, we'll also make it very easy to publish our
+packages on public repositories -- this will be covered in a
+[future lesson](./05-publishing.Rmd). After doing this, our
 users will be able to download and install our package using `pip` from any machine
 of their chocie!
 
@@ -202,11 +202,11 @@ name as the package itself:
 \ \ \ \ \ |\ \ \ \ |\_\_\_\_&#128220; utils.py<br>
 \ \ \ \ \ |<br>
 \ \ \ \ \ |\_\_\_\_&#128193; plotting<br>
-\ \ \ \ \ \ \ \ \ |<br>
-\ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
-\ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SIR.py<br>
-\ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SEIR.py<br>
-\ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SIS.py<br>
+\ \ \ \ \ \ \ \ \ \ |<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SIR.py<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SEIR.py<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SIS.py<br>
 </code>
 
 
@@ -279,20 +279,25 @@ $ pip uninstall epi_models
 
 We can also create an 'editable install', in which any changes we make to our code are
 instantly recognised by any codes importing it -- this mode can be very useful when
-developing our code, especially when working on documentation or tests. However, as
-of writing, `setuptools` require us to add an additional file `setup.py` to achieve
-this:
+developing our code, especially when working on documentation or tests. 
 
-```python
-# file: setup.py
-
-from setuptools import setup
-
-setup()
+```bash
+$ pip install -e .
+$ # Or...
+$ pip install --editable .
 ```
 
-This should be added to the same directory that contains `pyproject.toml`. It is likely
-that a future version of `setuptools` will not require this file.
+:::::::::::::::::::::::::::::::: callout
+
+The ability to create editable installs from a `pyproject.toml`-only build was
+standardised in [PEP 660][PEP 660], and only recently implemented in `pip`. You may
+need to upgrade to use this feature:
+
+```bash
+$ pip install --upgrade pip
+```
+
+::::::::::::::::::::::::::::::::::::::::
 
 There are many other options we can add to our `pyproject.toml` to better describe our
 project. [PEP 621][PEP 621] defines a minimum list of possible metadata that all build
@@ -339,10 +344,7 @@ authors = [
 
 # urls: Table
 # Should describe where to find useful info for your project
-urls = {
-    Source = "github.com/MyProfile/my_project",
-    Documentation = "my_project.readthedocs.io/en/latest",
-}
+urls = {source = "github.com/MyProfile/my_project", documentation = "my_project.readthedocs.io/en/latest"}
 
 # dependencies: Array of Strings
 # A list of requirements for our package
@@ -359,7 +361,7 @@ can be created 'inline' using a Python `dict`-like syntax:
 inline_table = {key1 = "value1", key2 = "value2"}
 ```
 
-This is equivalent to creating a new header:
+Note that these cannot include newlines! This is equivalent to creating a new header:
 
 ```toml
 [non-inline-table]
@@ -380,18 +382,15 @@ These formats can be mixed:
 [table]
 table-1 = {key1 = "value1"}
 
-[table.tabel-2]
+[table.table-2]
 key2 = "value2"
 
 # Which would be equivalent to:
-table = {
-    table-1 = {key1 = "value1"},
-    table-2 = {key2 = "value2"},
-}
+table = {table-1 = {key1 = "value1"}, table-2 = {key2 = "value2"}}
 ```
 
-Therefore, some of the syntactically noisy entries in our TOML file can be written in
-an alternative way:
+Therefore, some of the longer tables in our TOML file can be written in an alternative
+way:
 
 ```toml
 [project.urls]
@@ -401,20 +400,325 @@ Documentation = "my_project.readthedocs.io/en/latest",
 
 ### Alternative Directory Structures
 
+If we choose to arrange our project in a different manner to the standard
+recommendations, `setuptools` provides some additional tools to help us install our
+package. A popular alternative layout is the `src`-layout:
+
+<code>
+&#128193; epi_models<br>
+|<br>
+|\_\_\_\_&#128220; pyproject.toml<br>
+|\_\_\_\_&#128193; src<br>
+\ \ \ \ \ |<br>
+\ \ \ \ \ |\_\_\_\_&#128230; epi_models<br>
+\ \ \ \ \ \ \ \ \ \ |<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; \_\_main\_\_.py<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128193; models<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128193; plotting<br>
+</code>
+
+The main benefit of this choice is that `setuptools` won't accidentally bundle any
+utility modules with our package. Note that even when we use a 'flat' layout,
+directories and files with special names are already excluded by default, such as
+`test/`, `docs/`, and `setup.py`.
+
+::::::::::::::::::::: callout
+
+Some Python library authors prefer to reserve the directories `include` and `src` for
+compiled extensions written in languages such as C or C++.
+
+:::::::::::::::::::::::::::::
+
+We can also disable automatic package discovery and explicitly list the packages we
+wish to install:
+
+```toml
+# file: pyproject.toml
+
+[tool.setuptools]
+pacakges = ["my_package", "my_other_package"]
+```
+
+Note that this is not part of the [PEP 621][PEP 621] standard, and instead is a method
+specific to `setuptools`. Finally, we may set up custom package discovery:
+
+```toml
+# file: pyproject.toml
+
+[tool.setuptools.packages.find]
+where = ["my_directory"]
+include = ["my_package", "my_other_package"]
+exclude = ["my_package.tests*"]
+```
+
+However, for ease of use, it is recommended to stick to either the flat layout or
+the `src` layout.
+
 ### Package Data
 
-### Entrypoints
+Sometimes our code requires some non-`.py` files in order to function properly, but
+these would not be picked up by automatic package discovery. For example, the project
+may store default input data in `.json` files. These could be included with your
+package by adding the following to `pyproject.toml`:
+
+
+```toml
+# file: pyproject.toml
+
+[tool.setuptools.package-data]
+epi_models = ["*.json"]
+```
+
+Note that this would grab only `.json` files in the top-level directory of our
+project. To include data files from all packages and sub-packages, we should instead
+write:
+
+```toml
+# file: pyproject.toml
+
+[tool.setuptools.package-data]
+"*" = ["*.json"]
+```
+
+### Better Scripts
+
+If our package contains any scripts, we can also install those to our environment, and
+even give them a simplified interface. This is how tools like `pip` can be invoked
+using two possible methods:
+
+```bash
+$ python3 -m pip  # Invoke with python
+$ pip             # Invoke via console-scripts entrypoint
+```
+
+This can be easily achieved by adding a table `scripts` under the `[project]` header:
+
+```toml
+# file: pyproject.toml
+
+[project]
+scripts = {epi_models = "epi_models.__main__:main"}
+
+# Alternative form:
+[project.scripts]
+epi_models = "epi_models.__main__:main"
+```
+
+This syntax means that we should create a console script `epi_models`, and that running
+it should call the function `main()` from the file `epi_models/__main__.py`. This will
+require a slight modification to our `__main__.py` file. All that's necessary is to
+move everything from the script into a function `main()` that takes no arguments,
+and then to call `main()` at the bottom of the script:
+
+```python
+from argparse import ArgumentParser
+import yaml
+from .models import SIR_model, SEIR_model, SIS_model
+from .plotting import plot_SIR_model, plot_SEIR_model, plot_SIS_model
+
+def main():
+    # Create ArgumentParser, which can read inputs from the command line
+    parser = ArgumentParser(
+        prog="epi_models",
+        description="Tool for solving epidemiology models",
+    )
+
+    # Add arguments that the user must supply
+    parser.add_argument("model")
+    parser.add_argument("input_file")
+
+    # Read command line args
+    args = parser.parse_args()
+
+    # Get data from input file
+    with open(args.input_file, "r") as f:
+        data = yaml.load(f, yaml.Loader)
+
+    # Run models and plot
+    # Note: In real code, you should validate the input data and
+    # raise helpful errors if something goes wrong!
+    if args.model == "SIR":
+        S, I, R = SIR_model(**data)
+        plot_SIR_model(S, I, R)
+    elif args.model == "SEIR":
+        S, E, I, R = SEIR_model(**data)
+        plot_SEIR_model(S, E, I, R)
+    elif args.model == "SIS":
+        S, E, I, R = SIS_model(**data)
+        plot_SIS_model(S, E, I, R)
+    else:
+        raise ValueError(f"The model '{args.model}' is not recognised.")
+
+main()
+```
+
+This will allow us to run our package as a script directly from the command line
+
+```bash
+$ pip install .
+$ epi_models --help
+```
+
+Note that we'd still be able to run our code using the longer form regardless of
+whether `project.scripts` were added or not:
+
+```bash
+$ python3 -m epi_models --help
+```
+
+If we have multiple scripts in our package, these can all be given invidual console
+scripts. However, these will also need to have a function name as an entry point. For
+example, we could modify our `if __name__ == "__main__"` section from `plot_SIR.py`
+to the following:
+
+```python
+def main():
+    S, I, R = SIR_model(
+        pop_size=8000000, beta=0.5, gamma=0.1, days=150, I_0=10
+    )
+    plot_SIR_model(S, I, R)
+
+if __name__ == "__main__":
+    main()
+```
+
+We could then create a new console script using:
+
+```toml
+# file: pyproject.toml
+
+[project.scripts]
+epi_models = "epi_models.__main__:main"
+epi_models_sir = "epi_models.plotting.plot_SIR:main"
+```
+
+So how does this work? When we activate a virtual environment, a new entry is
+added to our `PATH` environment variable:
+
+```bash
+PATH = "/path/to/my/env/bin:${PATH}"
+```
+
+After installing our console scripts, we can find a new file in this directory:
+
+```python
+#!/path/to/my/env/bin/python3
+# -*- coding: utf-8 -*-
+import re
+import sys
+from epi_models.__main__ import main
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
+    sys.exit(main())
+```
+
+Installing our project has automatically created a new Python file that can be run as a
+command line script due to the hash-bang (`#!`) on the top line, and all it does it
+import our main function and run it. As it's contained with the `bin/` directory of
+our Python environment, it's available for use as long we're using that environment,
+but as soon as we call `deactivate`, it is removed from our `PATH`.
 
 ### Setting Dependency Versions
 
+Earlier, when setting `dependencies` in our `pyproject.toml`, we chose to specify
+a minimum requirement for `numpy`, but not for `pyyaml`:
+
+```toml
+# file: pyproject.toml
+
+dependencies = [
+    "numpy >= 1.20",
+    "pyyaml",
+]
+```
+
+This indicates that `pip` should install any version of `numpy` greater than 1.20, but
+that any version of `pyyaml` will do. If our installed `numpy` version is less than
+1.20, or if it isn't installed at all, `pip` will upgrade to the latest version that's
+compatible with the rest of our installed packages and our Python version. We'll cover
+software versioning in more detail in the [lesson on publishing](05-publishing.Rmd), but
+now we'll simply cover some ways to specify which software versions we need:
+
+```toml
+"numpy >= 1.20"  # Must be at least 1.20
+"numpy > 1.20"   # Must be greater than 1.20
+"numpy == 1.20"  # Must be exactly 1.20
+"numpy <= 1.20"  # Must be 1.20 at most
+"numpy < 1.20"   # Must be less than 1.20
+```
+
+If we separate our clauses with commas, we can combine these requirements:
+
+```toml
+# At least 1.20, less than 1.22, and specifically not the release 1.21.3
+"numpy => 1.20, < 1.22, != 1.21.3"
+```
+
+A useful shorthand is the 'compatible release' clause:
+
+```toml
+"numpy ~= 1.20"  # Must be a release compatible with 1.20
+```
+
+This is equivalent to:
+
+```toml
+"numpy >= 1.20,  == 1.*"
+```
+
+That is, we require anything which is version 1, provided it's greater than 1.20.
+This would include version 1.25, but exlude version 2.0. We'll come back to this later
+when we discuss [publishing](05-publishing.Rmd).
+
 ### Optional Dependencies
+
+Sometimes we might have dependencies that only make sense for certain kind of user.
+For example, a developer of our library might need any libraries we use to run
+unit tests or build documentation, but an end user would not. These can be
+added as `optional-dependencies`:
+
+```toml
+# file: pyproject.toml
+
+[project.optional-dependencies]
+test = [
+    "pytest >= 5.0.0",
+]
+doc = [
+    "sphinx",
+]
+```
+
+These dependencies can be installed by adding the name of each optional dependency
+group in square brackets after telling `pip` what we want to install:
+
+```bash
+$ pip install .[test]     # Include testing dependencies
+$ pip install .[doc]      # Include documentation dependencies
+$ pip install .[test,doc] # Include all dependencies
+```
 
 ### Additional Tools
 
- 
+Some additional tools unrelated to package building also make use of `pyproject.toml`.
+Their settings are typically set using `[tool.*]` headings. For example, the tool
+[`black`][black] which is used to auto-format Python code can be configured here:
+
+```toml
+[tool.black]
+line-length = 120
+```
+
+Not all popular Python tools have adopted `pyproject.toml` yet. Notably, the linter
+[`flake8`][flake8] cannot be configured this way, and users will instead need to use
+a `.flake8` file (or one of a few alternative config files).
+
 ::::::::::::::::::::::::::::: keypoints
 
-- hello
-- world
+- We can configure our projects for `pip` installation by setting up a `pyproject.toml`
+  file.
+- Simple projects require very little to be added to this file, but there are many
+  optional extras we can add.
 
 :::::::::::::::::::::::::::::::::::::::

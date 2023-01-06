@@ -12,3 +12,10 @@ dependencies = [
     "matplotlib",
     "pyyaml",
 ]
+
+[project.scripts]
+epi_models = "epi_models.__main__:main"
+epi_models_sir = "epi_models.plotting.plot_SIR:main"
+
+[tool.setuptools.package-data]
+"*" = ["*.json"]
