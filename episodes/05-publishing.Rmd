@@ -242,7 +242,9 @@ This section may be skipped.
 
 There are many more fine-grained versioning techniques that may be employed as our
 projects grow in complexity. The full list of version types accepted by tools such as
-pip is listed in [PEP 440][PEP 440]. For example, we may provide pre-release specifiers:
+pip is listed in [PEP 440][PEP 440], while the formal specification for semantic
+versioning can be found at [semver.org][semver]. For example, we may provide pre-release
+specifiers:
 
 - 1.1.0a0: The first alpha version of 1.1.0. This is intended for use by developers of
   the project and (perhaps) a small group of users, and may be subject to large changes.

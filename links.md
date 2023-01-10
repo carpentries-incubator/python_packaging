@@ -18,3 +18,4 @@ any links that you are not going to use.
 [setuptools-keywords]: https://setuptools.pypa.io/en/latest/references/keywords.html
 [black]: https://pypi.org/project/black/
 [flake8]: https://flake8.pycqa.org/en/latest/
+[semver]: https://semver.org
