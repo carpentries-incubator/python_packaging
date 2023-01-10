@@ -6,22 +6,294 @@ exercises: 0
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::: questions 
 
-- hello
-- world
+- What services can we use to publish our software? 
+- What steps must we take to accomplish this?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- hello
-- world
+- Learn how to version our software and create releases.
+- Learn how to publish our software on PyPi, the Python Packaging Index.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Hello World 
+## Publishing our Python Packages
 
-See PEP 440 for versioning info
+Following our lesson on [building and installing](03-building-and-installing.Rmd) Python
+packages, we should now have a package that can be installed using `pip`. With just a
+little more work, we can now publish our software on a few free online services:
+GitHub for source/version control, and PyPI (the Python Packaging Index) for package
+hosting. The latter is the default repository used by `pip`, so by hosting our software
+there, other users will be able to install our software to any machine of their
+choosing, and will be able to add it as a dependency to their own projects.
+
+Before discussing how to use these services, we'll briefly cover 'semantic versioning':
+a method for adding meaningful versions to our software containing compatibility
+information.
+
+## Versions and Releases
+
+Users of our software will expect it to stay consistent over time. If we were to
+suddenly rename a function, or change what arguments it takes, this could break our
+external user's code, which in turn could break a third user's software, etc.
+
+A good solution to this problem is to use 'semantic versioning' for our code. Using
+semanic versioning, we will periodically make a new 'release' of our code, each time
+updating its version number, and the way we change the number informs our users of
+whether the changes to our code will break compatibility. In its most basic form,
+semantic versioning requires 3 numbers, separated by periods, i.e. 1.2.3. These
+numbers stand for MAJOR.MINOR.PATCH, and are typically updated right-to-left. The
+meaning of each number is:
+
+- PATCH: We increment the patch number whenever we make an update that doesn't add or
+  remove functionality. It can include things such as backwards-compatible bug fixes, 
+  internal code restructuring, and performance improvements.
+- MINOR: The minor version should be incremented whenever we add new
+  backwards-compatible features to our code.  This can include the addition of new
+  functions and classes. Whenever we increment the minor version, the patch version is
+  reset to zero.
+- MAJOR: The major version should be incremented whenever we make a change that breaks
+  backwards compatibility. This could include changing a function name or signature,
+  or removing something from the public API. It can also include changing a function's
+  behaviour in a significant way. Whenever we increment the major version, both the
+  minor version and patch version should be reset to zero.
+
+:::::::::::::::::: challenge
+
+Our contains the following function which gives the nth value of the  Fibonacci
+sequence:
+
+```python
+def fibonacci(n):
+    if n in [0, 1]:
+        return n
+    else:
+        return fibonacci(n-1) + fibonacci(n-2)
+```
+
+A user points out that this function causes an infinite loop if provided with a negative
+number, so we change it to:
+
+```python
+def fibonacci(n):
+    if n < 0:
+        raise ValueError("n must be greater than or equal to 0")
+    elif n in [0, 1]:
+        return n
+    else:
+        return fibonacci(n-1) + fibonacci(n-2)
+```
+
+If our software was version 2.3.4, and after this change we make a new release, what
+should the new version number be?
+
+::::::::::::::::::::::::::::
+
+::::::::::::::::::: solution
+
+2.3.5. This change is backwards compatible, and doesn't add any new features. Instead,
+it simply fixes a bug.
+
+::::::::::::::::::::::::::::
+
+:::::::::::::::::: challenge
+
+Our algorithm isn't very efficient, so we convert it to an iterative algorithm:
+
+```python
+def fibonacci(n):
+    if n < 0:
+        raise ValueError("n must be greater than or equal to 0")
+    elif n in [0, 1]:
+        return n
+    else:
+        last_two = [0, 1]
+        while n > 1:
+            val = sum(last_two)
+            last_two[0] = last_two[1]
+            last_two[1] = val
+            n -= 1
+        return val
+```
+
+If the previous version was 2.4.7, what should the new version be?
+
+::::::::::::::::::::::::::::
+
+::::::::::::::::::: solution
+
+2.4.8. This change is backwards compatible, and doesn't add any new features. Instead,
+it just improves the performance of an existing function.
+
+::::::::::::::::::::::::::::
+
+:::::::::::::::::: challenge
+
+We decide to add a new function to our code that gives the user the full list of
+Fibonnaci numbers up to n:
+
+```python
+def fibonacci_list(n):
+    if n < 0:
+        raise ValueError("n must be greater than or equal to 0")
+    elif n == 0:
+        return [0]
+    else:
+        result = [0, 1]
+        while n > 1:
+            result.append(result[-1] + result[-2])
+            n -= 1
+        return result
+```
+
+If the previous version was 3.2.1, what should the new version be?
+
+::::::::::::::::::::::::::::
+
+::::::::::::::::::: solution
+
+3.3.0. We've added new features to our software, but we haven't changed the existing
+API. Therefore the minor version should be incremented, and the patch number should be
+reset to zero.
+
+::::::::::::::::::::::::::::
+
+:::::::::::::::::: challenge
+
+Our users seem to prefer the `fibonacci_list` function, so we decide to streamline our
+software by removing the original function and renaming the new one `fibonacci`. If the
+previous version was 3.4.5, what should the new version be?
+
+::::::::::::::::::::::::::::
+
+::::::::::::::::::: solution
+
+4.0.0. By removing a function and changing the behaviour of another, we have changed
+the public API in a manner which is not backwards-compatible, and thus this might break
+our user's code. We therefore must increment the major number, and set both the minor
+and patch numbers to zero.
+
+::::::::::::::::::::::::::::
+
+Something to note about the major and minor version numbers is that they only need to
+be updated if we change the _public API_ of our software. Therefore, if we change the
+behaviour of any functions or classes intended for internal use, and the public API is
+unchanged we only need to update the patch number.
+
+We can indicate that a function, class, or variable is only intended for internal use
+by prepending their name with an underscore (i.e. `_myvar`, `_myfunc`, `_MyClass`).
+Alternatively, if our project includes rich documentation, it may be assumed that any
+objects that aren't included in the user API are for internal usage.
+
+When we update the version of our software and release it publically, we must not
+go back and change it, no matter how tempting the prospect may be! Any fixes to our
+software may be perfomed by further releases, usually via the patch number. If a
+vulnerability is found in an old version of our software, it is permissible to return
+to it and release a new patch. For example, the last version of Python 2 was version
+2.7.18, released in April 2020 -- over a decade after the release of Python 3.0. If we
+choose to stop supporting an old version of our software, and therefore leave any
+vulnerabilities intact, this should be clearly stated to our users, and they should be
+strongly advised to upgrade.
+
+### Unstable Versions
+
+Software with a major version of 0 is usually understood to be 'unstable'. This means
+that anything can change between minor versions, and that no promises can be made for
+backwards compatibility. This is common for software in early stages of development,
+as the public API may undergo many iterations before being finalised.
+
+For your own software, it may be a good idea to keep the major number at zero while
+you're hashing out the public API and building a userbase. Once you've settled on a
+stable API, or you've developed a sizable userbase that won't appreciate having to
+regularly update their code to match your changing standards, you should consider
+setting your version to 1.0.0.
+
+### Deprecation
+
+It is considered good manners to give our users plenty of warning if we plan to remove
+features that they might depend upon in our next major release. For this reason, many
+developers will implement deprecation warnings to alert users that the API is due to
+change in future, and that they should update their code accordingly. For example:
+
+```python
+import warnings
+
+def myfunc():
+    warnings.warn(
+        "myfunc is deprecated, and wil be removed in version 4",
+        DeprecationWarning,
+    )
+    return 42
+```
+
+When adding deprecations to our code, we should update the minor version, and include
+them in our changelog (discussed later). When we follow through on our deprecations and
+remove features, this should also be clearly stated in the changelog of our major
+release.
+
+### Advanced Versioning
+
+:::::::::::::::::::::::::::: instructor
+
+This section may be skipped.
+
+:::::::::::::::::::::::::::::::::::::::
+
+There are many more fine-grained versioning techniques that may be employed as our
+projects grow in complexity. The full list of version types accepted by tools such as
+pip is listed in [PEP 440][PEP 440]. For example, we may provide pre-release specifiers:
+
+- 1.1.0a0: The first alpha version of 1.1.0. This is intended for use by developers of
+  the project and (perhaps) a small group of users, and may be subject to large changes.
+  1.1.0a0 comes after 1.0.N, but before 1.1.0. A second alpha version may be listed as
+  1.1.0a1.
+- 1.1.0b0: The beta version of 1.1.0. This follows 1.1.0aN, and is intended for use by a
+  wider pool of users for further testing and feedback. This is usually close to the
+  finished product, but some large changes remain possible.
+- 1.1.0rc0: The release-candiate version of 1.1. Sometimes called a 'preview' version, it
+  is not expected that further significant changes will be made in version 1.1, but
+  some small changes may be included. It comes after 1.1.0bN, but before 1.1.0.
+
+The number following the pre-release specifier is optional, with no number interpretted
+as 0 (i.e. `1.0.0a == 1.0.0a0`). A dot, hyphen, or underscore separator is also allowed,
+e.g. `1.0.0-a1`, `1.1.0.beta.3`, `1.1.0-rc.2`. We may also make _post-releases_ if we wish
+to make minor edits after a release:
+
+- 1.1.0post0: An update after a release that does not change the distributed software,
+  e.g. a change in documentation or release notes. It comes after 1.1.0 but before
+  1.1.1.
+
+Similarly, post-release specifiers may have dot, hypen or underscore separators, and
+may exclude the trailing number. The use of 'rev' or 'r' in place of 'post' is also
+common. Note that a post-release is _not_ the appropriate place for a quick bug fix
+after a full release -- that should be an update to the patch number.
+
+Finally, it is possible to create local versions in cases where a developer has made
+progress on a new development but has not finalised their work in a new release. If you
+use a tool such as Git to control your versioning, it may automatically generate
+the local version. In general, there is no ordering to local versions. A local version
+is specified with a `+` followed by a dot-separated list of numbers, letters, and
+hyphens, e.g. `1.1.0+001`, `1.2.0-alpha-630-g60eca14`.
+
+
+## Publishing our Software on GitHub
+
+### Licensing
+
+### Changelogs
+
+### Consistent Versioning with `setuptools-scm`
+
+## Publishing our Software on PyPI
+
 Discuss keywords and classifiers in pyproject.toml
+
+### `build`, `twine`, and `wheels`
+
+### TestPyPI
+
+### Automating Package Publishing with GitHub Actions
 
 ::::::::::::::::::::::::::::::::::::: keypoints
 
