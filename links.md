@@ -19,3 +19,4 @@ any links that you are not going to use.
 [black]: https://pypi.org/project/black/
 [flake8]: https://flake8.pycqa.org/en/latest/
 [semver]: https://semver.org
+[licenses]: https://choosealicense.com/

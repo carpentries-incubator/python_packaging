@@ -30,7 +30,8 @@ choosing, and will be able to add it as a dependency to their own projects.
 
 Before discussing how to use these services, we'll briefly cover 'semantic versioning':
 a method for adding meaningful versions to our software containing compatibility
-information.
+information, and we'll look at some of the preparatory steps we should take before
+publishing our code.
 
 ## Versions and Releases
 
@@ -176,6 +177,27 @@ and patch numbers to zero.
 
 ::::::::::::::::::::::::::::
 
+We can add a version to our code by adding a `__version__` to our top-most `__init__.py`
+file:
+
+```python
+# file: epi_models/__init__.py
+
+__version__ = "1.2.3"
+```
+
+This should also be reflected in our `pyproject.toml`:
+
+```toml
+# file: pyproject.toml
+
+[project]
+version = "1.2.3"
+```
+
+To avoid having to keep these up-to-date manually, we'll see later how to automatically
+generate version info using `git` tags.
+
 Something to note about the major and minor version numbers is that they only need to
 be updated if we change the _public API_ of our software. Therefore, if we change the
 behaviour of any functions or classes intended for internal use, and the public API is
@@ -196,6 +218,29 @@ choose to stop supporting an old version of our software, and therefore leave an
 vulnerabilities intact, this should be clearly stated to our users, and they should be
 strongly advised to upgrade.
 
+With this understanding of semantic versioning, we can now better understand the
+behaviour of the 'compatible release' comparator `~=` that we can use when setting
+dependencies in `pyproject.toml`:
+
+```toml
+dependencies = [
+    "numpy ~= 1.22.1",
+]
+```
+
+This means that we require a version of NumPy which has at least all of the features of
+version 1.22.1, but maintains backwards compatibility with it. `pip` will aim to
+get the highest possible version that matches, so if a patch is released, it will
+get version 1.22.2. If a new minor version is released, it will install 1.23.0. This
+continues until the release of 2.0.0, which `pip` will not install. This is
+equivalent to:
+
+```toml
+dependencies = [
+    "numpy >= 1.22.1, == 1.*",
+]
+```
+
 ### Unstable Versions
 
 Software with a major version of 0 is usually understood to be 'unstable'. This means
@@ -208,6 +253,28 @@ you're hashing out the public API and building a userbase. Once you've settled o
 stable API, or you've developed a sizable userbase that won't appreciate having to
 regularly update their code to match your changing standards, you should consider
 setting your version to 1.0.0.
+
+If one of the dependencies in your project is still in an unstable state, it may be
+a good idea to fix the minor version number instead of using the compatible release
+comparator `~=`:
+
+```toml
+dependencies = [
+    "unstable_project >= 0.6.2, == 0.6.*"
+]
+```
+
+This is because the `~= 0.6` will get the latest release from `0.6.0` to `1.0.0` (not
+included), but in this case version 0.7 might break backwards compatibility with 0.6.
+Note that some unstable projects may also break backwards compatibiliy in their patch
+releases, as the regular rules don't really apply. In these cases, it may be better to
+fix even the patch number:
+
+```toml
+dependencies = [
+    "unstable_project == 0.6.2"
+]
+```
 
 ### Deprecation
 
@@ -241,10 +308,11 @@ This section may be skipped.
 :::::::::::::::::::::::::::::::::::::::
 
 There are many more fine-grained versioning techniques that may be employed as our
-projects grow in complexity. The full list of version types accepted by tools such as
-pip is listed in [PEP 440][PEP 440], while the formal specification for semantic
-versioning can be found at [semver.org][semver]. For example, we may provide pre-release
-specifiers:
+projects grow in complexity, although these are not universally adopted and may only be
+applicable to very large projects with a detailed review process. The full list of
+version types accepted by tools such as pip is listed in [PEP 440][PEP 440], while the
+formal specification for semantic versioning can be found at [semver.org][semver]. For
+example, we may provide pre-release specifiers:
 
 - 1.1.0a0: The first alpha version of 1.1.0. This is intended for use by developers of
   the project and (perhaps) a small group of users, and may be subject to large changes.
@@ -278,14 +346,318 @@ the local version. In general, there is no ordering to local versions. A local v
 is specified with a `+` followed by a dot-separated list of numbers, letters, and
 hyphens, e.g. `1.1.0+001`, `1.2.0-alpha-630-g60eca14`.
 
+## Preparing to Publish
 
-## Publishing our Software on GitHub
+### README Files
+
+Before sharing our software with the world, it is a good idea to let others know what it
+is and how it works! A good README file should explain what a project is for, how users
+can install it, and how to use it. For example, we may use the following file
+`README.md`, written using markdown.
+
+```markdown
+    # epi_models
+
+    A collection of Python utilities for solving epidemiology problems.
+
+    ## Installation
+
+    The project can be installed using \`pip\`:
+
+    ```
+    $ pip install epi_models
+    ```
+
+    To install from this repo:
+
+    ```
+    $ git clone github.com/username/epi_models
+    $ cd epi_models
+    $ pip install .
+    ```
+
+    ## Usage
+
+    The project offers a command line interface, which can be used as
+    follows:
+
+    ```
+    $ epi_models SIR input.yaml
+    ```
+
+    `SIR` can be exchanged for a model of your choice, and `input.yaml`
+    is an input file with the following entries...
+```
+
+This should be included at the top level of our project:
+
+<code>
+&#128193; epi\_models<br>
+|<br>
+|\_\_\_\_&#128220; pyproject.toml<br>
+|\_\_\_\_&#128220; README.md<br>
+|\_\_\_\_&#128230; epi\_models<br>
+\ \ \ \ \ |<br>
+\ \ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
+\ \ \ \ \ |\_\_\_\_&#128220; \_\_main\_\_.py<br>
+\ \ \ \ \ |\_\_\_\_&#128193; models<br>
+\ \ \ \ \ |\_\_\_\_&#128193; plotting<br>
+</code>
+
+It should be included in our package metadata by adding the following line in our
+`pyproject.toml`:
+
+```toml
+# file: pyproject.toml
+
+[project]
+readme = "README.md"
+```
 
 ### Licensing
 
-### Changelogs
+It is important for our software to have a license so that any potential users know
+what their rights are with regards to usage and redistribution. This can also provide us
+with legal protections in some cases.
+
+There are several open source licenses available, and they can be applied to our
+project simply by adding a `LICENSE`, `LICENSE.txt`, or `LICENSE.md` file to the top
+level of our project:
+
+<code>
+&#128193; epi\_models<br>
+|<br>
+|\_\_\_\_&#128220; pyproject.toml<br>
+|\_\_\_\_&#128220; README.md<br>
+|\_\_\_\_&#128220; LICENSE.md<br>
+|\_\_\_\_&#128230; epi\_models<br>
+\ \ \ \ \ |<br>
+\ \ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
+\ \ \ \ \ |\_\_\_\_&#128220; \_\_main\_\_.py<br>
+\ \ \ \ \ |\_\_\_\_&#128193; models<br>
+\ \ \ \ \ |\_\_\_\_&#128193; plotting<br>
+</code>
+
+One of the simplest and most widely used licenses is the MIT License, which is very
+permissive. It requires users of your software to retain its copyright notice if
+they redistribute or modify it (or 'substantial portions' of it), but otherwise allows
+users to do what they wish. It also ensures the author is not liable for anything
+the users do with their software:
+
+```
+MIT License
+
+Copyright (c) [year] [fullname]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+Information on alternative open source licenses can be found at
+[choosealicense.com][licenses]. Note that your choice of license may be determined
+by your dependencies. For example, if your code uses software licensed under the GNU
+GPLv3.0 license, it too should be licensed under GPLv3.0.
+
+We should include our license in our `pyproject.toml` file as follows:
+
+```toml
+[project]
+license = {file = "LICENSE.md"}
+```
+
+We can instead simply state the name of the license:
+```toml
+[project]
+license = {text = "MIT License"}
+```
+
+## Publishing our Software on GitHub
+
+`git` is a powerful version control tool that allows us to track changes to our source
+code over time. This lesson is not the place for teaching how to use `git`, but it is
+highly recommended that you use it for managing your Python projects.
+
+GitHub is an online service for hosting software projects using `git`, and it is a great
+way to share our code and collaborate with others.
+
+:::::::::::::::::::: callout
+
+GitHub is not the only service you can use for hosting your source code. GitLab and
+BitBucket are popular alternatives.
+
+::::::::::::::::::::::::::::
+
+Once our code is hosted on GitHub, we can create releases and assign them a tag. This
+tag should be the version number of the release. We will see later how to use GitHub
+Actions to automatically publish our code on other services whenever a new release is
+created.
+
+Whenever we make new releases of our code, we should write a detailed changelog that
+describes all of the changes since the last version. This should include new features, 
+bug fixes, removals, and deprecations. A good changelog document should include all
+code changes in reverse chronological order (so the latest changes should be first in
+the list), and should credit anybody who contributed to the code.
+
+With our code hosted on GitHub, it is possible for others to install it using `pip`:
+
+```bash
+$ pip install "git+https://github.com/user/project"
+```
+
+However, this will simply get the latest commit to the main branch, which may be a
+work-in-progress and not a true release. We can specify a particular release by
+providing the version number after an `@` sign:
+
+```bash
+$ pip install "git+https://github.com/user/project@1.2.3"
+```
+
+Note that we can also supply a branch name, or a commit hash here:
+
+```bash
+$ pip install "git+https://github.com/user/project@branch"
+$ pip install "git+https://github.com/user/project@1a2b3c4"
+```
+
+Projects hosted on GitHub can also be added to dependencies in `pyproject.toml` as so:
+
+```toml
+dependencies = [
+    "mypkg @ git+https://github.com/user/mypkg@1.2.3",
+]
+```
+
+However, it is relatively slow for `pip` to install in this way, as it must clone the
+whole repository. We can instead install from a snapshot by pointing `pip` towards an
+archived `.zip`:
+
+```bash
+$ pip install "https://github.com/user/project/archive/1.2.3.zip"
+```
+
+```toml
+dependencies = [
+    "mypkg @ https://github.com/user/mypkg/archive/1.2.3.zip",
+]
+```
+
+However, this is still slower than installing from a dedicated Python package
+repository such as PyPI, which hosts pre-built `.whl` files, and it only allows our
+users to specify a singular version of our code. This means that they may miss out on
+crucial patch releases. In general, it is a good idea to use GitHub to host our source
+code and to manage its development, and to use a service like PyPI to host packages that
+our users can install.
+
 
 ### Consistent Versioning with `setuptools-scm`
+
+An issue with using GitHub to create new releases is that the project version can
+easily become desynced. The version should be specified in three places:
+
+- `git` tags, determined by releases on GitHub
+- The `version` field in `pyproject.toml`
+- `__version__` in our `__init__.py`
+
+It is possible to have all three determined by `git` tags using `setuptools-scm`. This
+can be set as a requirement of the build system:
+
+```toml
+# file: pyproject.toml
+
+[build-system]
+requires = [
+    "setuptools >= 65",
+    "setuptools_scm[toml]",
+    "wheel",
+]
+build-backend = "setuptools.build_meta"
+```
+
+With this, we no longer need to provide an entry for `project.version`, and instead
+should add:
+
+```toml
+# file: pyproject.toml
+
+[project]
+name = "epi_models"
+# version = "1.2.3" # no longer needed!
+dynamic = ["version"]
+```
+
+Following this, we should the following section elsewhere in `pyproject.toml`:
+
+```toml
+# file: pyproject.toml
+
+[tool.setuptools_scm]
+write_to = "epi_models/_version.py"
+```
+
+Now, when we install or build the project, `setuptools-scm` will create a new file
+`_version.py` inside of our built package. If our git tag is `1.2.3`, this will contain:
+
+```python
+# file generated by setuptools_scm
+# don't change, don't track in version control
+__version__ = version = '1.2.3'
+__version_tuple__ = version_tuple = (1, 2, 3)
+```
+
+This can be retrieved at runtime by adding the following to `__init__.py`:
+
+```python
+# file: __init__.py
+
+from importlib.metadata import version, PackageNotFoundError
+
+try:
+    __version__ = version("epi_models")
+except PackageNotFoundError:
+    # If the package is not installed, don't add a version
+    pass
+```
+
+Note that `importlib.metadata` was added to the standard Python library in version 3.8.
+Earlier versions will need to instead load `importlib_metadata`:
+
+```python
+# file: __init__.py
+
+try:
+    from importlib.metadata import version, PackageNotFoundError
+except ImportError:
+    from importlib_metadata import version, PackageNotFoundError
+```
+
+We can add this to our `pyproject.toml` as follows:
+
+```toml
+# file: pyproject.toml
+[project]
+dependencies = [
+    'importlib_metadata; python_version < "3.8"',
+]
+```
+
+Now, our Git tags, `__version__` variable, and `pyproject.toml` `version` will all
+refer to the same place, and there is much less chance of them accidentally falling
+out-of-sync.
 
 ## Publishing our Software on PyPI
 
