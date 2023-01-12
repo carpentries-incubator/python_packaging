@@ -377,7 +377,7 @@ new release, what should the new version number be?</p>
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>2.3.5. This change is backwards compatible, and doesn’t add any new
 features. Instead, it simply fixes a bug.</p>
@@ -424,7 +424,7 @@ be?</p>
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>2.4.8. This change is backwards compatible, and doesn’t add any new
 features. Instead, it just improves the performance of an existing
@@ -470,7 +470,7 @@ be?</p>
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <p>3.3.0. We’ve added new features to our software, but we haven’t
 changed the existing API. Therefore the minor version should be
@@ -501,7 +501,7 @@ was 3.4.5, what should the new version be?</p>
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
 <p>4.0.0. By removing a function and changing the behaviour of another,
 we have changed the public API in a manner which is not
@@ -650,7 +650,7 @@ be clearly stated in the changelog of our major release.</p>
   Instructor Note
   </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
 <p>This section may be skipped.</p>
 </div>
@@ -661,7 +661,7 @@ be clearly stated in the changelog of our major release.</p>
 employed as our projects grow in complexity, although these are not
 universally adopted and may only be applicable to very large projects
 with a detailed review process. The full list of version types accepted
-by tools such as pip is listed in <a href="https://peps.python.org/pep-0420/" class="external-link">PEP 440</a>, while the formal
+by tools such as pip is listed in <a href="https://peps.python.org/pep-0440/" class="external-link">PEP 440</a>, while the formal
 specification for semantic versioning can be found at <a href="https://semver.org" class="external-link">semver.org</a>. For example, we may provide
 pre-release specifiers:</p>
 <ul><li>1.1.0a0: The first alpha version of 1.1.0. This is intended for use
@@ -1307,9 +1307,20 @@ new release:</p>
 project (at the same level as <code>pyproject.toml</code>). In order for
 this to work, we’ll need to set up a <code>PYPI_DEPLOYMENT_TOKEN</code>
 in the ‘secrets’ section of our project’s GitHub settings. A guide to
-doing this may be found on the <a href="https://pypi.org/help/#apitoken" class="external-link">PyPI website</a>. Note that you
-should <em>never</em> push sensitive information such as passwords
-directly to your GitHub projects!</p>
+doing this may be found on the <a href="https://pypi.org/help/#apitoken" class="external-link">PyPI website</a>.</p>
+<div id="callout2" class="callout callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<div class="callout-inner">
+<h3 class="callout-title">Callout<a class="anchor" aria-label="anchor" href="#callout2"></a>
+</h3>
+<div class="callout-content">
+<p>You should <em>never</em> push sensitive information such as
+passwords directly to your GitHub projects!</p>
+</div>
+</div>
+</div>
 <p>With this set up, our projects will be automatically pushed to PyPI
 each time we make a new release.</p>
 <div id="keypoints1" class="callout keypoints">

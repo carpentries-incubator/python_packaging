@@ -352,7 +352,7 @@ to generate a figure.</p>
   Instructor Note
   </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <p>It isn’t necessary to dwell on the details of the script. It’s only
 being used as an example of the sort of script the students might be
@@ -564,7 +564,7 @@ module more versatile and useful.</p>
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>The result is <code>15</code>, as the second import does not run the
 code in <code>my_module.py</code>, and therefore
@@ -862,7 +862,7 @@ only the following line:</p>
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>It prints <code>"__main__"</code></p>
 </div>
@@ -893,7 +893,7 @@ only the following line:</p>
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>It prints <code>"name_test"</code></p>
 </div>
@@ -2314,7 +2314,7 @@ packages changed so much of the years?</li>
   Instructor Note
   </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
 <p>This lesson can be skipped entirely if you’re aiming for a purely
 practical lesson.</p>
@@ -2342,10 +2342,9 @@ alternative methods so that you can use them in new projects, but rather
 to provide some context to the often confusing information out there,
 and to help if you ever find yourself working on a project that hasn’t
 yet updated to the latest systems.</p>
-<div class="section level3">
-<h3 id="in-the-beginning-there-was-distutils">In the beginning, there was <code>distutils</code>
-<a class="anchor" aria-label="anchor" href="#in-the-beginning-there-was-distutils"></a>
-</h3>
+</section><section id="in-the-beginning-there-was-distutils"><h2 class="section-heading">In the beginning, there was <code>distutils</code><a class="anchor" aria-label="anchor" href="#in-the-beginning-there-was-distutils"></a>
+</h2>
+<hr class="half-width">
 <p>First introduced with Python 2.2, <code>distutils</code> is the
 official Python package that allows users to install and distribute
 their own packages. However, it was deprecated in <a href="https://peps.python.org/pep-0632/" class="external-link">PEP 632</a>, having been
@@ -2368,9 +2367,9 @@ __init__.py<br>      |____📜 __main__.py<br>      |<br>      |_
 models<br>      |    |<br>      |    |____📜 __init__.py<br>
      |    |____📜 SIR.py<br>      |    |____📜 SEIR.py<br>
      |    |____📜 SIS.py<br>      |    |____📜 utils.py<br>      |<br>
-     |____📁 plotting<br>          |<br>          |____📜
-__init__.py<br>          |____📜 plot_SIR.py<br>          |____📜
-plot_SEIR.py<br>          |____📜 plot_SIS.py<br></code></p>
+     |____📁 plotting<br>           |<br>           |____📜
+__init__.py<br>           |____📜 plot_SIR.py<br>           |____📜
+plot_SEIR.py<br>           |____📜 plot_SIS.py<br></code></p>
 <p>Note that the project directory name is the same as the package name
 – this is a common project layout for Python projects, but we will see
 later how to achieve alternative layouts.</p>
@@ -2483,11 +2482,10 @@ file <code>requirements.txt</code>:</p>
 and it will be removed from standard Python distributions starting from
 version 3.12. Listing dependencies in <code>requirements.txt</code> is
 also no longer required.</p>
-</div>
-<div class="section level3">
-<h3 id="setuptools-and-egg-files">
+</section><section id="setuptools-and-egg-files"><h2 class="section-heading">
 <code>setuptools</code> and <code>egg</code> files<a class="anchor" aria-label="anchor" href="#setuptools-and-egg-files"></a>
-</h3>
+</h2>
+<hr class="half-width">
 <p><code>setuptools</code> is not part of the core Python library, but
 it has become the <em>de facto</em> standard build tool. Originally, it
 added extra functionality on top of <code>distutils</code> using a
@@ -2587,11 +2585,9 @@ way using pip:</p>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip uninstall epi_models</span></code></pre>
 </div>
-</div>
-<div class="section level3">
-<h3 id="using-pip-instead-of-running-setup-py">Using <code>pip</code> instead of running <code>setup.py</code>
-<a class="anchor" aria-label="anchor" href="#using-pip-instead-of-running-setup-py"></a>
-</h3>
+</section><section id="using-pip-instead-of-running-setup.py"><h2 class="section-heading">Using <code>pip</code> instead of running <code>setup.py</code><a class="anchor" aria-label="anchor" href="#using-pip-instead-of-running-setup.py"></a>
+</h2>
+<hr class="half-width">
 <p>The direct usage of <code>setup.py</code> is now discouraged. After
 installing a package using <code>python3 setup.py install</code>, there
 is no equivalent command to uninstall. It also tends to clutter the
@@ -2663,11 +2659,10 @@ glance. <code>distutils</code> had also supported an alternative method
 of specifying package metadata using an additional file
 <code>setup.cfg</code>, and in time this became the preferred
 method.</p>
-</div>
-<div class="section level3">
-<h3 id="setup-cfg-as-a-declarative-config">
-<code>setup.cfg</code> as a ‘Declarative Config’<a class="anchor" aria-label="anchor" href="#setup-cfg-as-a-declarative-config"></a>
-</h3>
+</section><section id="setup.cfg-as-a-declarative-config"><h2 class="section-heading">
+<code>setup.cfg</code> as a ‘Declarative Config’<a class="anchor" aria-label="anchor" href="#setup.cfg-as-a-declarative-config"></a>
+</h2>
+<hr class="half-width">
 <p>Instead of using <code>setup.py</code> to define our package
 metadata, it is preferable to instead use the file
 <code>setup.cfg</code>. Instead of being a runnable Python module, this
@@ -2793,11 +2788,10 @@ directory name, but it is recommended to keep the directory structure of
 your projects as close as possible to that of the Python package. See
 the <a href="https://setuptools.pypa.io/en/latest/references/keywords.html" class="external-link">documentation
 for <code>setuptools</code> keywords</a> for more information.</p>
-</div>
-<div class="section level3">
-<h3 id="pyproject-toml-and-circular-build-requirements">
-<code>pyproject.toml</code> and Circular Build Requirements<a class="anchor" aria-label="anchor" href="#pyproject-toml-and-circular-build-requirements"></a>
-</h3>
+</section><section id="pyproject.toml-and-circular-build-requirements"><h2 class="section-heading">
+<code>pyproject.toml</code> and Circular Build Requirements<a class="anchor" aria-label="anchor" href="#pyproject.toml-and-circular-build-requirements"></a>
+</h2>
+<hr class="half-width">
 <p>We saw in the previous sections that <code>setuptools</code> allows
 library writers to specify the requirements of their packages and allow
 users to automatically download and install dependencies. However, there
@@ -2863,10 +2857,9 @@ also provide a <code>build-backend</code>:</p>
 <span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span>
 <span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="dt">build-backend</span> <span class="op">=</span> <span class="st">"setuptools.build_meta"</span></span></code></pre>
 </div>
-</div>
-<div class="section level3">
-<h3 id="moving-to-pyproject-toml-only-builds">Moving to <code>pyproject.toml</code>-only builds<a class="anchor" aria-label="anchor" href="#moving-to-pyproject-toml-only-builds"></a>
-</h3>
+</section><section id="moving-to-pyproject.toml-only-builds"><h2 class="section-heading">Moving to <code>pyproject.toml</code>-only builds<a class="anchor" aria-label="anchor" href="#moving-to-pyproject.toml-only-builds"></a>
+</h2>
+<hr class="half-width">
 <p>Following <a href="https://peps.python.org/pep-0517/" class="external-link">PEP 517</a>/<a href="https://peps.python.org/pep-0518/" class="external-link">518</a>, it was realised that
 <code>pyproject.toml</code> and <code>setup.cfg</code> were both solving
 similar problems, although <code>pyproject.toml</code> was to be a
@@ -2885,11 +2878,9 @@ recognise, such as <code>name</code>, <code>version</code>,
 use their own synonyms for this metadata, and they may provide many more
 options than the core set, but to be standards compliant they must
 recognise the metadata of <a href="https://peps.python.org/pep-0621/" class="external-link">PEP 621</a> at a minimum.</p>
-</div>
-<div class="section level3">
-<h3 id="the-end-of-setup-py">The end of <code>setup.py</code>
-<a class="anchor" aria-label="anchor" href="#the-end-of-setup-py"></a>
-</h3>
+</section><section id="the-end-of-setup.py"><h2 class="section-heading">The end of <code>setup.py</code><a class="anchor" aria-label="anchor" href="#the-end-of-setup.py"></a>
+</h2>
+<hr class="half-width">
 <p>With <a href="https://peps.python.org/pep-0621/" class="external-link">PEP 621</a> removing
 the need for <code>setup.cfg</code>, one might expect that the older
 <code>setup.py</code> could be removed too. However,
@@ -2928,7 +2919,6 @@ may no longer be relevant.</li>
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use. 
  -->
-</div>
 </section></section><section id="aio-05-publishing"><p>Content from <a href="05-publishing.html">Publishing our Python Packages</a></p>
 <hr>
 <p> Last updated on 2023-01-12 | 
@@ -3057,7 +3047,7 @@ new release, what should the new version number be?</p>
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>2.3.5. This change is backwards compatible, and doesn’t add any new
 features. Instead, it simply fixes a bug.</p>
@@ -3104,7 +3094,7 @@ be?</p>
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>2.4.8. This change is backwards compatible, and doesn’t add any new
 features. Instead, it just improves the performance of an existing
@@ -3150,7 +3140,7 @@ be?</p>
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <p>3.3.0. We’ve added new features to our software, but we haven’t
 changed the existing API. Therefore the minor version should be
@@ -3181,7 +3171,7 @@ was 3.4.5, what should the new version be?</p>
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
 <p>4.0.0. By removing a function and changing the behaviour of another,
 we have changed the public API in a manner which is not
@@ -3333,7 +3323,7 @@ be clearly stated in the changelog of our major release.</p>
   Instructor Note
   </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
 <p>This section may be skipped.</p>
 </div>
@@ -3344,7 +3334,7 @@ be clearly stated in the changelog of our major release.</p>
 employed as our projects grow in complexity, although these are not
 universally adopted and may only be applicable to very large projects
 with a detailed review process. The full list of version types accepted
-by tools such as pip is listed in <a href="https://peps.python.org/pep-0420/" class="external-link">PEP 440</a>, while the formal
+by tools such as pip is listed in <a href="https://peps.python.org/pep-0440/" class="external-link">PEP 440</a>, while the formal
 specification for semantic versioning can be found at <a href="https://semver.org" class="external-link">semver.org</a>. For example, we may provide
 pre-release specifiers:</p>
 <ul>
@@ -4012,9 +4002,20 @@ new release:</p>
 project (at the same level as <code>pyproject.toml</code>). In order for
 this to work, we’ll need to set up a <code>PYPI_DEPLOYMENT_TOKEN</code>
 in the ‘secrets’ section of our project’s GitHub settings. A guide to
-doing this may be found on the <a href="https://pypi.org/help/#apitoken" class="external-link">PyPI website</a>. Note that you
-should <em>never</em> push sensitive information such as passwords
-directly to your GitHub projects!</p>
+doing this may be found on the <a href="https://pypi.org/help/#apitoken" class="external-link">PyPI website</a>.</p>
+<div id="callout2" class="callout callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<div class="callout-inner">
+<h3 class="callout-title">Callout<a class="anchor" aria-label="anchor" href="#callout2"></a>
+</h3>
+<div class="callout-content">
+<p>You should <em>never</em> push sensitive information such as
+passwords directly to your GitHub projects!</p>
+</div>
+</div>
+</div>
 <p>With this set up, our projects will be automatically pushed to PyPI
 each time we make a new release.</p>
 <div id="keypoints1" class="callout keypoints">
