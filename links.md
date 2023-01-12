@@ -8,6 +8,7 @@ any links that you are not going to use.
 [pandas]: https://pandas.pydata.org/docs/getting_started/index.html
 [PyYAML]: https://pyyaml.org/wiki/PyYAMLDocumentation
 [PEP 420]: https://peps.python.org/pep-0420/
+[PEP 427]: https://peps.python.org/pep-0427/
 [PEP 440]: https://peps.python.org/pep-0420/
 [PEP 508]: https://peps.python.org/pep-0508/
 [PEP 517]: https://peps.python.org/pep-0517/
@@ -20,3 +21,7 @@ any links that you are not going to use.
 [flake8]: https://flake8.pycqa.org/en/latest/
 [semver]: https://semver.org
 [licenses]: https://choosealicense.com/
+[PyPI]: https://pypi.org
+[TestPyPI]: https://test.pypi.org
+[classifiers]: https://pypi.org/classifiers
+[pypi_token]: https://pypi.org/help/#apitoken

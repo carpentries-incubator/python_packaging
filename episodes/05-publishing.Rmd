@@ -661,17 +661,309 @@ out-of-sync.
 
 ## Publishing our Software on PyPI
 
-Discuss keywords and classifiers in pyproject.toml
+[PyPI][PyPI], the Python Packaging Index, is the official package repository for the
+Python community. It is equivalent to CRAN, used for the R programming language. This is
+the repository that `pip` uses when we install remote packages from the command line. It
+is recommended to upload packages here if we want our projects to reach a wider
+audience.
 
-### `build`, `twine`, and `wheels`
+![PyPI_screenshot](fig/pypi.png){alt="The Python Packaging Index"}
 
-### TestPyPI
+To begin, you will need to create an account on [PyPI][PyPI] and its sister-site,
+[TestPyPI][TestPyPI] -- the latter is used to check that our packages have been
+uploaded and set up properly before committing to the standard repository.
+
+To help people find our project after it's uploaded, we should add some keywords they
+can search for. We can also add 'classifiers' that categorise our project and describe
+its intended audience. A list of possible classifiers are available on the
+[PyPI website][classifiers]. These should be added to our `pyproject.toml`:
+
+```toml
+# file: pyproject.toml
+
+[project]
+
+# keywords should contain search terms so users can
+# find our project
+keywords = [
+    "epimediology",
+    "virology",
+    "SIR",
+    "SEIR",
+    "Compartmental",
+    "Model",
+]
+
+# Classifiers are a standard set of categories for
+# our project, including which level of development
+# we're at, who our intended audience is, which
+# license we're using, etc.
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.8",
+    "Topic :: Scientific/Engineering",
+]
+```
+
+### `wheels`
+
+When we install packages using `pip`, it first creates a 'wheel' file. For example
+
+```bash
+$ cd epi_models
+$ pip install .
+```
+
+```result
+... installs dependencies ...
+
+Building wheels for collected packages: epi-models
+  Building wheel for epi-models (pyproject.toml) ... done
+  Created wheel for epi-models: filename=epi_models-0.1.0-py3-none-any.whl size=5378 sha256=005bcad72e7f6cc773f4180960e402e3bdbdf0fcb6fb683a019d9521775edfc8
+  Stored in directory: /tmp/pip-ephem-wheel-cache-69r0h48p/wheels/d9/4d/ac/bbc1437fd83635787dd0fb8c3df8da61fc7b57f6eaa2b0d17b
+Successfully built epi-models
+Installing collected packages: epi-models
+Successfully installed epi-models-0.1.0
+```
+
+The installation goes through several steps:
+
+- `pip` analyses our package and creates a `*.whl` file.
+- The `*.whl` file is stored in a temporary directory.
+- The package is installed to our system from the `*.whl` file.
+
+After installation, we can find our installed package at
+`/path/to/my/env/lib/python3.8/site-packages/epi_models`, and within we'll find that
+every file has been compiled to Python bytecode, contained within `__pycache__`
+directories:
+
+```bash
+$ ls /path/to/my/env/lib/python3.8/site-packages/epi_models
+```
+
+```result
+__init__.py __main__.py models plotting __pycache__
+```
+
+```bash
+$ ls /path/to/my/env/lib/python3.8/site-packages/epi_models/__pycache__
+```
+
+```result
+__init__.cpython-38.pyc __main__.cpython-38.pyc
+```
+
+Python bytecode is a simpler and lower level language that is understood by the Python
+Virtual Machine (PVM). The Python interpretter always converts our code to bytecode
+before running it, and Python will also compile modules to bytecode when we `import`
+them. By precompiling our modules, it will be much faster to import and run them.
+
+So what is a wheel file, and how does it help with this process?
+
+A wheel is a standard package distribution format, defined in [PEP 427][PEP 427]. It
+is essentially a `*.zip` file containing our package contents with a descriptive name.
+When we installed our package above it created the following wheel file:
+
+```
+epi_models-0.1.0-py3-none-any.whl
+```
+
+The filename has seveal components separated by hyphens. In order, these are:
+
+- The package name
+- The package version
+- Language implementation, e.g. `py3`, `py27`, `py2`. Packages that are compatible with
+  any Python version will be `py2.py3`. Packages that are only compatible with a
+  particular Python implementation, such as CPython, may be listed `cpy38`.
+- The ABI tag, which stands for 'Application Binary Interface'. This specifies the
+  binary compatibility of the CPython API, e.g. `abi3`. This won't be relevant unless
+  you're distributing compiled extensions written in C, and will be `none` if your
+  package is pure Python. This is beyond the scope of these lessons.
+- Platform tag, which specifies which operating system your package is compatible with.
+  `any` means it will run on Windows, Mac or Linux, while it may say something like
+  `macosx_10_9_x86_64` if it includes compiled C extensions for Mac OSX 10.9 on an
+  x86_64 architecture. The `manylinux` tag encompasses many different popular Linux
+  distros.
+
+When we upload our package to PyPI, we will do so in the form of a wheel file, which
+contains all Python files in our package along with any compiled binaries for extensions
+written in C. When a wheel file is installed, Python files are compiled to bytecode, and
+the package is installed to the `site-packages` of our environment.
+
+### `build` and `twine`
+
+So how do we create a wheel file to upload? The standard tool used to create wheel files
+is `build`:
+
+```bash
+$ pip install build
+```
+
+As we already have a `pyproject.toml`, `build` has everything it needs to create a
+wheel file. It can be called simply using
+
+```bash
+$ python3 -m build
+```
+
+This will create a new directory `.dist/` containing the following:
+
+<code>
+&#128193; dist<br>
+|<br>
+|\_\_\_\_&#128220; epi_models-0.1.0-py3-none-any.whl<br>
+|\_\_\_\_&#128220; epi_models-0.1.0.tar.gz<br>
+</code>
+
+We can see the contents of the `.whl` file by unzipping it:
+
+```bash
+$ cd dist
+$ unzip dist/epi_models-0.1.0-py3-none-any.whl
+```
+
+We'll see that it contains our package along with a second directory
+`epi_models-0.1.0.dist-info`, which contains package metadata such as our license
+and README file. Note that we should remove the unzipped directories before the upload
+stage.
+
+The second file `build` created is a `.tar.gz` file -- a gzip compressed tarball. This
+is a 'source distribution', which is used as a backup by `pip` if it can't find a
+suitable wheel file to install.
+
+The tool for uploading our package to PyPI is `twine`:
+
+```bash
+$ pip install twine
+```
+
+We can check that our package is well-formed by running `twine check`:
+
+```bash
+$ twine check dist/*
+```
+
+If this returns that the package is okay, we can test the distribution of our package
+by uploading to TestPyPI:
+
+```bash
+$ twine upload --repository testpypi dist/*
+```
+
+After checking that everything looks right on TestPyPI, we may proceed with installing
+our package to PyPI:
+
+```bash
+$ twine upload dist/*
+```
+
+That's all we need! Users will then be able to install our package to any machine
+by calling the following:
+
+```bash
+$ pip install epi_models
+```
+
+Similarly, it can be included as a dependency to other Python projects:
+
+```toml
+# file: pyproject.toml
+
+[project]
+dependencies = [
+    "epi_models",
+]
+```
+
+As we continue to develop our software, we should upload each new version to PyPI.
+Our users will then be able to request a particular version:
+
+```toml
+# file: pyproject.toml
+
+[project]
+dependencies = [
+    "epi_models ~= 1.2",
+]
+```
 
 ### Automating Package Publishing with GitHub Actions
 
+We saw earlier how to ensure that the version of our package was stored only in the
+Git tags. We can similarly set up our GitHub project to automatically publish our
+package whenever we make a new release. We can use GitHub Actions for this, which is a
+service used for continuous integration. It can achieve tasks such as:
+
+- Automatically run tests on a variety of platforms each time a new commit is pushed
+  or version is published.
+- Enforce a code style automatically.
+- Publish work on each release.
+
+GitHub Actions are controlled using a YAML file. Though the full specification is beyond
+the scope of this course, the following file will cause GitHub to automatically upload
+our package to PyPI with each new release:
+
+```yaml
+# Provide a name for the workflow
+name: Upload Python Package
+
+# Tell GitHub when to run the action
+# This will run every time a new release is published
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    # Run the workflow on the latest Ubuntu version
+    runs-on: ubuntu-latest
+    steps:
+      # This will checkout our GitHub project and enter
+      # the directory
+      - uses: actions/checkout@v2
+      # This will set up a Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      # Here we update pip to the latest version and
+      # install 'build'. We won't need 'twine' here.
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build
+      # Here we run build to create a wheel and a
+      # .tar.gz source distribution.
+      - name: Build package
+        run: python -m build --sdist --wheel
+      # Finally, we use a pre-defined action to publish
+      # our package in place of twine.
+      - name: Publish package
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
+```
+
+This should be included in the file `.github/workflows/publish.yml`, where the `.github`
+directory is located at the top level of our project (at the same level as
+`pyproject.toml`). In order for this to work, we'll need to set up a
+`PYPI_DEPLOYMENT_TOKEN` in the 'secrets' section of our project's GitHub settings.
+A guide to doing this may be found on the [PyPI website][pypi_token]. Note that you
+should _never_ push sensitive information such as passwords directly to your GitHub
+projects!
+
+With this set up, our projects will be automatically pushed to PyPI each time we 
+make a new release.
+
 ::::::::::::::::::::::::::::::::::::: keypoints
 
-- hello
-- world
+- Versioning our projects is important so that our users know what's compatible.
+- GitHub is a powerful service for hosting our projects and managing their development.
+- Each new release of our packages should be uploaded to PyPI using `build` and `twine`.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
