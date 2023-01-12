@@ -953,9 +953,14 @@ This should be included in the file `.github/workflows/publish.yml`, where the `
 directory is located at the top level of our project (at the same level as
 `pyproject.toml`). In order for this to work, we'll need to set up a
 `PYPI_DEPLOYMENT_TOKEN` in the 'secrets' section of our project's GitHub settings.
-A guide to doing this may be found on the [PyPI website][pypi_token]. Note that you
-should _never_ push sensitive information such as passwords directly to your GitHub
-projects!
+A guide to doing this may be found on the [PyPI website][pypi_token].
+
+:::::::::::::::::::::: callout
+
+You should _never_ push sensitive information such as passwords directly to
+your GitHub projects!
+
+::::::::::::::::::::::::::::::
 
 With this set up, our projects will be automatically pushed to PyPI each time we 
 make a new release.

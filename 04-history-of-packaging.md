@@ -44,7 +44,7 @@ provide some context to the often confusing information out there, and to help i
 you ever find yourself working on a project that hasn't yet updated to the latest
 systems.
 
-### In the beginning, there was `distutils`
+## In the beginning, there was `distutils`
 
 First introduced with Python 2.2, `distutils` is the official Python package that allows
 users to install and distribute their own packages. However, it was
@@ -80,11 +80,11 @@ To use `distutils` to install a package, the user would create a file `setup.py`
 \ \ \ \ \ |\ \ \ \ |\_\_\_\_&#128220; utils.py<br>
 \ \ \ \ \ |<br>
 \ \ \ \ \ |\_\_\_\_&#128193; plotting<br>
-\ \ \ \ \ \ \ \ \ |<br>
-\ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
-\ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SIR.py<br>
-\ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SEIR.py<br>
-\ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SIS.py<br>
+\ \ \ \ \ \ \ \ \ \ |<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SIR.py<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SEIR.py<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SIS.py<br>
 </code>
 
 Note that the project directory name is the same as the package name -- this is a common
@@ -199,7 +199,7 @@ It is not recommended to use `distutils` for new projects, and it will be remove
 standard Python distributions starting from version 3.12. Listing dependencies in
 `requirements.txt` is also no longer required.
 
-### `setuptools` and `egg` files
+## `setuptools` and `egg` files
 
 `setuptools` is not part of the core Python library, but it has become the _de facto_
 standard build tool. Originally, it added extra functionality on top of `distutils`
@@ -297,7 +297,7 @@ $ pip uninstall epi_models
 ```
 
 
-### Using `pip` instead of running `setup.py`
+## Using `pip` instead of running `setup.py`
 
 The direct usage of `setup.py` is now discouraged. After installing a package using
 `python3 setup.py install`, there is no equivalent command to uninstall. It also tends
@@ -363,7 +363,7 @@ potentially dangerous (or even malicious) code that may not be apparent at first
 `distutils` had also supported an alternative method of specifying package metadata
 using an additional file `setup.cfg`, and in time this became the preferred method.
 
-### `setup.cfg` as a 'Declarative Config'
+## `setup.cfg` as a 'Declarative Config'
 
 Instead of using `setup.py` to define our package metadata, it is preferable to instead
 use the file `setup.cfg`. Instead of being a runnable Python module, this file is
@@ -497,7 +497,7 @@ keep the directory structure of your projects as close as possible to that of th
 package. See the [documentation for `setuptools` keywords][setuptools-keywords] for more
 information.
 
-###  `pyproject.toml` and Circular Build Requirements
+##  `pyproject.toml` and Circular Build Requirements
 
 We saw in the previous sections that `setuptools` allows library writers to specify the
 requirements of their packages and allow users to automatically download and install
@@ -572,7 +572,7 @@ requires = [
 build-backend = "setuptools.build_meta"
 ```
 
-### Moving to `pyproject.toml`-only builds
+## Moving to `pyproject.toml`-only builds
 
 Following [PEP 517][PEP 517]/[518][PEP 518], it was realised that `pyproject.toml` and
 `setup.cfg` were both solving similar problems, although `pyproject.toml` was to be
@@ -588,7 +588,7 @@ Tools may choose to use their own synonyms for this metadata, and they may provi
 more options than the core set, but to be standards compliant they must recognise the
 metadata of [PEP 621][PEP 621] at a minimum.
 
-### The end of `setup.py`
+## The end of `setup.py`
 
 With [PEP 621][PEP 621] removing the need for `setup.cfg`, one might expect that the
 older `setup.py` could be removed too. However, `setuptools` still required this file

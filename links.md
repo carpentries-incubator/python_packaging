@@ -9,7 +9,7 @@ any links that you are not going to use.
 [PyYAML]: https://pyyaml.org/wiki/PyYAMLDocumentation
 [PEP 420]: https://peps.python.org/pep-0420/
 [PEP 427]: https://peps.python.org/pep-0427/
-[PEP 440]: https://peps.python.org/pep-0420/
+[PEP 440]: https://peps.python.org/pep-0440/
 [PEP 508]: https://peps.python.org/pep-0508/
 [PEP 517]: https://peps.python.org/pep-0517/
 [PEP 518]: https://peps.python.org/pep-0518/
