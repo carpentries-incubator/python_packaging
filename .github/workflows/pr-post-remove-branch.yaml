@@ -11,8 +11,8 @@ jobs:
     name: "Delete branch from Pull Request"
     runs-on: ubuntu-latest
     if: >
-      ${{ github.event.workflow_run.event == 'pull_request' &&
-      github.event.workflow_run.conclusion == 'success' }}
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success'
     steps:
       - name: 'Download artifact'
         uses: carpentries/actions/download-workflow-artifact@main
@@ -23,7 +23,7 @@ jobs:
         id: get-pr
         run: |
           unzip pr.zip
-          echo "::set-output name=NUM::$(<./NUM)"
+          echo "NUM=$(<./NUM)" >> $GITHUB_OUTPUT
       - name: 'Remove branch'
         uses: carpentries/actions/remove-branch@main
         with:
