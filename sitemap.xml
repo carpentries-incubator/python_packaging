@@ -1,63 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://carpentries.github.io/workbench-template-rmd/01-introduction.html</loc>
+    <loc>https://LiamPattinson.github.io/python-packaging/01-introduction.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-rmd/CODE_OF_CONDUCT.html</loc>
+    <loc>https://LiamPattinson.github.io/python-packaging/01-scripts-and-modules.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-rmd/LICENSE.html</loc>
+    <loc>https://LiamPattinson.github.io/python-packaging/02-packages.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-rmd/aio.html</loc>
+    <loc>https://LiamPattinson.github.io/python-packaging/03-building-and-installing.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-rmd/images.html</loc>
+    <loc>https://LiamPattinson.github.io/python-packaging/04-history-of-packaging.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-rmd/index.html</loc>
+    <loc>https://LiamPattinson.github.io/python-packaging/05-publishing.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-rmd/instructor/01-introduction.html</loc>
+    <loc>https://LiamPattinson.github.io/python-packaging/CODE_OF_CONDUCT.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-rmd/instructor/CODE_OF_CONDUCT.html</loc>
+    <loc>https://LiamPattinson.github.io/python-packaging/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-rmd/instructor/LICENSE.html</loc>
+    <loc>https://LiamPattinson.github.io/python-packaging/TODO.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-rmd/instructor/aio.html</loc>
+    <loc>https://LiamPattinson.github.io/python-packaging/aio.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-rmd/instructor/images.html</loc>
+    <loc>https://LiamPattinson.github.io/python-packaging/images.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-rmd/instructor/index.html</loc>
+    <loc>https://LiamPattinson.github.io/python-packaging/index.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-rmd/instructor/instructor-notes.html</loc>
+    <loc>https://LiamPattinson.github.io/python-packaging/instructor/01-introduction.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-rmd/instructor/key-points.html</loc>
+    <loc>https://LiamPattinson.github.io/python-packaging/instructor/01-scripts-and-modules.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-rmd/instructor/keypoints.html</loc>
+    <loc>https://LiamPattinson.github.io/python-packaging/instructor/02-packages.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-rmd/instructor/profiles.html</loc>
+    <loc>https://LiamPattinson.github.io/python-packaging/instructor/03-building-and-installing.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-rmd/instructor-notes.html</loc>
+    <loc>https://LiamPattinson.github.io/python-packaging/instructor/04-history-of-packaging.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-rmd/key-points.html</loc>
+    <loc>https://LiamPattinson.github.io/python-packaging/instructor/05-publishing.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-rmd/keypoints.html</loc>
+    <loc>https://LiamPattinson.github.io/python-packaging/instructor/CODE_OF_CONDUCT.html</loc>
   </url>
   <url>
-    <loc>https://carpentries.github.io/workbench-template-rmd/profiles.html</loc>
+    <loc>https://LiamPattinson.github.io/python-packaging/instructor/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://LiamPattinson.github.io/python-packaging/instructor/TODO.html</loc>
+  </url>
+  <url>
+    <loc>https://LiamPattinson.github.io/python-packaging/instructor/aio.html</loc>
+  </url>
+  <url>
+    <loc>https://LiamPattinson.github.io/python-packaging/instructor/images.html</loc>
+  </url>
+  <url>
+    <loc>https://LiamPattinson.github.io/python-packaging/instructor/index.html</loc>
+  </url>
+  <url>
+    <loc>https://LiamPattinson.github.io/python-packaging/instructor/instructor-notes.html</loc>
+  </url>
+  <url>
+    <loc>https://LiamPattinson.github.io/python-packaging/instructor/key-points.html</loc>
+  </url>
+  <url>
+    <loc>https://LiamPattinson.github.io/python-packaging/instructor/keypoints.html</loc>
+  </url>
+  <url>
+    <loc>https://LiamPattinson.github.io/python-packaging/instructor/profiles.html</loc>
+  </url>
+  <url>
+    <loc>https://LiamPattinson.github.io/python-packaging/instructor-notes.html</loc>
+  </url>
+  <url>
+    <loc>https://LiamPattinson.github.io/python-packaging/key-points.html</loc>
+  </url>
+  <url>
+    <loc>https://LiamPattinson.github.io/python-packaging/keypoints.html</loc>
+  </url>
+  <url>
+    <loc>https://LiamPattinson.github.io/python-packaging/profiles.html</loc>
   </url>
 </urlset>
