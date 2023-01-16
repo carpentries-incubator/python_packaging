@@ -1,7 +1,10 @@
 from argparse import ArgumentParser
-import yaml
-from .models import SIR_model, SEIR_model, SIS_model
-from .plotting import plot_SIR_model, plot_SEIR_model, plot_SIS_model
+from .plotting.plot_SIR import main as SIR_main
+from .plotting.plot_SEIR import main as SEIR_main
+from .plotting.plot_SIS import main as SIS_main
+from .plotting.plot_SIR import _add_arguments as add_SIR_arguments
+from .plotting.plot_SIR import _add_arguments as add_SEIR_arguments
+from .plotting.plot_SIR import _add_arguments as add_SIS_arguments
 
 # Create ArgumentParser, which can read inputs from the command line
 parser = ArgumentParser(
@@ -9,28 +12,26 @@ parser = ArgumentParser(
     description="Tool for solving epidemiology models",
 )
 
-# Add arguments that the user must supply
-parser.add_argument("model")
-parser.add_argument("input_file")
+# Set up subparsers
+subparsers = parser.add_subparsers(required=True)
 
-# Read command line args
+# Add subcommand for each model
+SIR_parser = subparsers.add_parser("SIR")
+SEIR_parser = subparsers.add_parser("SEIR")
+SIS_parser = subparsers.add_parser("SIS")
+
+# Setup each parser
+add_SIR_arguments(SIR_parser)
+add_SEIR_arguments(SEIR_parser)
+add_SIS_arguments(SIS_parser)
+
+# Ensure each parser knows which function to
+# call. set_defaults can be used to set a new
+# arg which isn't set on the command line.
+SIR_parser.set_defaults(main=SIR_main)
+SEIR_parser.set_defaults(main=SEIR_main)
+SIS_parser.set_defaults(main=SIS_main)
+
+# Extract command line arguments and run
 args = parser.parse_args()
-
-# Get data from input file
-with open(args.input_file, "r") as f:
-    data = yaml.load(f, yaml.Loader)
-
-# Run models and plot
-# Note: In real code, you should validate the input data and
-# raise helpful errors if something goes wrong!
-if args.model == "SIR":
-    S, I, R = SIR_model(**data)
-    plot_SIR_model(S, I, R)
-elif args.model == "SEIR":
-    S, E, I, R = SEIR_model(**data)
-    plot_SEIR_model(S, E, I, R)
-elif args.model == "SIS":
-    S, E, I, R = SIS_model(**data)
-    plot_SIS_model(S, E, I, R)
-else:
-    raise ValueError(f"The model '{args.model}' is not recognised.")
+args.main(args)

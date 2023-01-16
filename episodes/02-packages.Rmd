@@ -22,7 +22,7 @@ exercises: 0
 
 ## Packages
 
-In the previous episode, we showed how to convert a simple Python script into a reusable
+In the previous lesson, we showed how to convert a simple Python script into a reusable
 module by bundling up different parts of the script into functions. However, as our
 project grows, we may find it beneficial to spread the functionality of our project
 over multiple files. Separating logically distinct units of code into their own files
@@ -30,7 +30,7 @@ will help others to understand how our project works, and it allows us to contro
 features of our code are exposed to users at the top level.
 
 The primary tool for organising a project spread across multiple files is the _package_.
-Packages a very similar to modules, and they are defined by the directory structure we
+Packages are very similar to modules, and they are defined by the directory structure we
 use to organise our files.
 
 As an example of how to use packages, we'll return to the SIR model introduced in the
@@ -48,19 +48,21 @@ directory structure:
 <!-- File unicode &#128220; -->
 
 <code>
-&#128230; epi_models<br>
+&#128193; my_project<br>
 |<br>
-|\_\_\_\_&#128220; \_\_init\_\_.py<br>
-|\_\_\_\_&#128220; SIR.py<br>
-|\_\_\_\_&#128220; SEIR.py<br>
-|\_\_\_\_&#128220; SIS.py<br>
+|\_\_\_\_&#128230; epi_models<br>
+\ \ \ \ \ |<br>
+\ \ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
+\ \ \ \ \ |\_\_\_\_&#128220; SIR.py<br>
+\ \ \ \ \ |\_\_\_\_&#128220; SEIR.py<br>
+\ \ \ \ \ |\_\_\_\_&#128220; SIS.py<br>
 </code>
 
 Each model has its own file under the directory `epi_models`, and we've also added a
-new file `__init__.py`. The presence of an `__init__.py` file marks the directory as
-a package, and the contents of this file are run when the package or any modules within
-are imported. For now, this file can be left empty -- we'll explain how to use this file
-to set up and control our package in the next section.
+new file `__init__.py`. The presence of an `__init__.py` file marks the `epi_models`
+directory as a package, and the contents of this file are run when the package or any
+modules within are imported. For now, this file can be left empty -- we'll explain how
+to use this file to set up and control our package in the next section.
 
 :::::::::::::::::::::::::::::: discussion
 
@@ -78,8 +80,8 @@ for the package clearer.
 
 ::::::::::::::::::::::::::::::::::::::
 
-To import our functions, we can now enter the directory that contains the package
-`epi_models`, and call the following in an interactive session:
+To import our functions, we can now enter the `my_project` directory and call the
+following in an interactive session:
 
 ```python
 >>> import epi_models.SIR
@@ -89,7 +91,7 @@ To import our functions, we can now enter the directory that contains the packag
 ```
 
 Having to type the package name and the module name every time can be inconvenient, so
-it's a good idea to use the alternative `import`-ing styles we discussed in the previous
+it's a good idea to use the alternative `import` styles we discussed in the previous
 lesson:
 
 ```python
@@ -110,23 +112,25 @@ we may decide to move these into their own directories. To do this, we can defin
 _sub-packages_ within our top-level package:
 
 <code>
-&#128230; epi\_models<br>
+&#128193; my_project<br>
 |<br>
-|\_\_\_\_&#128220; \_\_init\_\_.py<br>
-|<br>
-|\_\_\_\_&#128193; models<br>
-|\ \ \ \ |<br>
-|\ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
-|\ \ \ \ |\_\_\_\_&#128220; SIR.py<br>
-|\ \ \ \ |\_\_\_\_&#128220; SEIR.py<br>
-|\ \ \ \ |\_\_\_\_&#128220; SIS.py<br>
-|<br>
-|\_\_\_\_&#128193; plotting<br>
+|\_\_\_\_&#128230; epi\_models<br>
 \ \ \ \ \ |<br>
 \ \ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
-\ \ \ \ \ |\_\_\_\_&#128220; plot\_SIR.py<br>
-\ \ \ \ \ |\_\_\_\_&#128220; plot\_SEIR.py<br>
-\ \ \ \ \ |\_\_\_\_&#128220; plot\_SIS.py<br>
+\ \ \ \ \ |<br>
+\ \ \ \ \ |\_\_\_\_&#128193; models<br>
+\ \ \ \ \ |\ \ \ \ |<br>
+\ \ \ \ \ |\ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
+\ \ \ \ \ |\ \ \ \ |\_\_\_\_&#128220; SIR.py<br>
+\ \ \ \ \ |\ \ \ \ |\_\_\_\_&#128220; SEIR.py<br>
+\ \ \ \ \ |\ \ \ \ |\_\_\_\_&#128220; SIS.py<br>
+\ \ \ \ \ |<br>
+\ \ \ \ \ |\_\_\_\_&#128193; plotting<br>
+\ \ \ \ \ \ \ \ \ \ |<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SIR.py<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SEIR.py<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SIS.py<br>
 </code>
 
 Note that each sub-directory, and hence sub-package, requires its own `__init__.py`.
@@ -145,24 +149,26 @@ to import other modules using _relative imports_. To show how these work, we'll 
 an extra file `utils.py` inside the `models` subpackage.
 
 <code>
-&#128230; epi\_models<br>
+&#128193; my_project<br>
 |<br>
-|\_\_\_\_&#128220; \_\_init\_\_.py<br>
-|<br>
-|\_\_\_\_&#128193; models<br>
-|\ \ \ \ |<br>
-|\ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
-|\ \ \ \ |\_\_\_\_&#128220; SIR.py<br>
-|\ \ \ \ |\_\_\_\_&#128220; SEIR.py<br>
-|\ \ \ \ |\_\_\_\_&#128220; SIS.py<br>
-|\ \ \ \ |\_\_\_\_&#128220; utils.py<br>
-|<br>
-|\_\_\_\_&#128193; plotting<br>
+|\_\_\_\_&#128230; epi\_models<br>
 \ \ \ \ \ |<br>
 \ \ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
-\ \ \ \ \ |\_\_\_\_&#128220; plot\_SIR.py<br>
-\ \ \ \ \ |\_\_\_\_&#128220; plot\_SEIR.py<br>
-\ \ \ \ \ |\_\_\_\_&#128220; plot\_SIS.py<br>
+\ \ \ \ \ |<br>
+\ \ \ \ \ |\_\_\_\_&#128193; models<br>
+\ \ \ \ \ |\ \ \ \ |<br>
+\ \ \ \ \ |\ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
+\ \ \ \ \ |\ \ \ \ |\_\_\_\_&#128220; SIR.py<br>
+\ \ \ \ \ |\ \ \ \ |\_\_\_\_&#128220; SEIR.py<br>
+\ \ \ \ \ |\ \ \ \ |\_\_\_\_&#128220; SIS.py<br>
+\ \ \ \ \ |\ \ \ \ |\_\_\_\_&#128220; utils.py<br>
+\ \ \ \ \ |<br>
+\ \ \ \ \ |\_\_\_\_&#128193; plotting<br>
+\ \ \ \ \ \ \ \ \ \ |<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SIR.py<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SEIR.py<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SIS.py<br>
 </code>
 
 This could contain utility functions that may be useful within `SIR.py`, `SEIR.py`,
@@ -186,17 +192,22 @@ from ..models.SIR import SIR_model
 Here, the double dots indicate that we should look one package higher than the current
 sub-package.
 
+Note that relative imports only work within packages, so they should be avoided in our
+plain scripts.
+
+
 ## The `__init__.py` file
 
 `__init__.py` files do not need to contain any code to mark a directory as a
 Python package, but if we wish, we can use them to control what is or isn't visible at
-package-level scope, or to perform any additional setup steps.
+package-level scope, or to perform any additional setup.
 
 Consider the `__init__.py` file in the `models` directory. Let's add the following
 lines:
 
 ```python
 # file: epi_models/models/__init__.py
+
 from .SIR import SIR_model
 from .SEIR import SEIR_model
 from .SIS import SIS_model
@@ -228,10 +239,10 @@ functions:
 ```
 
 When writing `__init__.py` files, it is important to consider what we _don't_ import.
-Above, we did not import any functions from `utils.py`, as these are only intended
+Note that we did not import any functions from `utils.py`, as these are only intended
 for use within the `models` sub-package, and there's no need to expose these
 implementation details to the user. A well crafted `__init__.py` allows us to define a
-public API while keeping the internals private, which makes it much easier to develop
+_public API_ while keeping the internals private, which makes it much easier to develop
 our project further without breaking things for the end-user. The following sub-section
 introduces the `__all__` variable, which allows us to more rigorously define a public
 API.
@@ -290,11 +301,10 @@ NameError: name 'SIS_model' is not defined
 ### 'Private' variables in Python
 
 It is common for Python programmers to mark objects as private by prefixing their
-names with an underscore, i.e. `_private_variable`, `_PrivateClass`, etc. These are
-still accessible to the end-user, so it should be considered more a warning than a hard
-rule. For an added layer of protection, variables set in class instances with two
-underscores, i.e. `self.__x`, will have their names mangled when viewed from outside
-the class, but they will still be locatable and modifiable to a determined individual.
+names with an underscore, e.g. `_private_variable`, `_PrivateClass`, etc. For an added
+layer of protection, variables set in class instances with two underscores, i.e.
+`self.__x`, will have their names mangled when viewed from outside the class, but they
+will still be locatable and modifiable by a determined individual.
 
 Python programmers will also sometimes use a _trailing_ underscore, and this is commonly
 used to avoid a name clash with a built-in object, e.g.:
@@ -303,6 +313,10 @@ used to avoid a name clash with a built-in object, e.g.:
 >>> lambda = 10 # Fails! Raises SyntaxError
 >>> lambda_ = 10 # Works just fine
 ```
+
+A combination of the private naming convention, well chosen `__all__` variables, and
+thorough documentation is more than sufficient to specify a public API.
+
 ::::::::::::::::::::::::::::::
 
 ## Script-like Packages and the `__main__.py` file
@@ -311,11 +325,12 @@ In the previous lesson, we introduced the `if __name__ == "__main__"` idiom, and
 discussed how to use this to maintain script-like behaviour in our reusable modules.
 The good news is that this is still possible when we upgrade our modules to packages.
 For instance, let's say that the file `epi_models/plotting/plot_SIR` contains the
-following:
+following, which excludes the enhancements added in the 'extra' section last lesson:
 
 ```python
+# file: plot_SIR.py
+
 import matplotlib.pyplot as plt
-from ..models.SIR import SIR_model
 
 def plot_SIR_model(S, I, R):
     """
@@ -341,7 +356,6 @@ def plot_SIR_model(S, I, R):
     plt.ylabel("Population")
     plt.legend()
     plt.show()
-
 
 if __name__ == "__main__":
     S, I, R = SIR_model(
@@ -377,95 +391,419 @@ sub-package/module, and we don't include `.py` at the end.
 We can also add script-like behaviour to packages by adding a `__main__.py` file:
 
 <code>
-&#128230; epi\_models<br>
+&#128193; my_project<br>
 |<br>
-|\_\_\_\_&#128220; \_\_init\_\_.py<br>
-|\_\_\_\_&#128220; \_\_main\_\_.py<br>
-|<br>
-|\_\_\_\_&#128193; models<br>
-|\ \ \ \ |<br>
-|\ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
-|\ \ \ \ |\_\_\_\_&#128220; SIR.py<br>
-|\ \ \ \ |\_\_\_\_&#128220; SEIR.py<br>
-|\ \ \ \ |\_\_\_\_&#128220; SIS.py<br>
-|\ \ \ \ |\_\_\_\_&#128220; utils.py<br>
-|<br>
-|\_\_\_\_&#128193; plotting<br>
+|\_\_\_\_&#128230; epi\_models<br>
 \ \ \ \ \ |<br>
 \ \ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
-\ \ \ \ \ |\_\_\_\_&#128220; plot\_SIR.py<br>
-\ \ \ \ \ |\_\_\_\_&#128220; plot\_SEIR.py<br>
-\ \ \ \ \ |\_\_\_\_&#128220; plot\_SIS.py<br>
+\ \ \ \ \ |\_\_\_\_&#128220; \_\_main\_\_.py<br>
+\ \ \ \ \ |<br>
+\ \ \ \ \ |\_\_\_\_&#128193; models<br>
+\ \ \ \ \ |\ \ \ \ |<br>
+\ \ \ \ \ |\ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
+\ \ \ \ \ |\ \ \ \ |\_\_\_\_&#128220; SIR.py<br>
+\ \ \ \ \ |\ \ \ \ |\_\_\_\_&#128220; SEIR.py<br>
+\ \ \ \ \ |\ \ \ \ |\_\_\_\_&#128220; SIS.py<br>
+\ \ \ \ \ |\ \ \ \ |\_\_\_\_&#128220; utils.py<br>
+\ \ \ \ \ |<br>
+\ \ \ \ \ |\_\_\_\_&#128193; plotting<br>
+\ \ \ \ \ \ \ \ \ \ |<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SIR.py<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SEIR.py<br>
+\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SIS.py<br>
 </code>
 
 As the module name of this file is already `__main__`, there's no need to use the
 `if __name__ == "__main__"` idiom, and we may write this file as if it were a simple
-script. Consider the following example `__main__.py` file, which uses `argparse` to
-read arguments from the command line, and uses the library [PyYAML][PyYAML] to read
-YAML files to determine inputs (it isn't necessary to understand how these tools work
-at this stage -- this is simply an example of what a more advanced scripting interface
-might look like):
+script. If we wish to run the scripting interface from `plot_SIR.py`, we can do so by
+slightly refactoring `plot_SIR.py` such that the contents of the
+`if __name__ == "__main__"` section are wrapped up in a function `main()`:
 
 ```python
-from argparse import ArgumentParser
-import yaml
-from .models import SIR_model, SEIR_model, SIS_model
-from .plotting import plot_SIR_model, plot_SEIR_model, plot_SIS_model
+# file: plot_SIR.py
 
-# Create ArgumentParser, which can read inputs from the command line
+def main():
+    S, I, R = SIR_model(
+        pop_size=8000000, beta=0.5, gamma=0.1, days=150, I_0=10
+    )
+    plot_SIR_model(S, I, R)
+
+if __name__ == "__main__":
+    main()
+```
+
+This can then be reused in `__main__.py`:
+
+```python
+# file: __main__.py
+
+from plotting.plot_SIR import main
+main()
+```
+
+If we add a different scripting interface for each model type, we can use `sys.argv` to
+read the user's model choice from the command line:
+
+```python
+# file: __main__.py
+
+import sys
+from plotting.plot_SIR import main as SIR_main
+from plotting.plot_SEIR import main as SEIR_main
+from plotting.plot_SIS import main as SIS_main
+
+# Read model type from the command line
+model = sys.argv[1]
+
+# Run the chosen model
+if model == "SIR":
+    SIR_main()
+elif model == "SEIR":
+    SEIR_main()
+elif model == "SIS":
+    SIS_main()
+else:
+    raise RuntimeError(
+        "First cmd line arg should be 'SIR', 'SEIR', or 'SIS'"
+    )
+```
+
+If you do intend to add scripting behaviour to your packages, it is highly recommended
+to read the 'extra' sections in this lesson and the previous one, as `argparse` allows
+you to build much more sophisticated command line interfaces.
+
+## Extra: Advanced `argparse` in `__main__.py`
+
+Let's return to `plot_SIR.py`, and apply the enhancements discussed in the 'extra'
+sections last lesson:
+
+```python
+import matplotlib.pyplot as plt
+from argparse import ArgumentParser
+from ..models.SIR import SIR_model
+
+def plot_SIR_model(S, I, R, ax=None, save_to=None, show=False):
+    """
+    Plot the results of a SIR simulation.
+
+    Parameters
+    ----------
+    S: List[float]
+        Number of susceptible people on each day.
+    I: List[float]
+        Number of infected people on each day.
+    R: List[float]
+        Number of recovered people on each day.
+    ax: Optional[plt.Axes], default None
+        Axes object on which to create the plot.
+        A new Axes is created if this is None.
+    save_to: Optional[str], default None
+        Name of the file to save the plot to.
+        Does not save if None.
+    show: bool, default False
+        If True, call plt.show() on completion.
+
+    Returns
+    -------
+    plt.Axes
+        The axes object the results have been plotted to.
+    """
+    # Use plt.subplots to create Figure and Axes objects
+    # if one is not provided.
+    if ax is None:
+        fig, ax = plt.subplots()
+
+    # Create plot
+    ax.plot(range(len(S)), S, label="S")
+    ax.plot(range(len(I)), I, label="I")
+    ax.plot(range(len(R)), R, label="R")
+    ax.set_xlabel("Time /days")
+    ax.set_ylabel("Population")
+    ax.legend()
+
+    # Optionally save the figure
+    if save_to is not None:
+        fig = ax.get_figure()
+        fig.savefig(save_to)
+
+    # Optionally show the figure
+    if show:
+        plt.show()
+
+    return ax
+
+def main():
+    # Create an argument parser object. We can provide
+    # some info about our program here.
+    parser = ArgumentParser(
+        prog="SIR_model",
+        description="Solves SIR model and creates a plot",
+    )
+
+    # Add each argument to the parser. We can specify
+    # the types of each argument. Optional arguments
+    # should have single character names with a hypen,
+    # or longer names with a double hyphen.
+    parser.add_argument(
+        "-p", "--pop_size", type=int, default=10000000,
+        help="Total population size",
+    )
+    parser.add_argument(
+        "-b", "--beta", type=float, default=0.5,
+        help="Average no. of new infections per infected person per day",
+    )
+    parser.add_argument(
+        "-g", "--gamma", type=float, default=0.1,
+        help="Inverse of average number of days taken to recover",
+    )
+    parser.add_argument(
+        "-d", "--days", type=int, default=150,
+        help="Number of days to run the simulation",
+    )
+    parser.add_argument(
+        "-i", "--i0", type=int, default=10,
+        help="Number of infected people at the start of the simulation",
+    )
+    parser.add_argument(
+        "-o", "--output", default="SIR_model.png",
+        help="Output file to save plot to",
+    )
+
+    # Get each argument from the command line
+    args = parser.parse_args()
+
+    # Run our code
+    S, I, R = SIR_model(
+        pop_size=args.pop_size,
+        beta=args.beta,
+        gamma=args.gamma,
+        days=args.days,
+        I_0=args.i0,
+    )
+    plot_SIR_model(S, I, R, save_to=args.output)
+
+if __name__ == "__main__":
+    main()
+```
+
+This will work if we run `python3 -m epi_models.plotting.plot_SIR`, but it won't work
+if we try to run it using `python3 -m epi_models SIR`, as we need to read from the
+command line in `__main__.py` in order to decide which model to run, but `plot_SIR.py`
+will also try to read from the command line to determine its own setup. Inevitably,
+each scripting interface will expect a different set of arguments. The solution comes in
+the form of `subparsers`. We'll show how these work using the following simple example:
+
+```python
+# file: subparsers.py
+
+from argparse import ArgumentParser
+
+parser = ArgumentParser(description="A test program")
+
+# set up subparsers, make them required
+subparsers = parser.add_subparsers(required=True)
+
+# add two subcommands: cmd1 and cmd2
+parser1 = subparsers.add_parser("cmd1")
+parser2 = subparsers.add_parser("cmd2")
+
+# add some args to each
+parser1.add_argument("foo")
+parser1.add_argument("bar")
+parser2.add_argument("baz")
+
+# parse args and print what we get
+args = parser.parse_args()
+print(args)
+```
+
+If we try running this with no arguments, it breaks! If we check how it should work
+using `--help`:
+
+```bash
+$ python3 subparsers.py --help
+```
+```result
+usage: subparsers.py [-h] {cmd1,cmd2} ...
+
+A test program
+
+positional arguments:
+  {cmd1,cmd2}
+
+optional arguments:
+  -h, --help   show this help message and exit
+```
+
+We therefore need to supply either `cmd1` or `cmd2` as the first argument. We can then
+get further info on each subcommand:
+
+```bash
+$ python3 subparsers.py cmd1 --help
+```
+```result
+usage: subparsers.py cmd1 [-h] foo bar
+
+positional arguments:
+  foo
+  bar
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+
+So what if we provide these arguments?
+
+```bash
+$ python3 subparsers.py cmd1 1 2
+```
+```result
+Namespace(bar='2', foo='1')
+```
+
+We see that `foo` and `bar` are defined within `args`, but not `baz`. Similarly:
+
+```bash
+$ python3 subparsers.py cmd2 3
+```
+```result
+Namespace(baz='3')
+```
+
+We can therefore use subparsers to set up multiple independent command line interfaces
+using the same root command. If we wished, we could even create further subparsers from
+our subparsers, leading to a nested command line interface! Something to note is that
+information about which command was chosen is _not_ contained within args; we'll show a
+workaround for this later using `set_defaults()`.
+
+Let's apply subparsers to our `epi_models` package.  First, our `main()` function
+should be split into a function that assigns arguments to an `ArgumentParser`,
+and a function that runs the code using `args`:
+
+```python
+# file: plot_SIR.py
+
+def _add_arguments(parser):
+
+    parser.add_argument(
+        "-p", "--pop_size", type=int, default=10000000,
+        help="Total population size",
+    )
+    parser.add_argument(
+        "-b", "--beta", type=float, default=0.5,
+        help="Average no. of new infections per infected person per day",
+    )
+    parser.add_argument(
+        "-g", "--gamma", type=float, default=0.1,
+        help="Inverse of average number of days taken to recover",
+    )
+    parser.add_argument(
+        "-d", "--days", type=int, default=150,
+        help="Number of days to run the simulation",
+    )
+    parser.add_argument(
+        "-i", "--i0", type=int, default=10,
+        help="Number of infected people at the start of the simulation",
+    )
+    parser.add_argument(
+        "-o", "--output", default="SIR_model.png",
+        help="Output file to save plot to",
+    )
+
+
+def main(args):
+    # Run our code
+    S, I, R = SIR_model(
+        pop_size=args.pop_size,
+        beta=args.beta,
+        gamma=args.gamma,
+        days=args.days,
+        I_0=args.i0,
+    )
+    plot_SIR_model(S, I, R, save_to=args.output)
+```
+
+The `if __name__ == "__main__"` section should be tasked with creating an
+`ArgumentParser` and coordinating everything:
+
+```python
+# file: plot_SIR.py
+
+if __name__ == "__main__":
+    parser = ArgumentParser(
+        prog="SIR_model",
+        description="Solves SIR model and creates a plot",
+    )
+    _add_arguments(parser)
+    args = parser.parse_args()
+    main(args)
+```
+
+As the `_add_arguments(parser)` function doesn't care whether it's supplied with a
+parser or a subparser, this will work just fine if we run this file directly
+using `python3 -m epi_models.plotting.plot_SIR`.
+
+A similar refactor should be applied for every other model. There is no need for
+each model to require the same command line arguments, but they should each have a
+function equivalent to `_add_arguments(parser)` and `main(args)`.
+
+We can then switch between each model in `__main__.py` using subparsers.
+The file below shows how to achieve a rich command line interface for `epi_models`:
+
+```python
+# file: __main__.py
+
+from argparse import ArgumentParser
+
+# Import each _add_arguments and main, giving each an alias
+from .plotting.plot_SIR import main as SIR_main
+from .plotting.plot_SEIR import main as SEIR_main
+from .plotting.plot_SIS import main as SIS_main
+from .plotting.plot_SIR import _add_arguments as add_SIR_arguments
+from .plotting.plot_SIR import _add_arguments as add_SEIR_arguments
+from .plotting.plot_SIR import _add_arguments as add_SIS_arguments
+
+# Create top-level ArgumentParser
 parser = ArgumentParser(
     prog="epi_models",
     description="Tool for solving epidemiology models",
 )
 
-# Add arguments that the user must supply
-parser.add_argument("model")
-parser.add_argument("input_file")
+# Set up subparsers, adding a new one for each model
+subparsers = parser.add_subparsers(required=True)
+SIR_parser = subparsers.add_parser("SIR")
+SEIR_parser = subparsers.add_parser("SEIR")
+SIS_parser = subparsers.add_parser("SIS")
 
-# Read command line args
+# Setup each subparser using each model's _add_arguments
+add_SIR_arguments(SIR_parser)
+add_SEIR_arguments(SEIR_parser)
+add_SIS_arguments(SIS_parser)
+
+# Ensure each parser knows which function to call.
+# set_defaults can be used to set a new arg which
+# isn't set on the command line.
+SIR_parser.set_defaults(main=SIR_main)
+SEIR_parser.set_defaults(main=SEIR_main)
+SIS_parser.set_defaults(main=SIS_main)
+
+# Extract command line arguments and run
 args = parser.parse_args()
-
-# Get data from input file
-with open(args.input_file, "r") as f:
-    data = yaml.load(f, yaml.Loader)
-
-# Run models and plot
-# Note: In real code, you should validate the input data and
-# raise helpful errors if something goes wrong!
-if args.model == "SIR":
-    S, I, R = SIR_model(**data)
-    plot_SIR_model(S, I, R)
-elif args.model == "SEIR":
-    S, E, I, R = SEIR_model(**data)
-    plot_SEIR_model(S, E, I, R)
-elif args.model == "SIS":
-    S, E, I, R = SIS_model(**data)
-    plot_SIS_model(S, E, I, R)
-else:
-    raise ValueError(f"The model '{args.model}' is not recognised.")
+args.main(args)
 ```
 
-If our input file `input.yaml` contains the following:
+Here, we used `set_defaults()` to assign each model's `main()` function to the variable
+`main` within `args`. This will be set depending on which subcommand the user provides.
+Each model's `_add_arguments` can be used as a 'black box', and each can be developed
+independently of the others.
 
-```yaml
-pop_size: 8000000
-beta: 0.5
-gamma: 0.1
-days: 100
-I_0: 10
-```
-
-we could then run the SIR model and plot the results by calling:
+Following this, we can use `epi_models` to run several different models, each with
+their own command line interface!
 
 ```bash
-$ python3 -m epi_models SIR input.yaml
-```
-
-Many Python tools make use of `__main__.py` in their top-level package to define a
-command line interface. For example, when using pip to install new packages:
-
-```bash
-$ python3 -m pip install some_package
+$ python3 -m epi_models SIR --pop_size=300 --output="SIR.png"
+$ python3 -m epi_models SEIR --alpha=1
 ```
 
 ::::::::::::::::::::::::::::: keypoints
@@ -476,4 +814,6 @@ $ python3 -m pip install some_package
   API for our project.
 - A package can be run as a script using the `-m` flag, provided it contains a
   file `__main__.py`.
+- Through clever use of `argparse`, we can provide a rich scripting interface
+  to a whole package.
 :::::::::::::::::::::::::::::::::::::::

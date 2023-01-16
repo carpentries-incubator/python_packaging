@@ -734,5 +734,6 @@ our code from a single module to a collection of modules known as a 'package'.
   functions in other modules or in the Python interpretter.
 - After turning our scripts into reusable modules, we can maintain script-like behaviour
   using the idiom `if __name__ == "__main__"`.
+- `argparse` can be used to create sophisticated command line interfaces.
 
 ::::::::::::::::::::::::::::::::::::::::
