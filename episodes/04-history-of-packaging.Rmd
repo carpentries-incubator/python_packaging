@@ -29,11 +29,11 @@ lesson.
 ## Introduction
 
 In the previous lesson, we showed how to install Python packages using the file
-`prproject.toml`. However, if you ever find yourself looking for online help on
-a Python packaging topic, you'll likely find a large number of alternative
-methods being recommended. Some say you should use a file `setup.py`, while
-others recommend a combination of `setup.cfg` and `setup.py` -- some even say
-to use both these and `pyproject.toml`! 
+`pyproject.toml`. However, if you ever find yourself looking for online help on a Python
+packaging topic, you'll likely find a large number of alternative methods being
+recommended. Some say you should use a file `setup.py`, while others recommend a
+combination of `setup.cfg` and `setup.py` -- some even say to use both these and
+`pyproject.toml`! 
 
 The reason for this conflicting information is that the Python packaging 'best
 practices', as decided by the Python community, have changed a number of times over
@@ -42,17 +42,16 @@ recommend some methods over the ones we've covered here. The intention here is n
 present alternative methods so that you can use them in new projects, but rather to
 provide some context to the often confusing information out there, and to help if 
 you ever find yourself working on a project that hasn't yet updated to the latest
-systems.
+standards.
 
 ## In the beginning, there was `distutils`
 
-First introduced with Python 2.2, `distutils` is the official Python package that allows
-users to install and distribute their own packages. However, it was
+First introduced with Python 2.2, `distutils` was a module of Python's standard library
+that allowed users to install and distribute their own packages. However, it was
 deprecated in [PEP 632][PEP 632], having been superceded by `setuptools`. The primary
 issue with `distutils` is that it is strongly coupled to the user's Python version,
-so the developers found they could not implement some features or fixes without
-breaking inter-version compatibility. There were further complaints that `distutils`
-was not well maintained or documented. Nowadays, it is recommended to use a combination
+and the developers found they could not implement some features or fixes without
+breaking inter-version compatibility. Nowadays, it is recommended to use a combination
 of `pip` and `setuptools` instead, but it will be useful to briefly cover basic
 `distutils` usage so that we can understand some of the design choices that would
 follow.
@@ -70,29 +69,12 @@ To use `distutils` to install a package, the user would create a file `setup.py`
 \ \ \ \ \ |<br>
 \ \ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
 \ \ \ \ \ |\_\_\_\_&#128220; \_\_main\_\_.py<br>
-\ \ \ \ \ |<br>
 \ \ \ \ \ |\_\_\_\_&#128193; models<br>
-\ \ \ \ \ |\ \ \ \ |<br>
-\ \ \ \ \ |\ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
-\ \ \ \ \ |\ \ \ \ |\_\_\_\_&#128220; SIR.py<br>
-\ \ \ \ \ |\ \ \ \ |\_\_\_\_&#128220; SEIR.py<br>
-\ \ \ \ \ |\ \ \ \ |\_\_\_\_&#128220; SIS.py<br>
-\ \ \ \ \ |\ \ \ \ |\_\_\_\_&#128220; utils.py<br>
-\ \ \ \ \ |<br>
 \ \ \ \ \ |\_\_\_\_&#128193; plotting<br>
-\ \ \ \ \ \ \ \ \ \ |<br>
-\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
-\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SIR.py<br>
-\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SEIR.py<br>
-\ \ \ \ \ \ \ \ \ \ |\_\_\_\_&#128220; plot\_SIS.py<br>
 </code>
 
-Note that the project directory name is the same as the package name -- this is a common
-project layout for Python projects, but we will see later how to achieve alternative
-layouts.
-
-The file `setup.py` should contain a script that describes the package and some metadata
-about the author. A very simple one might look like this:
+The file `setup.py` should contain a script that contains metadata about the package and
+its author(s). A very simple one might look like this:
 
 ```python
 # file: setup.py
@@ -109,7 +91,10 @@ setup(
 )
 ```
 
-To install, `setup.py` can be run as a script with the argument `install`:
+Note that each subpackage is explicitly listed, unlike modern systems that make
+assumptions about your directory structure and perform automatic package discovery.
+
+To install, `setup.py` could be run as a script with the argument `install`:
 
 ```bash
 $ python3 setup.py install
@@ -117,13 +102,14 @@ $ python3 setup.py install
 
 :::::::::::::::::::::::::: callout
 
-Installing by running `setup.py` as a script is highly discouraged. Use `pip` instead!
+Installing by running `setup.py` as a script is highly discouraged. If you're using a
+package that still uses `setup.py`, use `pip install .` as usual.
 
 ::::::::::::::::::::::::::::::::::
 
-This creates  a 'source distribution' in a new directory `./build`, and adds it to the
-current environment. We can see how this works by reading the output written to the
-terminal:
+This creates a 'source distribution' in a new directory `./build`, and adds it to the
+current environment. We can see how the package is added to our environmentby reading
+the output written to the terminal:
 
 ```result
 creating /path/to/my/env/lib/python3.8/site-packages/epi_models
@@ -153,40 +139,25 @@ byte-compiling /path/to/my/env/lib/python3.8/site-packages/epi_models/plotting/p
 byte-compiling /path/to/my/env/lib/python3.8/site-packages/epi_models/__main__.py to __main__.cpython-38.pyc
 ```
 
-After building a package in the `./build` directory, which simply requires copying
-over all of our Python files into a special directory structure, each file and directory
-is copied into the `site-packages` directory in our virtual environment. This directory
-is located on Python's import path, which we can view by calling:
+There are three stages:
 
-```python
->>> import sys
->>> print(sys.path)
-```
+- First, create `./build` and make a source distribution there.
+- Create a new directory within `/path/to/my/env/lib/python3.8/site-packages/`, and
+  copy the contents of `./build/lib`.
+- Compile each file to Python bytecode so it can be run more quickly later.
 
-```result
-['', '/usr/lib/python38.zip', '/usr/lib/python3.8', '/usr/lib/python3.8/lib-dynload', '/path/to/my/env/lib/python3.8/site-packages']
-```
+The end result is therefore very similar to what happens when we install using
+`pyproject.toml`. However, a significant downside of using `distutils` and `setup.py`
+is that there is no way to safely uninstall a project once it has been installed, and
+instead the user must manually remove the package from their `site-packages` folder.
+The creation of a `./build` directory also tends to clutter up our workspace.
 
-We therefore do not need to modify the `PYTHONPATH` environment variable in order to
-import these modules from anywhere on our system.
-
-The second stage of installing our package is to compile each file into Python bytecode.
-This is a low-level representation of our code which is understood by the Python virtual
-machine on our system, and ultimately all Python code is reduced to this form before
-being imported or run. By pre-compiling each of our modules, any future imports will be
-much faster.
-
-A significant downside of `distutils` is that there is no way to safely uninstall a
-project once it has been installed, and instead the user must manually remove the
-package from their `site-packages` folder.
-
-`distutils` also contains many other tools for adding language extensions written in
+`distutils` contains many other utilities, such as adding language extensions written in
 C. However, it does not allow users to specify dependencies, and these are instead
 expected to be listed in the file `requirements.txt`:
 
 ```
 matplotlib>=3.6
-pyyaml>=6.0
 ```
 
 The user can install the requirements by calling:
@@ -196,7 +167,7 @@ $ python3 -m pip -r requirements.txt
 ```
 
 It is not recommended to use `distutils` for new projects, and it will be removed from
-standard Python distributions starting from version 3.12. Listing dependencies in
+standard Python distributions in version 3.12. Listing dependencies in
 `requirements.txt` is also no longer required.
 
 ## `setuptools` and `egg` files
@@ -221,7 +192,7 @@ setup(
     author_email="jsmith@email.net",
     url="https://github.com/jsmith1234/epi_models",
     packages=["epi_models", "epi_models.models", "epi_models.plotting"],
-    install_requires=["matplotlib>=3.6", "pyyaml>=6.0"],
+    install_requires=["matplotlib>=3.6"],
 )
 ```
 
@@ -236,17 +207,16 @@ $ python3 setup.py install
 ```
 
 Again, this will create a new directory `./build`, but it will also create a directory
-`./dist` containing a file with a name such as `epi_models-1.0-py3.8.egg`, and a
-directory `epi_models.egg-info` that contains metadata files describing our project.
-The 'egg' file is a distributable package format used by `setuptools`, and is
-essentially just a `.zip` file containing our package with a name specifying its version
-and its Python version compatibility. We can show this on Linux systems using the
-`unzip` command line utility:
+`./dist`. Much as before, `./build` contains a 'source distribution' of our code, while
+`./dist` contains a file with a name such as `epi_models-1.0-py3.8.egg` and a directory
+`epi_models.egg-info` containing metadata files describing our project.  The 'egg' file
+is a distributable package format used by `setuptools`, and is essentially just a `.zip`
+file containing our package with a name specifying both the package version and the
+version of Python it runs on. We can show this on Linux systems using the `unzip`
+command line utility:
 
 ```bash
-$ # unzip the egg file, put the results in a new folder 'test'
 $ unzip dist/epi_models-1.0-py3.8.egg -d test
-$ # See what's inside
 $ ls test
 ```
 
@@ -271,7 +241,7 @@ Adding epi-models 1.0 to easy-install.pth file
 ```
 
 If we look in our `site-packages` directory, we'll see a file `easy-install.pth`. This
-is a path configuration file, denoted by the extension `*.pth`, and if any are found
+is a path configuration file, denoted by the extension `.pth`, and if any are found
 within `site-packages` (or a number of other Python configuration directories), any
 additional items listed in it will be added to `sys.path` whenever Python is loaded
 up. If we look into this file, we find:
@@ -284,18 +254,18 @@ $ cat /path/to/my/env/lib/python3.8/site-packages/easy-install.pth
 ./epi_models-1.0-py3.8.egg
 ```
 
-If we again check our `sys.path` variable in an interactive session, we'll see that
-this is located on the path. Python is capable of running/importing zipped directories, 
-so the egg file that was created in `./dist` and copied to `site-packages` will be used
-for any future imports.
+Therefore, rather than copying our source distribution into `site-packages`,
+`setuptools` has instead copied the egg file and added its location to `sys.path`.
+This last step is necessary, as while Python is capable of running/importing zipped
+directories, it doesn't automatically search zip files on the import path for any
+modules contained within.
 
 Although there is still no way to uninstall using `setup.py`, it is possible to remove
 a package installed this way using pip:
 
 ```bash
-$ pip uninstall epi_models
+$ python3 -m pip uninstall epi_models
 ```
-
 
 ## Using `pip` instead of running `setup.py`
 
@@ -304,14 +274,6 @@ The direct usage of `setup.py` is now discouraged. After installing a package us
 to clutter the user's workspace by creating local `./build` and `./dist` directories.
 Both of these problems can be solved using `pip`, which also provides a number of
 further benefits:
-
-```bash
-$ pip install .
-```
-
-Alternatively, to ensure we're using the right version of `pip` on systems that have
-both Python 2 and Python 3 installed alongside each other, we may invoke `pip` as a
-runnable package:
 
 ```bash
 $ python3 -m pip install .
@@ -356,10 +318,10 @@ This works simply by adding the path of our working directory into `easy-install
 within the `site-packages` directory. It will also install any dependencies of the
 project as normal.
 
-As  the usage of `setup.py` gained further criticism, even when used alonside `pip`.
-As library writers were able to add arbitrary code to this file, setup scripts often
-became very long and confusing to understand for users. They could also contain
-potentially dangerous (or even malicious) code that may not be apparent at first glance.
+The usage of `setup.py` gained further criticism, even when used alonside `pip`.  As
+library writers were able to add arbitrary code to this file, setup scripts often became
+very long and difficult for users to understand. They could also contain potentially
+dangerous (or even malicious) code that may not be apparent at first glance.
 `distutils` had also supported an alternative method of specifying package metadata
 using an additional file `setup.cfg`, and in time this became the preferred method.
 
@@ -410,7 +372,6 @@ url = "https://github.com/jsmith1234/epi_models"
 packages = find:
 install_requires =
     matplotlib >= 3.6
-    pyyaml >= 6.0
 ```
 
 Note that the values on the right hand side of each equals sign are all intepretted as
@@ -587,6 +548,8 @@ build tool should recognise, such as `name`, `version`, `description`, `authors`
 Tools may choose to use their own synonyms for this metadata, and they may provide many
 more options than the core set, but to be standards compliant they must recognise the
 metadata of [PEP 621][PEP 621] at a minimum.
+
+
 
 ## The end of `setup.py`
 
