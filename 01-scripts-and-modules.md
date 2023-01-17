@@ -630,7 +630,7 @@ if __name__ == "__main__":
 
 However, this requires the user to provide every argument in order, and doesn't allow
 default arguments. We can achieve a better interface using the built-in `argparse`
-library:
+library. The comments in the code below explain how this works:
 
 ```python
 # file: SIR_model.py
@@ -647,7 +647,7 @@ if __name__ == "__main__":
     # Add each argument to the parser. We can specify
     # the types of each argument. Optional arguments
     # should have single character names with a hypen,
-    # or longer names with a double hyphen.
+    # or longer names with a double dash.
     parser.add_argument(
         "-p", "--pop_size", type=int, default=10000000,
         help="Total population size",
@@ -687,7 +687,43 @@ if __name__ == "__main__":
     plot_SIR_model(S, I, R, save_to=args.output)
 ```
 
-We'll also get a nice help message if we run it with `-h` or `--help`:
+We can now run our script using inputs from the command line:
+
+```bash
+$ python3 SIR_model.py --pop_size=1000 --days=10 -o mymodel.png
+```
+
+We defined each option with a default, so we don't need to provide all of them if we
+don't want to. Each option has a long form with two dashes (`--output`, `--beta`), and a
+short form with one dash (`-o`, `-b`), which are interchangeable (if we wish, we could
+provide only the short form or the long form). Note that we can use
+either an equals `=` or a space to separate the option name from its value.
+
+If we had provided options without preceeding dashes, they would become 'positional'
+arguments, and would be required. The order positional arguments should be supplied
+is given by the order in which they are added to the parser. For example, if we had
+added `beta` and `gamma` as follows:
+
+```python
+    parser.add_argument(
+        "beta", type=float,
+        help="Average no. of new infections per infected person per day",
+    )
+    parser.add_argument(
+        "gamma", type=float,
+        help="Inverse of average number of days taken to recover",
+    )
+```
+
+We would need to supply these arguments in order when running our code. Positional
+arguments are not specified by name on the command line:
+
+```bash
+$ python3 SIR_model.py 0.5 0.1 --pop_size=1000 --days=10 -o mymodel.png
+```
+
+If we forget how our script is supposed to be run, `argparse` automatically provides
+a nice help message if we run it with `-h` or `--help`:
 
 ```bash
 $ python3 SIR_model.py --help
@@ -710,6 +746,7 @@ optional arguments:
   -o OUTPUT, --output OUTPUT
                         Output file to save plot to
 ```
+
 
 There are many ways to control our command line interface in more detail, such as
 constraining the possible user input choices, parsing lists of inputs, and using

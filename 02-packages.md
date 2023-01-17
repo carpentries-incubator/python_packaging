@@ -544,7 +544,7 @@ def main():
     # Add each argument to the parser. We can specify
     # the types of each argument. Optional arguments
     # should have single character names with a hypen,
-    # or longer names with a double hyphen.
+    # or longer names with a double dash.
     parser.add_argument(
         "-p", "--pop_size", type=int, default=10000000,
         help="Total population size",
