@@ -1,0 +1,21 @@
+
+# file: mytoml.toml
+
+int_val = 5
+float_val = 0.5
+string_val = "hello world"
+bool_val = true
+date_val = 2023-01-01T08:00:00
+array = [1, 2, 3]
+inline_table = {key = "value"}
+
+# Section headings allow us to define tables over
+# multiple lines
+[header_table]
+name = "John"
+dob = 2002-03-05
+
+
+# We can define subtables using dot notation
+[header_table.subtable]
+foo = "bar"
