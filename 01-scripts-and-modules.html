@@ -188,7 +188,7 @@
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="04-history-of-packaging.html">4. A Brief History of Python Build Tools</a>
+        <a href="04-history-of-packaging.html">4. Extra: A History of Python Build Tools</a>
     </div><!--/div.accordion-header-->
         
   </div><!--/div.accordion-item-->
@@ -254,7 +254,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Python Scripts and Modules</h1>
-        <p> Last updated on 2023-01-16 | 
+        <p> Last updated on 2023-01-17 | 
         
         <a href="https://github.com/LiamPattinson/python-packaging/edit/main/episodes/01-scripts-and-modules.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
         
@@ -1008,7 +1008,8 @@ a list of command line arguments in the form of strings:</p>
 </div>
 <p>However, this requires the user to provide every argument in order,
 and doesn’t allow default arguments. We can achieve a better interface
-using the built-in <code>argparse</code> library:</p>
+using the built-in <code>argparse</code> library. The comments in the
+code below explain how this works:</p>
 <div class="codewrapper sourceCode" id="cb30">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -1026,7 +1027,7 @@ using the built-in <code>argparse</code> library:</p>
 <span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add each argument to the parser. We can specify</span></span>
 <span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># the types of each argument. Optional arguments</span></span>
 <span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># should have single character names with a hypen,</span></span>
-<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># or longer names with a double hyphen.</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># or longer names with a double dash.</span></span>
 <span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(</span>
 <span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"-p"</span>, <span class="st">"--pop_size"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">int</span>, default<span class="op">=</span><span class="dv">10000000</span>,</span>
 <span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Total population size"</span>,</span>
@@ -1065,12 +1066,51 @@ using the built-in <code>argparse</code> library:</p>
 <span id="cb30-51"><a href="#cb30-51" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb30-52"><a href="#cb30-52" aria-hidden="true" tabindex="-1"></a>    plot_SIR_model(S, I, R, save_to<span class="op">=</span>args.output)</span></code></pre>
 </div>
-<p>We’ll also get a nice help message if we run it with <code>-h</code>
-or <code>--help</code>:</p>
+<p>We can now run our script using inputs from the command line:</p>
 <div class="codewrapper sourceCode" id="cb31">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 SIR_model.py <span class="at">--help</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 SIR_model.py <span class="at">--pop_size</span><span class="op">=</span>1000 <span class="at">--days</span><span class="op">=</span>10 <span class="at">-o</span> mymodel.png</span></code></pre>
+</div>
+<p>We defined each option with a default, so we don’t need to provide
+all of them if we don’t want to. Each option has a long form with two
+dashes (<code>--output</code>, <code>--beta</code>), and a short form
+with one dash (<code>-o</code>, <code>-b</code>), which are
+interchangeable (if we wish, we could provide only the short form or the
+long form). Note that we can use either an equals <code>=</code> or a
+space to separate the option name from its value.</p>
+<p>If we had provided options without preceeding dashes, they would
+become ‘positional’ arguments, and would be required. The order
+positional arguments should be supplied is given by the order in which
+they are added to the parser. For example, if we had added
+<code>beta</code> and <code>gamma</code> as follows:</p>
+<div class="codewrapper sourceCode" id="cb32">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>        <span class="st">"beta"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">float</span>,</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Average no. of new infections per infected person per day"</span>,</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"gamma"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">float</span>,</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Inverse of average number of days taken to recover"</span>,</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre>
+</div>
+<p>We would need to supply these arguments in order when running our
+code. Positional arguments are not specified by name on the command
+line:</p>
+<div class="codewrapper sourceCode" id="cb33">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 SIR_model.py 0.5 0.1 <span class="at">--pop_size</span><span class="op">=</span>1000 <span class="at">--days</span><span class="op">=</span>10 <span class="at">-o</span> mymodel.png</span></code></pre>
+</div>
+<p>If we forget how our script is supposed to be run,
+<code>argparse</code> automatically provides a nice help message if we
+run it with <code>-h</code> or <code>--help</code>:</p>
+<div class="codewrapper sourceCode" id="cb34">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 SIR_model.py <span class="at">--help</span></span></code></pre>
 </div>
 <pre class="result"><code>usage: SIR_model [-h] [-p POP_SIZE] [-b BETA] [-g GAMMA] [-d DAYS] [-i I0] [-o OUTPUT]
 
@@ -1092,11 +1132,11 @@ detail, such as constraining the possible user input choices, parsing
 lists of inputs, and using ‘sub-parsers’ to split functionality across a
 number of sub-commands, much like how <code>pip</code> handles its many
 utilities:</p>
-<div class="codewrapper sourceCode" id="cb33">
+<div class="codewrapper sourceCode" id="cb36">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install <span class="at">--upgrade</span> mypkg myotherpkg</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip list <span class="at">--exclude</span> numpy</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install <span class="at">--upgrade</span> mypkg myotherpkg</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip list <span class="at">--exclude</span> numpy</span></code></pre>
 </div>
 <p>Here, <code>install</code> and <code>list</code> are sub-commands,
 which each handle a different set of their own args. We’ll show how to
@@ -1183,8 +1223,8 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://LiamPattinson.github.io/python-packaging/01-scripts-and-modules.html",
   "identifier": "https://LiamPattinson.github.io/python-packaging/01-scripts-and-modules.html",
-  "dateCreated": "2023-01-16",
-  "dateModified": "2023-01-16",
+  "dateCreated": "2023-01-17",
+  "dateModified": "2023-01-17",
   "datePublished": "2023-01-17"
 }
 
