@@ -148,6 +148,18 @@ version may not match yours):
 $ ls /path/to/my/env/lib/python3.8/site-packages/numpy
 ```
 
+`site-packages` is a standard location to store installed Python packages. We can see
+this by analysing Python's import path:
+
+```python
+>>> import sys
+>>> print(sys.path)
+```
+
+```result
+['', '/usr/lib/python38.zip', '/usr/lib/python3.8', '/usr/lib/python3.8/lib-dynload', '/path/to/my/env/lib/python3.8/site-packages']
+```
+
 If we no longer wish to use this virtual environment, we can return to the system
 environment by calling:
 
