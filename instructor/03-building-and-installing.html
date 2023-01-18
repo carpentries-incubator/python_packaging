@@ -257,7 +257,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Building and Installing Packages using setuptools</h1>
-        <p> Last updated on 2023-01-17 | 
+        <p> Last updated on 2023-01-18 | 
         
         <a href="https://github.com/LiamPattinson/python-packaging/edit/main/episodes/03-building-and-installing.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
         
@@ -445,12 +445,21 @@ that the Python version may not match yours):</p>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls /path/to/my/env/lib/python3.8/site-packages/numpy</span></code></pre>
 </div>
+<p><code>site-packages</code> is a standard location to store installed
+Python packages. We can see this by analysing Python’s import path:</p>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> sys</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">print</span>(sys.path)</span></code></pre>
+</div>
+<pre class="result"><code>['', '/usr/lib/python38.zip', '/usr/lib/python3.8', '/usr/lib/python3.8/lib-dynload', '/path/to/my/env/lib/python3.8/site-packages']</code></pre>
 <p>If we no longer wish to use this virtual environment, we can return
 to the system environment by calling:</p>
-<div class="codewrapper sourceCode" id="cb11">
+<div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> deactivate</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> deactivate</span></code></pre>
 </div>
 <p>Virtual environments are very useful when we’re testing out code, as
 they allow us to create a fresh Python environment without any of the
@@ -478,43 +487,43 @@ unlike some other formats where all values are strings. The available
 types are strings, integers, floats, booleans, and dates. It is possible
 to store lists of values in arrays, or store a series of key-value pairs
 in tables. For example:</p>
-<div class="codewrapper sourceCode" id="cb12">
+<div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: mytoml.toml</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int_val</span> <span class="op">=</span> <span class="dv">5</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="dt">float_val</span> <span class="op">=</span> <span class="fl">0.5</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="dt">string_val</span> <span class="op">=</span> <span class="st">"hello world"</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="dt">bool_val</span> <span class="op">=</span> <span class="cn">true</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="dt">date_val</span> <span class="op">=</span> <span class="bn">2023-01-01T08:00:00</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="dt">array</span> <span class="op">=</span> <span class="op">[</span><span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">]</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="dt">inline_table</span> <span class="op">=</span> <span class="op">{</span><span class="dt">key</span><span class="op"> =</span> <span class="st">"value"</span><span class="op">}</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Section headings allow us to define tables over</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co"># multiple lines</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">header_table</span><span class="kw">]</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"John"</span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="dt">dob</span> <span class="op">=</span> <span class="bn">2002-03-05</span></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co"># We can define subtables using dot notation</span></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">header_table</span><span class="kw">.</span><span class="dt">subtable</span><span class="kw">]</span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="dt">foo</span> <span class="op">=</span> <span class="st">"bar"</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: mytoml.toml</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int_val</span> <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="dt">float_val</span> <span class="op">=</span> <span class="fl">0.5</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="dt">string_val</span> <span class="op">=</span> <span class="st">"hello world"</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="dt">bool_val</span> <span class="op">=</span> <span class="cn">true</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="dt">date_val</span> <span class="op">=</span> <span class="bn">2023-01-01T08:00:00</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="dt">array</span> <span class="op">=</span> <span class="op">[</span><span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">]</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="dt">inline_table</span> <span class="op">=</span> <span class="op">{</span><span class="dt">key</span><span class="op"> =</span> <span class="st">"value"</span><span class="op">}</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Section headings allow us to define tables over</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co"># multiple lines</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">header_table</span><span class="kw">]</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"John"</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="dt">dob</span> <span class="op">=</span> <span class="bn">2002-03-05</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="co"># We can define subtables using dot notation</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">header_table</span><span class="kw">.</span><span class="dt">subtable</span><span class="kw">]</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="dt">foo</span> <span class="op">=</span> <span class="st">"bar"</span></span></code></pre>
 </div>
 <p>We can read this using the <code>toml</code> libray in Python:</p>
-<div class="codewrapper sourceCode" id="cb13">
+<div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip install toml</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip install toml</span></code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb14">
+<div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> toml</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="cf">with</span> <span class="bu">open</span>(<span class="st">"mytoml.toml"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>...     data <span class="op">=</span> toml.load(f)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">print</span>(data)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> toml</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="cf">with</span> <span class="bu">open</span>(<span class="st">"mytoml.toml"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>...     data <span class="op">=</span> toml.load(f)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">print</span>(data)</span></code></pre>
 </div>
 <p>The result is a dictionary object, with TOML types converted to their
 corresponding Python types:</p>
@@ -582,17 +591,17 @@ have the correct build tool installed to run the install program – see
 the <a href="04-history-of-packaging.html">lesson on historical build
 tools</a> for more detail. We will choose to use
 <code>setuptools</code>, which requires the following:</p>
-<div class="codewrapper sourceCode" id="cb16">
+<div class="codewrapper sourceCode" id="cb18">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">build-system</span><span class="kw">]</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"setuptools &gt;= 65"</span><span class="op">,</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"wheel &gt;= 0.38,</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="dt">build-backend</span> <span class="op">=</span> <span class="st">"setuptools.build_meta"</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">build-system</span><span class="kw">]</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"setuptools &gt;= 65"</span><span class="op">,</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"wheel &gt;= 0.38,</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="dt">build-backend</span> <span class="op">=</span> <span class="st">"setuptools.build_meta"</span></span></code></pre>
 </div>
 <ul><li>
 <code>requires</code> is set to a list of strings, each of which
@@ -605,31 +614,31 @@ interface.</li>
 </ul><p>With our build system determined, we can add some metadata that
 defines our project. At a minimum, we should specify the name of the
 package, its version, and our dependencies:</p>
-<div class="codewrapper sourceCode" id="cb17">
+<div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">build-system</span><span class="kw">]</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"setuptools &gt;= 65"</span><span class="op">,</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"wheel &gt;= 0.38,</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="dt">build-backend</span> <span class="op">=</span> <span class="st">"setuptools.build_meta"</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">]</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"epi_models"</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"0.1.0"</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"matplotlib"</span><span class="op">,</span></span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">build-system</span><span class="kw">]</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"setuptools &gt;= 65"</span><span class="op">,</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"wheel &gt;= 0.38,</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="dt">build-backend</span> <span class="op">=</span> <span class="st">"setuptools.build_meta"</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">]</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"epi_models"</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"0.1.0"</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"matplotlib"</span><span class="op">,</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
 </div>
 <p>That’s all we need! We’ll discuss versioning in our <a href="05-publishing.html">lesson on publishing</a>. With this done, we
 can install our package using:</p>
-<div class="codewrapper sourceCode" id="cb18">
+<div class="codewrapper sourceCode" id="cb20">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip install .</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip install .</span></code></pre>
 </div>
 <p>This will automatically download and install our dependencies, and
 our package will be importable regardless of which directory we’re
@@ -640,10 +649,10 @@ along with a new directory, <code>epi_models-0.1.0.dist-info</code>,
 which simply contains metadata describing our project. If we look inside
 our installed package, we’ll see that our files have been copied, and
 there is also a <code>__pycache__</code> directory:</p>
-<div class="codewrapper sourceCode" id="cb19">
+<div class="codewrapper sourceCode" id="cb21">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls /path/to/my/env/lib/python3.8/site-packages/epi_models</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls /path/to/my/env/lib/python3.8/site-packages/epi_models</span></code></pre>
 </div>
 <pre class="results"><code>__init__.py  __main__.py  models  plotting  __pycache__</code></pre>
 <p>The <code>__pycache__</code> directory contains Python bytecode,
@@ -654,21 +663,21 @@ can be imported much faster. If we look into the directories
 <code>models</code> and <code>plotting</code>, we’ll see those have been
 compiled to bytecode too.</p>
 <p>If we wish to uninstall, we may call:</p>
-<div class="codewrapper sourceCode" id="cb21">
+<div class="codewrapper sourceCode" id="cb23">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip uninstall epi_models</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip uninstall epi_models</span></code></pre>
 </div>
 <p>We can also create an ‘editable install’, in which any changes we
 make to our code are instantly recognised by any codes importing it –
 this mode can be very useful when developing our code, especially when
 working on documentation or tests.</p>
-<div class="codewrapper sourceCode" id="cb22">
+<div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip install <span class="at">-e</span> .</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> <span class="co"># Or...</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip install <span class="at">--editable</span> .</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip install <span class="at">-e</span> .</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> <span class="co"># Or...</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip install <span class="at">--editable</span> .</span></code></pre>
 </div>
 <div id="callout3" class="callout callout">
 <div class="callout-square">
@@ -682,10 +691,10 @@ working on documentation or tests.</p>
 <code>pyproject.toml</code>-only build was standardised in <a href="https://peps.python.org/pep-0660/" class="external-link">PEP 660</a>, and only recently
 implemented in <code>pip</code>. You may need to upgrade to use this
 feature:</p>
-<div class="codewrapper sourceCode" id="cb23">
+<div class="codewrapper sourceCode" id="cb25">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip install <span class="at">--upgrade</span> pip</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip install <span class="at">--upgrade</span> pip</span></code></pre>
 </div>
 </div>
 </div>
@@ -696,65 +705,65 @@ list of possible metadata that all build tools should support, so we’ll
 stick to that list. Each build tool will also define synonyms for some
 metadata entries, and additional tool-specific metadata. Some of the
 recommended core metadata keys are described below:</p>
-<div class="codewrapper sourceCode" id="cb24">
+<div class="codewrapper sourceCode" id="cb26">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># name: String, REQUIRED</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"my_project"</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># version: String, REQUIRED</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Should follow PEP 440 rules</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Can be provided dynamically, see the lesson on publishing</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"1.2.3"</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co"># description: String</span></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co"># A simple summary of the project</span></span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="dt">description</span> <span class="op">=</span> <span class="st">"My wonderful Python package"</span></span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co"># readme: String</span></span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Full description of the project.</span></span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Should be the path to your README file, relative to pyproject.toml</span></span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="dt">readme</span> <span class="op">=</span> <span class="st">"README.md"</span></span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="co"># requires-python: String</span></span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a><span class="co"># The Python version required by the project</span></span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a><span class="dt">requires-python</span> <span class="op">=</span> <span class="st">"&gt;=3.8"</span></span>
-<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a><span class="co"># license: Table</span></span>
-<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a><span class="co"># The license of your project.</span></span>
-<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Can be provided as a file or a text description.</span></span>
-<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Discussed in the lesson on publishing</span></span>
-<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a><span class="dt">license</span> <span class="op">=</span> <span class="op">{</span><span class="dt">file</span><span class="op"> =</span> <span class="st">"LICENSE.md"</span><span class="op">}</span></span>
-<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a><span class="co"># or...</span></span>
-<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a><span class="dt">license</span> <span class="op">=</span> <span class="op">{</span><span class="dt">text</span><span class="op"> =</span> <span class="st">"BDS 3-Clause License"</span><span class="op">}</span></span>
-<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a><span class="co"># authors: Array of Tables</span></span>
-<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Can also be called 'maintainers'.</span></span>
-<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Each entry can have a name and/or an email</span></span>
-<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a><span class="dt">authors</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dt">name</span><span class="op"> =</span> <span class="st">"My Name"</span><span class="op">, </span><span class="dt">email</span><span class="op"> =</span> <span class="st">"my.email@email.net"</span><span class="op">},</span></span>
-<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dt">name</span><span class="op"> =</span> <span class="st">"My Friend"</span><span class="op">, </span><span class="dt">email</span><span class="op"> =</span> <span class="st">"their.email@email.net"</span><span class="op">},</span></span>
-<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span>
-<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a><span class="co"># urls: Table</span></span>
-<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Should describe where to find useful info for your project</span></span>
-<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a><span class="dt">urls</span> <span class="op">=</span> <span class="op">{</span><span class="dt">source</span><span class="op"> =</span> <span class="st">"github.com/MyProfile/my_project"</span><span class="op">, </span><span class="dt">documentation</span><span class="op"> =</span> <span class="st">"my_project.readthedocs.io/en/latest"</span><span class="op">}</span></span>
-<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a><span class="co"># dependencies: Array of Strings</span></span>
-<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a><span class="co"># A list of requirements for our package</span></span>
-<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb24-45"><a href="#cb24-45" aria-hidden="true" tabindex="-1"></a>    <span class="st">"numpy &gt;= 1.20"</span><span class="op">,</span></span>
-<span id="cb24-46"><a href="#cb24-46" aria-hidden="true" tabindex="-1"></a>    <span class="st">"pyyaml"</span><span class="op">,</span></span>
-<span id="cb24-47"><a href="#cb24-47" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># name: String, REQUIRED</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"my_project"</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># version: String, REQUIRED</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Should follow PEP 440 rules</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Can be provided dynamically, see the lesson on publishing</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"1.2.3"</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co"># description: String</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co"># A simple summary of the project</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="dt">description</span> <span class="op">=</span> <span class="st">"My wonderful Python package"</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="co"># readme: String</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Full description of the project.</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Should be the path to your README file, relative to pyproject.toml</span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="dt">readme</span> <span class="op">=</span> <span class="st">"README.md"</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a><span class="co"># requires-python: String</span></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a><span class="co"># The Python version required by the project</span></span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a><span class="dt">requires-python</span> <span class="op">=</span> <span class="st">"&gt;=3.8"</span></span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a><span class="co"># license: Table</span></span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a><span class="co"># The license of your project.</span></span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Can be provided as a file or a text description.</span></span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Discussed in the lesson on publishing</span></span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a><span class="dt">license</span> <span class="op">=</span> <span class="op">{</span><span class="dt">file</span><span class="op"> =</span> <span class="st">"LICENSE.md"</span><span class="op">}</span></span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a><span class="co"># or...</span></span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a><span class="dt">license</span> <span class="op">=</span> <span class="op">{</span><span class="dt">text</span><span class="op"> =</span> <span class="st">"BDS 3-Clause License"</span><span class="op">}</span></span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a><span class="co"># authors: Array of Tables</span></span>
+<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Can also be called 'maintainers'.</span></span>
+<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Each entry can have a name and/or an email</span></span>
+<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a><span class="dt">authors</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dt">name</span><span class="op"> =</span> <span class="st">"My Name"</span><span class="op">, </span><span class="dt">email</span><span class="op"> =</span> <span class="st">"my.email@email.net"</span><span class="op">},</span></span>
+<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dt">name</span><span class="op"> =</span> <span class="st">"My Friend"</span><span class="op">, </span><span class="dt">email</span><span class="op"> =</span> <span class="st">"their.email@email.net"</span><span class="op">},</span></span>
+<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span>
+<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a><span class="co"># urls: Table</span></span>
+<span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Should describe where to find useful info for your project</span></span>
+<span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a><span class="dt">urls</span> <span class="op">=</span> <span class="op">{</span><span class="dt">source</span><span class="op"> =</span> <span class="st">"github.com/MyProfile/my_project"</span><span class="op">, </span><span class="dt">documentation</span><span class="op"> =</span> <span class="st">"my_project.readthedocs.io/en/latest"</span><span class="op">}</span></span>
+<span id="cb26-41"><a href="#cb26-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-42"><a href="#cb26-42" aria-hidden="true" tabindex="-1"></a><span class="co"># dependencies: Array of Strings</span></span>
+<span id="cb26-43"><a href="#cb26-43" aria-hidden="true" tabindex="-1"></a><span class="co"># A list of requirements for our package</span></span>
+<span id="cb26-44"><a href="#cb26-44" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb26-45"><a href="#cb26-45" aria-hidden="true" tabindex="-1"></a>    <span class="st">"numpy &gt;= 1.20"</span><span class="op">,</span></span>
+<span id="cb26-46"><a href="#cb26-46" aria-hidden="true" tabindex="-1"></a>    <span class="st">"pyyaml"</span><span class="op">,</span></span>
+<span id="cb26-47"><a href="#cb26-47" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
 </div>
 <p>Note that some of the longer tables in our TOML file can be written
 using non-inline tables if it improved readability:</p>
-<div class="codewrapper sourceCode" id="cb25">
+<div class="codewrapper sourceCode" id="cb27">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">.</span><span class="dt">urls</span><span class="kw">]</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="dt">Source</span> <span class="op">=</span> <span class="st">"github.com/MyProfile/my_project"</span><span class="er">,</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="dt">Documentation</span> <span class="op">=</span> <span class="st">"my_project.readthedocs.io/en/latest"</span><span class="er">,</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">.</span><span class="dt">urls</span><span class="kw">]</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="dt">Source</span> <span class="op">=</span> <span class="st">"github.com/MyProfile/my_project"</span><span class="er">,</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="dt">Documentation</span> <span class="op">=</span> <span class="st">"my_project.readthedocs.io/en/latest"</span><span class="er">,</span></span></code></pre>
 </div>
 </section><section id="alternative-directory-structures"><h2 class="section-heading">Alternative Directory Structures<a class="anchor" aria-label="anchor" href="#alternative-directory-structures"></a>
 </h2>
@@ -775,26 +784,26 @@ as <code>test/</code>, <code>docs/</code>, and
 <code>setup.py</code>.</p>
 <p>We can also disable automatic package discovery and explicitly list
 the packages we wish to install:</p>
-<div class="codewrapper sourceCode" id="cb26">
+<div class="codewrapper sourceCode" id="cb28">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">tool</span><span class="kw">.</span><span class="dt">setuptools</span><span class="kw">]</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="dt">pacakges</span> <span class="op">=</span> <span class="op">[</span><span class="st">"my_package"</span><span class="op">,</span> <span class="st">"my_other_package"</span><span class="op">]</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">tool</span><span class="kw">.</span><span class="dt">setuptools</span><span class="kw">]</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="dt">pacakges</span> <span class="op">=</span> <span class="op">[</span><span class="st">"my_package"</span><span class="op">,</span> <span class="st">"my_other_package"</span><span class="op">]</span></span></code></pre>
 </div>
 <p>Note that this is not part of the <a href="https://peps.python.org/pep-0621/" class="external-link">PEP 621</a> standard, and
 instead is a method specific to <code>setuptools</code>. Finally, we may
 set up custom package discovery:</p>
-<div class="codewrapper sourceCode" id="cb27">
+<div class="codewrapper sourceCode" id="cb29">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">tool</span><span class="kw">.</span><span class="dt">setuptools</span><span class="kw">.</span><span class="dt">packages</span><span class="kw">.</span><span class="dt">find</span><span class="kw">]</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="dt">where</span> <span class="op">=</span> <span class="op">[</span><span class="st">"my_directory"</span><span class="op">]</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="dt">include</span> <span class="op">=</span> <span class="op">[</span><span class="st">"my_package"</span><span class="op">,</span> <span class="st">"my_other_package"</span><span class="op">]</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="dt">exclude</span> <span class="op">=</span> <span class="op">[</span><span class="st">"my_package.tests*"</span><span class="op">]</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">tool</span><span class="kw">.</span><span class="dt">setuptools</span><span class="kw">.</span><span class="dt">packages</span><span class="kw">.</span><span class="dt">find</span><span class="kw">]</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="dt">where</span> <span class="op">=</span> <span class="op">[</span><span class="st">"my_directory"</span><span class="op">]</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="dt">include</span> <span class="op">=</span> <span class="op">[</span><span class="st">"my_package"</span><span class="op">,</span> <span class="st">"my_other_package"</span><span class="op">]</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="dt">exclude</span> <span class="op">=</span> <span class="op">[</span><span class="st">"my_package.tests*"</span><span class="op">]</span></span></code></pre>
 </div>
 <p>However, for ease of use, it is recommended to stick to either the
 flat layout or the <code>src</code> layout.</p>
@@ -805,58 +814,58 @@ to function properly, but these would not be picked up by automatic
 package discovery. For example, the project may store default input data
 in <code>.json</code> files. These could be included with your package
 by adding the following to <code>pyproject.toml</code>:</p>
-<div class="codewrapper sourceCode" id="cb28">
+<div class="codewrapper sourceCode" id="cb30">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">tool</span><span class="kw">.</span><span class="dt">setuptools</span><span class="kw">.</span><span class="dt">package-data</span><span class="kw">]</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="dt">epi_models</span> <span class="op">=</span> <span class="op">[</span><span class="st">"*.json"</span><span class="op">]</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">tool</span><span class="kw">.</span><span class="dt">setuptools</span><span class="kw">.</span><span class="dt">package-data</span><span class="kw">]</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="dt">epi_models</span> <span class="op">=</span> <span class="op">[</span><span class="st">"*.json"</span><span class="op">]</span></span></code></pre>
 </div>
 <p>Note that this would grab only <code>.json</code> files in the
 top-level directory of our project. To include data files from all
 packages and sub-packages, we should instead write:</p>
-<div class="codewrapper sourceCode" id="cb29">
+<div class="codewrapper sourceCode" id="cb31">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">tool</span><span class="kw">.</span><span class="dt">setuptools</span><span class="kw">.</span><span class="dt">package-data</span><span class="kw">]</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="dt">"*"</span> <span class="op">=</span> <span class="op">[</span><span class="st">"*.json"</span><span class="op">]</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">tool</span><span class="kw">.</span><span class="dt">setuptools</span><span class="kw">.</span><span class="dt">package-data</span><span class="kw">]</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="dt">"*"</span> <span class="op">=</span> <span class="op">[</span><span class="st">"*.json"</span><span class="op">]</span></span></code></pre>
 </div>
 </section><section id="installing-scripts"><h2 class="section-heading">Installing Scripts<a class="anchor" aria-label="anchor" href="#installing-scripts"></a>
 </h2>
 <hr class="half-width"><p>If our package contains any scripts and/or a <code>__main__.py</code>
 file, we can run those from anywhere on our system after
 installation:</p>
-<div class="codewrapper sourceCode" id="cb30">
+<div class="codewrapper sourceCode" id="cb32">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> epi_models</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> epi_models.plotting.plot_SIR</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> epi_models</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> epi_models.plotting.plot_SIR</span></code></pre>
 </div>
 <p>With a little extra work, we can also install a simplified interface
 that doesn’t require <code>python3 -m</code> in front. This is how tools
 like <code>pip</code> can be invoked using two possible methods:</p>
-<div class="codewrapper sourceCode" id="cb31">
+<div class="codewrapper sourceCode" id="cb33">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip  <span class="co"># Invoke with python</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip             <span class="co"># Invoke via console-scripts entrypoint</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip  <span class="co"># Invoke with python</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip             <span class="co"># Invoke via console-scripts entrypoint</span></span></code></pre>
 </div>
 <p>This can be achieved by adding a table <code>scripts</code> under the
 <code>[project]</code> header:</p>
-<div class="codewrapper sourceCode" id="cb32">
+<div class="codewrapper sourceCode" id="cb34">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">]</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="dt">scripts</span> <span class="op">=</span> <span class="op">{</span><span class="dt">epi_models</span><span class="op"> =</span> <span class="st">"epi_models.__main__:main"</span><span class="op">}</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternative form:</span></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">.</span><span class="dt">scripts</span><span class="kw">]</span></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="dt">epi_models</span> <span class="op">=</span> <span class="st">"epi_models.__main__:main"</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">]</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="dt">scripts</span> <span class="op">=</span> <span class="op">{</span><span class="dt">epi_models</span><span class="op"> =</span> <span class="st">"epi_models.__main__:main"</span><span class="op">}</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternative form:</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">.</span><span class="dt">scripts</span><span class="kw">]</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="dt">epi_models</span> <span class="op">=</span> <span class="st">"epi_models.__main__:main"</span></span></code></pre>
 </div>
 <p>This syntax means that we should create a console script
 <code>epi_models</code>, and that running it should call the function
@@ -865,65 +874,65 @@ This will require a slight modification to our <code>__main__.py</code>
 file. All that’s necessary is to move everything from the script into a
 function <code>main()</code> that takes no arguments, and then to call
 <code>main()</code> at the bottom of the script:</p>
-<div class="codewrapper sourceCode" id="cb33">
+<div class="codewrapper sourceCode" id="cb35">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: main.py</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main():</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Put the __main__ script here...</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>main()</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: main.py</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main():</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Put the __main__ script here...</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>main()</span></code></pre>
 </div>
 <p>This will allow us to run our package as a script directly from the
 command line</p>
-<div class="codewrapper sourceCode" id="cb34">
+<div class="codewrapper sourceCode" id="cb36">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip install .</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> epi_models <span class="at">--help</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip install .</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> epi_models <span class="at">--help</span></span></code></pre>
 </div>
 <p>Note that we’ll still be able to run our code using the longer
 form:</p>
-<div class="codewrapper sourceCode" id="cb35">
+<div class="codewrapper sourceCode" id="cb37">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> epi_models <span class="at">--help</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> epi_models <span class="at">--help</span></span></code></pre>
 </div>
 <p>If we have multiple scripts in our package, these can all be given
 invidual console scripts. However, these will also need to have a
 function name as an entry point:</p>
-<div class="codewrapper sourceCode" id="cb36">
+<div class="codewrapper sourceCode" id="cb38">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">.</span><span class="dt">scripts</span><span class="kw">]</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="dt">epi_models</span> <span class="op">=</span> <span class="st">"epi_models.__main__:main"</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="dt">epi_models_sir</span> <span class="op">=</span> <span class="st">"epi_models.plotting.plot_SIR:main"</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">.</span><span class="dt">scripts</span><span class="kw">]</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="dt">epi_models</span> <span class="op">=</span> <span class="st">"epi_models.__main__:main"</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="dt">epi_models_sir</span> <span class="op">=</span> <span class="st">"epi_models.plotting.plot_SIR:main"</span></span></code></pre>
 </div>
 <p>So how do these scripts work? When we activate a virtual environment,
 a new entry is added to our <code>PATH</code> environment variable
 linking to <code>/path/to/my/env/bin/</code>:</p>
-<div class="codewrapper sourceCode" id="cb37">
+<div class="codewrapper sourceCode" id="cb39">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="ex">PATH</span> = <span class="st">"/path/to/my/env/bin:</span><span class="va">${PATH}</span><span class="st">"</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="ex">PATH</span> = <span class="st">"/path/to/my/env/bin:</span><span class="va">${PATH}</span><span class="st">"</span></span></code></pre>
 </div>
 <p>After installing our console scripts, we can find a new file in this
 directory with the name we assigned to it. For example,
 <code>/path/to/my/env/bin/epi_models</code>:</p>
-<div class="codewrapper sourceCode" id="cb38">
+<div class="codewrapper sourceCode" id="cb40">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/path/to/my/env/bin/python3</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co"># -*- coding: utf-8 -*-</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> epi_models.__main__ <span class="im">import</span> main</span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">'__main__'</span>:</span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>    sys.argv[<span class="dv">0</span>] <span class="op">=</span> re.sub(<span class="vs">r'(-script\.pyw|\.exe)?$'</span>, <span class="st">''</span>, sys.argv[<span class="dv">0</span>])</span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>    sys.exit(main())</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/path/to/my/env/bin/python3</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co"># -*- coding: utf-8 -*-</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> epi_models.__main__ <span class="im">import</span> main</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">'__main__'</span>:</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    sys.argv[<span class="dv">0</span>] <span class="op">=</span> re.sub(<span class="vs">r'(-script\.pyw|\.exe)?$'</span>, <span class="st">''</span>, sys.argv[<span class="dv">0</span>])</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>    sys.exit(main())</span></code></pre>
 </div>
 <p>Installing our project has automatically created a new Python file
 that can be run as a command line script due to the hash-bang
@@ -937,15 +946,15 @@ we’re using that environment, but as soon as we call
 <hr class="half-width"><p>Earlier, when setting <code>dependencies</code> in our
 <code>pyproject.toml</code>, we chose to specify a minimum requirement
 for <code>numpy</code>, but not for <code>pyyaml</code>:</p>
-<div class="codewrapper sourceCode" id="cb39">
+<div class="codewrapper sourceCode" id="cb41">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"numpy &gt;= 1.20"</span><span class="op">,</span></span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"pyyaml"</span><span class="op">,</span></span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"numpy &gt;= 1.20"</span><span class="op">,</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"pyyaml"</span><span class="op">,</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
 </div>
 <p>This indicates that <code>pip</code> should install any version of
 <code>numpy</code> greater than 1.20, but that any version of
@@ -956,35 +965,35 @@ our installed packages and our Python version. We’ll cover software
 versioning in more detail in the <a href="05-publishing.html">lesson on
 publishing</a>, but now we’ll simply cover some ways to specify which
 software versions we need:</p>
-<div class="codewrapper sourceCode" id="cb40">
-<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="dt">"numpy &gt;= 1.20"</span>  <span class="co"># Must be at least 1.20</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="dt">"numpy &gt; 1.20"</span>   <span class="co"># Must be greater than 1.20</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="dt">"numpy == 1.20"</span>  <span class="co"># Must be exactly 1.20</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="dt">"numpy &lt;= 1.20"</span>  <span class="co"># Must be 1.20 at most</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="dt">"numpy &lt; 1.20"</span>   <span class="co"># Must be less than 1.20</span></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="dt">"numpy == 1.*"</span>   <span class="co"># Must be any version 1</span></span></code></pre>
-</div>
-<p>If we separate our clauses with commas, we can combine these
-requirements:</p>
-<div class="codewrapper sourceCode" id="cb41">
-<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># At least 1.20, less than 1.22, and not the release 1.21.3</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="dt">"numpy =&gt; 1.20, &lt; 1.22, != 1.21.3"</span></span></code></pre>
-</div>
-<p>A useful shorthand is the ‘compatible release’ clause:</p>
 <div class="codewrapper sourceCode" id="cb42">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="dt">"numpy ~= 1.20"</span>  <span class="co"># Must be a release compatible with 1.20</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="dt">"numpy &gt;= 1.20"</span>  <span class="co"># Must be at least 1.20</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="dt">"numpy &gt; 1.20"</span>   <span class="co"># Must be greater than 1.20</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="dt">"numpy == 1.20"</span>  <span class="co"># Must be exactly 1.20</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="dt">"numpy &lt;= 1.20"</span>  <span class="co"># Must be 1.20 at most</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="dt">"numpy &lt; 1.20"</span>   <span class="co"># Must be less than 1.20</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="dt">"numpy == 1.*"</span>   <span class="co"># Must be any version 1</span></span></code></pre>
 </div>
-<p>This is equivalent to:</p>
+<p>If we separate our clauses with commas, we can combine these
+requirements:</p>
 <div class="codewrapper sourceCode" id="cb43">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="dt">"numpy &gt;= 1.20,  == 1.*"</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># At least 1.20, less than 1.22, and not the release 1.21.3</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="dt">"numpy =&gt; 1.20, &lt; 1.22, != 1.21.3"</span></span></code></pre>
+</div>
+<p>A useful shorthand is the ‘compatible release’ clause:</p>
+<div class="codewrapper sourceCode" id="cb44">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="dt">"numpy ~= 1.20"</span>  <span class="co"># Must be a release compatible with 1.20</span></span></code></pre>
+</div>
+<p>This is equivalent to:</p>
+<div class="codewrapper sourceCode" id="cb45">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="dt">"numpy &gt;= 1.20,  == 1.*"</span></span></code></pre>
 </div>
 <p>That is, we require anything which is version 1, provided it’s
 greater than 1.20. This would include version 1.25, but exlude version
@@ -996,28 +1005,28 @@ kind of user. For example, a developer of our library might need any
 libraries we use to run unit tests or build documentation, but an end
 user would not. These can be added as
 <code>optional-dependencies</code>:</p>
-<div class="codewrapper sourceCode" id="cb44">
+<div class="codewrapper sourceCode" id="cb46">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">.</span><span class="dt">optional-dependencies</span><span class="kw">]</span></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="dt">test</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"pytest &gt;= 5.0.0"</span><span class="op">,</span></span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="dt">doc</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"sphinx"</span><span class="op">,</span></span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">.</span><span class="dt">optional-dependencies</span><span class="kw">]</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="dt">test</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"pytest &gt;= 5.0.0"</span><span class="op">,</span></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="dt">doc</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"sphinx"</span><span class="op">,</span></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
 </div>
 <p>These dependencies can be installed by adding the name of each
 optional dependency group in square brackets after telling
 <code>pip</code> what we want to install:</p>
-<div class="codewrapper sourceCode" id="cb45">
+<div class="codewrapper sourceCode" id="cb47">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install .[test]     <span class="co"># Include testing dependencies</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install .[doc]      <span class="co"># Include documentation dependencies</span></span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install .[test,doc] <span class="co"># Include all dependencies</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install .[test]     <span class="co"># Include testing dependencies</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install .[doc]      <span class="co"># Include documentation dependencies</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install .[test,doc] <span class="co"># Include all dependencies</span></span></code></pre>
 </div>
 </section><section id="additional-tools"><h2 class="section-heading">Additional Tools<a class="anchor" aria-label="anchor" href="#additional-tools"></a>
 </h2>
@@ -1025,11 +1034,11 @@ optional dependency group in square brackets after telling
 <code>pyproject.toml</code>. Their settings are typically set using
 <code>[tool.*]</code> headings. For example, the tool <a href="https://pypi.org/project/black/" class="external-link"><code>black</code></a> which is
 used to auto-format Python code can be configured here:</p>
-<div class="codewrapper sourceCode" id="cb46">
+<div class="codewrapper sourceCode" id="cb48">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">tool</span><span class="kw">.</span><span class="dt">black</span><span class="kw">]</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="dt">line-length</span> <span class="op">=</span> <span class="dv">120</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">tool</span><span class="kw">.</span><span class="dt">black</span><span class="kw">]</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="dt">line-length</span> <span class="op">=</span> <span class="dv">120</span></span></code></pre>
 </div>
 <p>Not all popular Python tools have adopted <code>pyproject.toml</code>
 yet. Notably, the linter <a href="https://flake8.pycqa.org/en/latest/" class="external-link"><code>flake8</code></a>
@@ -1108,9 +1117,9 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://LiamPattinson.github.io/python-packaging/instructor/03-building-and-installing.html",
   "identifier": "https://LiamPattinson.github.io/python-packaging/instructor/03-building-and-installing.html",
-  "dateCreated": "2023-01-17",
-  "dateModified": "2023-01-17",
-  "datePublished": "2023-01-17"
+  "dateCreated": "2023-01-18",
+  "dateModified": "2023-01-18",
+  "datePublished": "2023-01-18"
 }
 
   </script><script>

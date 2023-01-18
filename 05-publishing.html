@@ -194,7 +194,11 @@
 <li><a href="#versions-and-releases">Versions and Releases</a></li>
 <li><a href="#preparing-to-publish">Preparing to Publish</a></li>
 <li><a href="#publishing-our-software-on-github">Publishing our Software on GitHub</a></li>
-<li><a href="#publishing-our-software-on-pypi">Publishing our Software on PyPI</a></li>
+<li><a href="#extra-consistent-versioning-with-setuptools-scm">Extra: Consistent Versioning with <code>setuptools-scm</code></a></li>
+<li><a href="#pypi-the-python-packaging-index">PyPI, the Python Packaging Index</a></li>
+<li><a href="#wheel-files">Wheel files</a></li>
+<li><a href="#build-and-twine"><code>build</code> and <code>twine</code></a></li>
+<li><a href="#extra-automating-package-publishing-with-github-actions">Extra: Automating Package Publishing with GitHub Actions</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
         
@@ -252,7 +256,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Publishing our Python Packages</h1>
-        <p> Last updated on 2023-01-16 | 
+        <p> Last updated on 2023-01-18 | 
         
         <a href="https://github.com/LiamPattinson/python-packaging/edit/main/episodes/05-publishing.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
         
@@ -307,13 +311,14 @@ the preparatory steps we should take before publishing our code.</p>
 </h2>
 <hr class="half-width"><p>Users of our software will expect it to stay consistent over time. If
 we were to suddenly rename a function, or change what arguments it
-takes, this could break our external user’s code, which in turn could
-break a third user’s software, etc.</p>
-<p>A good solution to this problem is to use ‘semantic versioning’ for
-our code. Using semanic versioning, we will periodically make a new
-‘release’ of our code, each time updating its version number, and the
-way we change the number informs our users of whether the changes to our
-code will break compatibility. In its most basic form, semantic
+takes, this could break our user’s code, which in turn could break
+another developer’s code, etc.</p>
+<p>A good solution to this problem is to use ‘semantic versioning’, in
+which the version number contains compatibility information in a widely
+agreed-upon format. Using semanic versioning, we will periodically make
+a new ‘release’ of our code, each time updating its version number, and
+the way we change the number informs our users of whether the changes to
+our code will break compatibility. In its most basic form, semantic
 versioning requires 3 numbers, separated by periods, i.e. 1.2.3. These
 numbers stand for MAJOR.MINOR.PATCH, and are typically updated
 right-to-left. The meaning of each number is:</p>
@@ -487,8 +492,24 @@ incremented, and the patch number should be reset to zero.</p>
 <div class="callout-content">
 <p>Our users seem to prefer the <code>fibonacci_list</code> function, so
 we decide to streamline our software by removing the original function
-and renaming the new one <code>fibonacci</code>. If the previous version
-was 3.4.5, what should the new version be?</p>
+and renaming the new one <code>fibonacci</code>.</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fibonacci(n):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="op">&lt;</span> <span class="dv">0</span>:</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"n must be greater than or equal to 0"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> n <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> [<span class="dv">0</span>]</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">1</span>]</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> n <span class="op">&gt;</span> <span class="dv">1</span>:</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>            result.append(result[<span class="op">-</span><span class="dv">1</span>] <span class="op">+</span> result[<span class="op">-</span><span class="dv">2</span>])</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>            n <span class="op">-=</span> <span class="dv">1</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> result</span></code></pre>
+</div>
+<p>If the previous version was 3.4.5, what should the new version
+be?</p>
 </div>
 </div>
 </div>
@@ -512,21 +533,21 @@ patch numbers to zero.</p>
 </div>
 <p>We can add a version to our code by adding a <code>__version__</code>
 to our top-most <code>__init__.py</code> file:</p>
-<div class="codewrapper sourceCode" id="cb5">
+<div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: epi_models/__init__.py</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>__version__ <span class="op">=</span> <span class="st">"1.2.3"</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: epi_models/__init__.py</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>__version__ <span class="op">=</span> <span class="st">"1.2.3"</span></span></code></pre>
 </div>
 <p>This should also be reflected in our <code>pyproject.toml</code>:</p>
-<div class="codewrapper sourceCode" id="cb6">
+<div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">]</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"1.2.3"</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">]</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"1.2.3"</span></span></code></pre>
 </div>
 <p>To avoid having to keep these up-to-date manually, we’ll see later
 how to automatically generate version info using <code>git</code>
@@ -534,14 +555,15 @@ tags.</p>
 <p>Something to note about the major and minor version numbers is that
 they only need to be updated if we change the <em>public API</em> of our
 software. Therefore, if we change the behaviour of any functions or
-classes intended for internal use, and the public API is unchanged we
+classes intended for internal use, and the public API is unchanged, we
 only need to update the patch number.</p>
-<p>We can indicate that a function, class, or variable is only intended
-for internal use by prepending their name with an underscore
-(i.e. <code>_myvar</code>, <code>_myfunc</code>, <code>_MyClass</code>).
-Alternatively, if our project includes rich documentation, it may be
-assumed that any objects that aren’t included in the user API are for
-internal usage.</p>
+<p>As discussed in our <a href="02-packages.html">lesson on
+packages</a>, e can indicate that a function, class, or variable is only
+intended for internal use by prepending their name with an underscore
+(i.e. <code>_myvar</code>, <code>_myfunc</code>, <code>_MyClass</code>),
+excluding it from <code>__all__</code>, and excluding it from the user
+API in any published documentation (although it may be a good idea to
+document private objects in a separate developer API).</p>
 <p>When we update the version of our software and release it publically,
 we must not go back and change it, no matter how tempting the prospect
 may be! Any fixes to our software may be perfomed by further releases,
@@ -556,12 +578,12 @@ stated to our users, and they should be strongly advised to upgrade.</p>
 understand the behaviour of the ‘compatible release’ comparator
 <code>~=</code> that we can use when setting dependencies in
 <code>pyproject.toml</code>:</p>
-<div class="codewrapper sourceCode" id="cb7">
+<div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"numpy ~= 1.22.1"</span><span class="op">,</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"numpy ~= 1.22.1"</span><span class="op">,</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
 </div>
 <p>This means that we require a version of NumPy which has at least all
 of the features of version 1.22.1, but maintains backwards compatibility
@@ -570,12 +592,12 @@ that matches, so if a patch is released, it will get version 1.22.2. If
 a new minor version is released, it will install 1.23.0. This continues
 until the release of 2.0.0, which <code>pip</code> will not install.
 This is equivalent to:</p>
-<div class="codewrapper sourceCode" id="cb8">
+<div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"numpy &gt;= 1.22.1, == 1.*"</span><span class="op">,</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"numpy &gt;= 1.22.1, == 1.*"</span><span class="op">,</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="unstable-versions">Unstable Versions<a class="anchor" aria-label="anchor" href="#unstable-versions"></a></h3>
@@ -593,25 +615,25 @@ to 1.0.0.</p>
 <p>If one of the dependencies in your project is still in an unstable
 state, it may be a good idea to fix the minor version number instead of
 using the compatible release comparator <code>~=</code>:</p>
-<div class="codewrapper sourceCode" id="cb9">
-<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"unstable_project &gt;= 0.6.2, == 0.6.*"</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
-</div>
-<p>This is because the <code>~= 0.6</code> will get the latest release
-from <code>0.6.0</code> to <code>1.0.0</code> (not included), but in
-this case version 0.7 might break backwards compatibility with 0.6. Note
-that some unstable projects may also break backwards compatibiliy in
-their patch releases, as the regular rules don’t really apply. In these
-cases, it may be better to fix even the patch number:</p>
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"unstable_project == 0.6.2"</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"unstable_project &gt;= 0.6.2, == 0.6.*"</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
+</div>
+<p>This is because the <code>~= 0.6</code> will get the latest release
+which is at least <code>0.6.0</code> but less than<code>1.0.0</code>,
+but in this case version <code>0.7</code> might break backwards
+compatibility with <code>0.6</code>. Note that some unstable projects
+may also break backwards compatibiliy in their patch releases. In these
+cases, it may be better to fix even the patch number:</p>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"unstable_project == 0.6.2"</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
 </div>
 </div>
 <div class="section level3">
@@ -621,31 +643,31 @@ we plan to remove features that they might depend upon in our next major
 release. For this reason, many developers will implement deprecation
 warnings to alert users that the API is due to change in future, and
 that they should update their code accordingly. For example:</p>
-<div class="codewrapper sourceCode" id="cb11">
+<div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> myfunc():</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    warnings.warn(</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"myfunc is deprecated, and wil be removed in version 4"</span>,</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="pp">DeprecationWarning</span>,</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">42</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> myfunc():</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    warnings.warn(</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"myfunc is deprecated, and wil be removed in version 4"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        <span class="pp">DeprecationWarning</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">42</span></span></code></pre>
 </div>
 <p>When adding deprecations to our code, we should update the minor
-version, and include them in our changelog (discussed later). When we
-follow through on our deprecations and remove features, this should also
-be clearly stated in the changelog of our major release.</p>
+version, and include them in our changelog. When we follow through on
+our deprecations and remove features, this should also be clearly stated
+in the changelog of our major release.</p>
 </div>
 <div class="section level3">
-<h3 id="advanced-versioning">Advanced Versioning<a class="anchor" aria-label="anchor" href="#advanced-versioning"></a></h3>
+<h3 id="extra-advanced-versioning">Extra: Advanced Versioning<a class="anchor" aria-label="anchor" href="#extra-advanced-versioning"></a></h3>
 
 <p>There are many more fine-grained versioning techniques that may be
 employed as our projects grow in complexity, although these are not
 universally adopted and may only be applicable to very large projects
 with a detailed review process. The full list of version types accepted
-by tools such as pip is listed in <a href="https://peps.python.org/pep-0440/" class="external-link">PEP 440</a>, while the formal
+by tools such as <code>pip</code> is listed in <a href="https://peps.python.org/pep-0440/" class="external-link">PEP 440</a>, while the formal
 specification for semantic versioning can be found at <a href="https://semver.org" class="external-link">semver.org</a>. For example, we may provide
 pre-release specifiers:</p>
 <ul><li>1.1.0a0: The first alpha version of 1.1.0. This is intended for use
@@ -691,41 +713,41 @@ numbers, letters, and hyphens, e.g. <code>1.1.0+001</code>,
 others know what it is and how it works! A good README file should
 explain what a project is for, how users can install it, and how to use
 it. For example, we may use the following file <code>README.md</code>,
-written using markdown.</p>
-<div class="codewrapper sourceCode" id="cb12">
+written using markdown:</p>
+<div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="in">    # epi_models</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="in">    A collection of Python utilities for solving epidemiology problems.</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="in">    ## Installation</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="in">    The project can be installed using \`pip\`:</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="in">    $ pip install epi_models</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="in">    To install from this repo:</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="in">    $ git clone github.com/username/epi_models</span></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="in">    $ cd epi_models</span></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="in">    $ pip install .</span></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="in">    ## Usage</span></span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="in">    The project offers a command line interface, which can be used as</span></span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="in">    follows:</span></span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="in">    $ epi_models SIR input.yaml</span></span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="in">    `SIR` can be exchanged for a model of your choice, and `input.yaml`</span></span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="in">    is an input file with the following entries...</span></span></code></pre>
+<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="in">    # epi_models</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="in">    A collection of Python utilities for solving epidemiology problems.</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="in">    ## Installation</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="in">    The project can be installed using \`pip\`:</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="in">    $ pip install epi_models</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="in">    To install from this repo:</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="in">    $ git clone github.com/username/epi_models</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="in">    $ cd epi_models</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="in">    $ pip install .</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="in">    ## Usage</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="in">    The project offers a command line interface, which can be used as</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="in">    follows:</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="in">    $ epi_models SIR input.yaml</span></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a><span class="in">    ```</span></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a><span class="in">    `SIR` can be exchanged for a model of your choice, and `input.yaml`</span></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="in">    is an input file with the following entries...</span></span></code></pre>
 </div>
 <p>This should be included at the top level of our project:</p>
 <p><code> 📁 epi_models<br> |<br> |____📜 pyproject.toml<br> |____📜
@@ -734,13 +756,13 @@ __init__.py<br>      |____📜 __main__.py<br>      |____📁 models<b
      |____📁 plotting<br></code></p>
 <p>It should be included in our package metadata by adding the following
 line in our <code>pyproject.toml</code>:</p>
-<div class="codewrapper sourceCode" id="cb13">
+<div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">]</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="dt">readme</span> <span class="op">=</span> <span class="st">"README.md"</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">]</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="dt">readme</span> <span class="op">=</span> <span class="st">"README.md"</span></span></code></pre>
 </div>
 </div>
 <div class="section level3">
@@ -790,19 +812,22 @@ example, if your code uses software licensed under the GNU GPLv3.0
 license, it too should be licensed under GPLv3.0.</p>
 <p>We should include our license in our <code>pyproject.toml</code> file
 as follows:</p>
-<div class="codewrapper sourceCode" id="cb15">
-<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">]</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="dt">license</span> <span class="op">=</span> <span class="op">{</span><span class="dt">file</span><span class="op"> =</span> <span class="st">"LICENSE.md"</span><span class="op">}</span></span></code></pre>
-</div>
-<p>We can instead simply state the name of the license:</p>
 <div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">]</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="dt">license</span> <span class="op">=</span> <span class="op">{</span><span class="dt">text</span><span class="op"> =</span> <span class="st">"MIT License"</span><span class="op">}</span></span></code></pre>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="dt">license</span> <span class="op">=</span> <span class="op">{</span><span class="dt">file</span><span class="op"> =</span> <span class="st">"LICENSE.md"</span><span class="op">}</span></span></code></pre>
 </div>
+<p>We can instead simply state the name of the license:</p>
+<div class="codewrapper sourceCode" id="cb17">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">]</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="dt">license</span> <span class="op">=</span> <span class="op">{</span><span class="dt">text</span><span class="op"> =</span> <span class="st">"MIT License"</span><span class="op">}</span></span></code></pre>
+</div>
+<p>If you’re developing code on behalf of an organisation, it’s worth
+checking in with their legal team (or at the very least, your
+supervisor) before deciding on a license.</p>
 </div>
 </section><section id="publishing-our-software-on-github"><h2 class="section-heading">Publishing our Software on GitHub<a class="anchor" aria-label="anchor" href="#publishing-our-software-on-github"></a>
 </h2>
@@ -810,8 +835,8 @@ as follows:</p>
 track changes to our source code over time. This lesson is not the place
 for teaching how to use <code>git</code>, but it is highly recommended
 that you use it for managing your Python projects.</p>
-<p>GitHub is an online service for hosting software projects using
-<code>git</code>, and it is a great way to share our code and
+<p>GitHub is an online service for hosting <code>git</code>-based
+software projects, and it is a great way to share our code and
 collaborate with others.</p>
 <div id="callout1" class="callout callout">
 <div class="callout-square">
@@ -838,65 +863,63 @@ chronological order (so the latest changes should be first in the list),
 and should credit anybody who contributed to the code.</p>
 <p>With our code hosted on GitHub, it is possible for others to install
 it using <code>pip</code>:</p>
-<div class="codewrapper sourceCode" id="cb17">
+<div class="codewrapper sourceCode" id="cb18">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install <span class="st">"git+https://github.com/user/project"</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install <span class="st">"git+https://github.com/user/project"</span></span></code></pre>
 </div>
 <p>However, this will simply get the latest commit to the main branch,
 which may be a work-in-progress and not a true release. We can specify a
 particular release by providing the version number after an
 <code>@</code> sign:</p>
-<div class="codewrapper sourceCode" id="cb18">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install <span class="st">"git+https://github.com/user/project@1.2.3"</span></span></code></pre>
-</div>
-<p>Note that we can also supply a branch name, or a commit hash
-here:</p>
 <div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install <span class="st">"git+https://github.com/user/project@branch"</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install <span class="st">"git+https://github.com/user/project@1a2b3c4"</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install <span class="st">"git+https://github.com/user/project@1.2.3"</span></span></code></pre>
+</div>
+<p>Note that we can also supply a branch name or a commit hash here:</p>
+<div class="codewrapper sourceCode" id="cb20">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install <span class="st">"git+https://github.com/user/project@branch"</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install <span class="st">"git+https://github.com/user/project@1a2b3c4"</span></span></code></pre>
 </div>
 <p>Projects hosted on GitHub can also be added to dependencies in
 <code>pyproject.toml</code> as so:</p>
-<div class="codewrapper sourceCode" id="cb20">
+<div class="codewrapper sourceCode" id="cb21">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mypkg @ git+https://github.com/user/mypkg@1.2.3"</span><span class="op">,</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mypkg @ git+https://github.com/user/mypkg@1.2.3"</span><span class="op">,</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
 </div>
 <p>However, it is relatively slow for <code>pip</code> to install in
 this way, as it must clone the whole repository. We can instead install
 from a snapshot by pointing <code>pip</code> towards an archived
 <code>.zip</code>:</p>
-<div class="codewrapper sourceCode" id="cb21">
+<div class="codewrapper sourceCode" id="cb22">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install <span class="st">"https://github.com/user/project/archive/1.2.3.zip"</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install <span class="st">"https://github.com/user/project/archive/1.2.3.zip"</span></span></code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb22">
+<div class="codewrapper sourceCode" id="cb23">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mypkg @ https://github.com/user/mypkg/archive/1.2.3.zip"</span><span class="op">,</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mypkg @ https://github.com/user/mypkg/archive/1.2.3.zip"</span><span class="op">,</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
 </div>
 <p>However, this is still slower than installing from a dedicated Python
 package repository such as PyPI, which hosts pre-built <code>.whl</code>
-files, and it only allows our users to specify a singular version of our
+files, and it only allows our users to specify a single version of our
 code. This means that they may miss out on crucial patch releases. In
 general, it is a good idea to use GitHub to host our source code and to
 manage its development, and to use a service like PyPI to host packages
 that our users can install.</p>
-<div class="section level3">
-<h3 id="consistent-versioning-with-setuptools-scm">Consistent Versioning with <code>setuptools-scm</code>
-<a class="anchor" aria-label="anchor" href="#consistent-versioning-with-setuptools-scm"></a></h3>
-<p>An issue with using GitHub to create new releases is that the project
-version can easily become desynced. The version should be specified in
+</section><section id="extra-consistent-versioning-with-setuptools-scm"><h2 class="section-heading">Extra: Consistent Versioning with <code>setuptools-scm</code><a class="anchor" aria-label="anchor" href="#extra-consistent-versioning-with-setuptools-scm"></a>
+</h2>
+<hr class="half-width"><p>An issue with using GitHub to create new releases is that the project
+version can easily become desynced. The version needs to be specified in
 three places:</p>
 <ul><li>
 <code>git</code> tags, determined by releases on GitHub</li>
@@ -908,104 +931,104 @@ three places:</p>
 </ul><p>It is possible to have all three determined by <code>git</code> tags
 using <code>setuptools-scm</code>. This can be set as a requirement of
 the build system:</p>
-<div class="codewrapper sourceCode" id="cb23">
-<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">build-system</span><span class="kw">]</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"setuptools &gt;= 65"</span><span class="op">,</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"setuptools_scm[toml]"</span><span class="op">,</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"wheel"</span><span class="op">,</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="dt">build-backend</span> <span class="op">=</span> <span class="st">"setuptools.build_meta"</span></span></code></pre>
-</div>
-<p>With this, we no longer need to provide an entry for
-<code>project.version</code>, and instead should add:</p>
 <div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">]</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"epi_models"</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co"># version = "1.2.3" # no longer needed!</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="dt">dynamic</span> <span class="op">=</span> <span class="op">[</span><span class="st">"version"</span><span class="op">]</span></span></code></pre>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">build-system</span><span class="kw">]</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"setuptools &gt;= 65"</span><span class="op">,</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"setuptools_scm[toml]"</span><span class="op">,</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"wheel"</span><span class="op">,</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="dt">build-backend</span> <span class="op">=</span> <span class="st">"setuptools.build_meta"</span></span></code></pre>
 </div>
-<p>Following this, we should the following section elsewhere in
-<code>pyproject.toml</code>:</p>
+<p>With this, we no longer need to provide an entry for
+<code>project.version</code>, and instead should add:</p>
 <div class="codewrapper sourceCode" id="cb25">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">tool</span><span class="kw">.</span><span class="dt">setuptools_scm</span><span class="kw">]</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="dt">write_to</span> <span class="op">=</span> <span class="st">"epi_models/_version.py"</span></span></code></pre>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">]</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"epi_models"</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># version = "1.2.3" # no longer needed!</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="dt">dynamic</span> <span class="op">=</span> <span class="op">[</span><span class="st">"version"</span><span class="op">]</span></span></code></pre>
+</div>
+<p>Following this, we should add the following section elsewhere in
+<code>pyproject.toml</code>:</p>
+<div class="codewrapper sourceCode" id="cb26">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">tool</span><span class="kw">.</span><span class="dt">setuptools_scm</span><span class="kw">]</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="dt">write_to</span> <span class="op">=</span> <span class="st">"epi_models/_version.py"</span></span></code></pre>
 </div>
 <p>Now, when we install or build the project,
 <code>setuptools-scm</code> will create a new file
 <code>_version.py</code> inside of our built package. If our git tag is
 <code>1.2.3</code>, this will contain:</p>
-<div class="codewrapper sourceCode" id="cb26">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file generated by setuptools_scm</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># don't change, don't track in version control</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>__version__ <span class="op">=</span> version <span class="op">=</span> <span class="st">'1.2.3'</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>__version_tuple__ <span class="op">=</span> version_tuple <span class="op">=</span> (<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span></code></pre>
-</div>
-<p>This can be retrieved at runtime by adding the following to
-<code>__init__.py</code>:</p>
 <div class="codewrapper sourceCode" id="cb27">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: __init__.py</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> importlib.metadata <span class="im">import</span> version, PackageNotFoundError</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    __version__ <span class="op">=</span> version(<span class="st">"epi_models"</span>)</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> PackageNotFoundError:</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If the package is not installed, don't add a version</span></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file generated by setuptools_scm</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># don't change, don't track in version control</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>__version__ <span class="op">=</span> version <span class="op">=</span> <span class="st">'1.2.3'</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>__version_tuple__ <span class="op">=</span> version_tuple <span class="op">=</span> (<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span></code></pre>
 </div>
-<p>Note that <code>importlib.metadata</code> was added to the standard
-Python library in version 3.8. Earlier versions will need to instead
-load <code>importlib_metadata</code>:</p>
+<p>This can be retrieved at runtime by adding the following to
+<code>__init__.py</code>:</p>
 <div class="codewrapper sourceCode" id="cb28">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: __init__.py</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> importlib.metadata <span class="im">import</span> version, PackageNotFoundError</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ImportError</span>:</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> importlib_metadata <span class="im">import</span> version, PackageNotFoundError</span></code></pre>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> importlib.metadata <span class="im">import</span> version, PackageNotFoundError</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    __version__ <span class="op">=</span> version(<span class="st">"epi_models"</span>)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> PackageNotFoundError:</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If the package is not installed, don't add __version__</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code></pre>
 </div>
-<p>We can add this to our <code>pyproject.toml</code> as follows:</p>
+<p>Note that <code>importlib.metadata</code> was added to the Python
+standard library in version 3.8. Earlier versions will need to instead
+load an external package <code>importlib_metadata</code>, which works in
+the same way. We can account for both using:</p>
 <div class="codewrapper sourceCode" id="cb29">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: __init__.py</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> importlib.metadata <span class="im">import</span> version, PackageNotFoundError</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ImportError</span>:</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> importlib_metadata <span class="im">import</span> version, PackageNotFoundError</span></code></pre>
+</div>
+<p>We’ll also need to account for <code>importlib_metadata</code> in our
+<code>pyproject.toml</code> as follows:</p>
+<div class="codewrapper sourceCode" id="cb30">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">]</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'</span><span class="vs">importlib_metadata; python_version &lt; "3.8"</span><span class="st">'</span><span class="op">,</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">]</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'</span><span class="vs">importlib_metadata; python_version &lt; "3.8"</span><span class="st">'</span><span class="op">,</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
 </div>
-<p>Now, our Git tags, <code>__version__</code> variable, and
-<code>pyproject.toml</code> <code>version</code> will all refer to the
-same place, and there is much less chance of them accidentally falling
-out-of-sync.</p>
-</div>
-</section><section id="publishing-our-software-on-pypi"><h2 class="section-heading">Publishing our Software on PyPI<a class="anchor" aria-label="anchor" href="#publishing-our-software-on-pypi"></a>
+<p>Now, our Git tags, <code>__version__</code>, and
+<code>pyproject.toml</code> <code>version</code> will automatically be
+kept in sync.</p>
+</section><section id="pypi-the-python-packaging-index"><h2 class="section-heading">PyPI, the Python Packaging Index<a class="anchor" aria-label="anchor" href="#pypi-the-python-packaging-index"></a>
 </h2>
-<hr class="half-width"><p><a href="https://pypi.org" class="external-link">PyPI</a>, the Python Packaging Index, is
-the official package repository for the Python community. It is
-equivalent to CRAN, used for the R programming language. This is the
-repository that <code>pip</code> uses when we install remote packages
-from the command line. It is recommended to upload packages here if we
-want our projects to reach a wider audience.</p>
+<hr class="half-width"><p><a href="https://pypi.org" class="external-link">PyPI</a> is the official package
+repository for the Python community. It is equivalent to CRAN, used for
+the R programming language. This is the repository that <code>pip</code>
+uses when we install remote packages from the command line. It is
+recommended to upload packages here if we want our projects to reach a
+wider audience.</p>
 <figure><img src="fig/pypi.png" alt="The Python Packaging Index" class="figure mx-auto d-block"><figcaption>PyPI_screenshot</figcaption></figure><p>To begin, you will need to create an account on <a href="https://pypi.org" class="external-link">PyPI</a> and its sister-site, <a href="https://test.pypi.org" class="external-link">TestPyPI</a> – the latter is used to check
 that our packages have been uploaded and set up properly before
 committing to the standard repository.</p>
@@ -1014,47 +1037,51 @@ some keywords they can search for. We can also add ‘classifiers’ that
 categorise our project and describe its intended audience. A list of
 possible classifiers are available on the <a href="https://pypi.org/classifiers" class="external-link">PyPI website</a>. These should be
 added to our <code>pyproject.toml</code>:</p>
-<div class="codewrapper sourceCode" id="cb30">
+<div class="codewrapper sourceCode" id="cb31">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">]</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co"># keywords should contain search terms so users can</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co"># find our project</span></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="dt">keywords</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"epimediology"</span><span class="op">,</span></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"virology"</span><span class="op">,</span></span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SIR"</span><span class="op">,</span></span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SEIR"</span><span class="op">,</span></span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Compartmental"</span><span class="op">,</span></span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Model"</span><span class="op">,</span></span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span>
-<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Classifiers are a standard set of categories for</span></span>
-<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a><span class="co"># our project, including which level of development</span></span>
-<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a><span class="co"># we're at, who our intended audience is, which</span></span>
-<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a><span class="co"># license we're using, etc.</span></span>
-<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a><span class="dt">classifiers</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Development Status :: 3 - Alpha"</span><span class="op">,</span></span>
-<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Intended Audience :: Science/Research"</span><span class="op">,</span></span>
-<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"License :: OSI Approved :: MIT License"</span><span class="op">,</span></span>
-<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Natural Language :: English"</span><span class="op">,</span></span>
-<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Operating System :: OS Independent"</span><span class="op">,</span></span>
-<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Programming Language :: Python :: 3.8"</span><span class="op">,</span></span>
-<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Topic :: Scientific/Engineering"</span><span class="op">,</span></span>
-<span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">]</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="co"># keywords should contain search terms so users can</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="co"># find our project</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="dt">keywords</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"epimediology"</span><span class="op">,</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"virology"</span><span class="op">,</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SIR"</span><span class="op">,</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SEIR"</span><span class="op">,</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Compartmental"</span><span class="op">,</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Model"</span><span class="op">,</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Classifiers are a standard set of categories for</span></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a><span class="co"># our project, including which level of development</span></span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a><span class="co"># we're at, who our intended audience is, which</span></span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a><span class="co"># license we're using, etc.</span></span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a><span class="dt">classifiers</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Development Status :: 3 - Alpha"</span><span class="op">,</span></span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Intended Audience :: Science/Research"</span><span class="op">,</span></span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"License :: OSI Approved :: MIT License"</span><span class="op">,</span></span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Natural Language :: English"</span><span class="op">,</span></span>
+<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Operating System :: OS Independent"</span><span class="op">,</span></span>
+<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Programming Language :: Python :: 3.8"</span><span class="op">,</span></span>
+<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Topic :: Scientific/Engineering"</span><span class="op">,</span></span>
+<span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
 </div>
-<div class="section level3">
-<h3 id="wheels"><code>wheels</code><a class="anchor" aria-label="anchor" href="#wheels"></a></h3>
-<p>When we install packages using <code>pip</code>, it first creates a
-‘wheel’ file. For example</p>
-<div class="codewrapper sourceCode" id="cb31">
+<p>Before discussing how to get our project hosted on PyPI, we’ll
+quickly discuss ‘wheel’ files, which are the standard way for Python to
+distribute packages.</p>
+</section><section id="wheel-files"><h2 class="section-heading">Wheel files<a class="anchor" aria-label="anchor" href="#wheel-files"></a>
+</h2>
+<hr class="half-width"><p>When we install packages using <code>pip</code>, it first creates a
+‘wheel’ file, with the file extension <code>.whl</code>. For
+example:</p>
+<div class="codewrapper sourceCode" id="cb32">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd epi_models</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install .</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd epi_models</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install .</span></code></pre>
 </div>
 <pre class="result"><code>... installs dependencies ...
 
@@ -1068,39 +1095,21 @@ Successfully installed epi-models-0.1.0</code></pre>
 <p>The installation goes through several steps:</p>
 <ul><li>
 <code>pip</code> analyses our package and creates a
-<code>*.whl</code> file.</li>
-<li>The <code>*.whl</code> file is stored in a temporary directory.</li>
-<li>The package is installed to our system from the <code>*.whl</code>
+<code>.whl</code> file.</li>
+<li>The <code>.whl</code> file is stored in a temporary directory.</li>
+<li>The package is installed to our system from the <code>.whl</code>
 file.</li>
 </ul><p>After installation, we can find our installed package at
 <code>/path/to/my/env/lib/python3.8/site-packages/epi_models</code>, and
 within we’ll find that every file has been compiled to Python bytecode,
-contained within <code>__pycache__</code> directories:</p>
-<div class="codewrapper sourceCode" id="cb33">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls /path/to/my/env/lib/python3.8/site-packages/epi_models</span></code></pre>
-</div>
-<pre class="result"><code>__init__.py __main__.py models plotting __pycache__</code></pre>
-<div class="codewrapper sourceCode" id="cb35">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls /path/to/my/env/lib/python3.8/site-packages/epi_models/__pycache__</span></code></pre>
-</div>
-<pre class="result"><code>__init__.cpython-38.pyc __main__.cpython-38.pyc</code></pre>
-<p>Python bytecode is a simpler and lower level language that is
-understood by the Python Virtual Machine (PVM). The Python interpretter
-always converts our code to bytecode before running it, and Python will
-also compile modules to bytecode when we <code>import</code> them. By
-precompiling our modules, it will be much faster to import and run
-them.</p>
-<p>So what is a wheel file, and how does it help with this process?</p>
+contained within <code>__pycache__</code> directories. So what is a
+wheel file, and how does it help with this process?</p>
 <p>A wheel is a standard package distribution format, defined in <a href="https://peps.python.org/pep-0427/" class="external-link">PEP 427</a>. It is essentially
-a <code>*.zip</code> file containing our package contents with a
-descriptive name. When we installed our package above it created the
-following wheel file:</p>
+a <code>.zip</code> file with a descriptive name that contains our
+package. When we installed our package above it created the following
+wheel file:</p>
 <pre><code>epi_models-0.1.0-py3-none-any.whl</code></pre>
-<p>The filename has seveal components separated by hyphens. In order,
+<p>The filename has seveal components separated by dashes. In order,
 these are:</p>
 <ul><li>The package name</li>
 <li>The package version</li>
@@ -1126,110 +1135,114 @@ wheel file, which contains all Python files in our package along with
 any compiled binaries for extensions written in C. When a wheel file is
 installed, Python files are compiled to bytecode, and the package is
 installed to the <code>site-packages</code> of our environment.</p>
-</div>
-<div class="section level3">
-<h3 id="build-and-twine">
-<code>build</code> and <code>twine</code>
-<a class="anchor" aria-label="anchor" href="#build-and-twine"></a></h3>
-<p>So how do we create a wheel file to upload? The standard tool used to
+<p>As the wheel file contains compatibility information in its name,
+<code>pip</code> can quickly check to see whether any wheels uploaded to
+PyPI are compatible with our system whenever we try to install
+something. In order to meet the needs of as many users as possible, it’s
+also possible for us to upload multiple wheels for each release – one
+for each targeted Python version and operating system.</p>
+</section><section id="build-and-twine"><h2 class="section-heading">
+<code>build</code> and <code>twine</code><a class="anchor" aria-label="anchor" href="#build-and-twine"></a>
+</h2>
+<hr class="half-width"><p>So how do we create a wheel file to upload? The standard tool used to
 create wheel files is <code>build</code>:</p>
-<div class="codewrapper sourceCode" id="cb38">
+<div class="codewrapper sourceCode" id="cb35">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install build</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install build</span></code></pre>
 </div>
 <p>As we already have a <code>pyproject.toml</code>, <code>build</code>
 has everything it needs to create a wheel file. It can be called simply
-using</p>
-<div class="codewrapper sourceCode" id="cb39">
+using:</p>
+<div class="codewrapper sourceCode" id="cb36">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> build</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> build</span></code></pre>
 </div>
-<p>This will create a new directory <code>.dist/</code> containing the
+<p>This will create a new directory <code>./dist</code> containing the
 following:</p>
 <p><code> 📁 dist<br> |<br> |____📜
 epi_models-0.1.0-py3-none-any.whl<br> |____📜
 epi_models-0.1.0.tar.gz<br></code></p>
 <p>We can see the contents of the <code>.whl</code> file by unzipping
 it:</p>
-<div class="codewrapper sourceCode" id="cb40">
+<div class="codewrapper sourceCode" id="cb37">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd dist</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> unzip dist/epi_models-0.1.0-py3-none-any.whl</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd dist</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> unzip dist/epi_models-0.1.0-py3-none-any.whl</span></code></pre>
 </div>
 <p>We’ll see that it contains our package along with a second directory
 <code>epi_models-0.1.0.dist-info</code>, which contains package metadata
 such as our license and README file. Note that we should remove the
-unzipped directories before the upload stage.</p>
+unzipped directories from <code>./dist</code> before the upload
+stage.</p>
 <p>The second file <code>build</code> created is a <code>.tar.gz</code>
-file – a gzip compressed tarball. This is a ‘source distribution’, which
+file – a gzip-compressed tarball. This is a ‘source distribution’, which
 is used as a backup by <code>pip</code> if it can’t find a suitable
 wheel file to install.</p>
 <p>The tool for uploading our package to PyPI is <code>twine</code>:</p>
-<div class="codewrapper sourceCode" id="cb41">
+<div class="codewrapper sourceCode" id="cb38">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install twine</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install twine</span></code></pre>
 </div>
 <p>We can check that our package is well-formed by running
 <code>twine check</code>:</p>
-<div class="codewrapper sourceCode" id="cb42">
+<div class="codewrapper sourceCode" id="cb39">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> twine check dist/<span class="pp">*</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> twine check dist/<span class="pp">*</span></span></code></pre>
 </div>
 <p>If this returns that the package is okay, we can test the
 distribution of our package by uploading to TestPyPI:</p>
-<div class="codewrapper sourceCode" id="cb43">
+<div class="codewrapper sourceCode" id="cb40">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> twine upload <span class="at">--repository</span> testpypi dist/<span class="pp">*</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> twine upload <span class="at">--repository</span> testpypi dist/<span class="pp">*</span></span></code></pre>
 </div>
 <p>After checking that everything looks right on TestPyPI, we may
 proceed with installing our package to PyPI:</p>
-<div class="codewrapper sourceCode" id="cb44">
+<div class="codewrapper sourceCode" id="cb41">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> twine upload dist/<span class="pp">*</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> twine upload dist/<span class="pp">*</span></span></code></pre>
 </div>
 <p>That’s all we need! Users will then be able to install our package to
 any machine by calling the following:</p>
-<div class="codewrapper sourceCode" id="cb45">
+<div class="codewrapper sourceCode" id="cb42">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install epi_models</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install epi_models</span></code></pre>
 </div>
 <p>Similarly, it can be included as a dependency to other Python
 projects:</p>
-<div class="codewrapper sourceCode" id="cb46">
+<div class="codewrapper sourceCode" id="cb43">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">]</span></span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"epi_models"</span><span class="op">,</span></span>
-<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">]</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"epi_models"</span><span class="op">,</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
 </div>
 <p>As we continue to develop our software, we should upload each new
 version to PyPI. Our users will then be able to request a particular
 version:</p>
-<div class="codewrapper sourceCode" id="cb47">
+<div class="codewrapper sourceCode" id="cb44">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">]</span></span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"epi_models ~= 1.2"</span><span class="op">,</span></span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">]</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"epi_models ~= 1.2"</span><span class="op">,</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
 </div>
-</div>
-<div class="section level3">
-<h3 id="automating-package-publishing-with-github-actions">Automating Package Publishing with GitHub Actions<a class="anchor" aria-label="anchor" href="#automating-package-publishing-with-github-actions"></a></h3>
-<p>We saw earlier how to ensure that the version of our package was
+</section><section id="extra-automating-package-publishing-with-github-actions"><h2 class="section-heading">Extra: Automating Package Publishing with GitHub Actions<a class="anchor" aria-label="anchor" href="#extra-automating-package-publishing-with-github-actions"></a>
+</h2>
+<hr class="half-width"><p>We saw earlier how to ensure that the version of our package was
 stored only in the Git tags. We can similarly set up our GitHub project
 to automatically publish our package whenever we make a new release. We
 can use GitHub Actions for this, which is a service used for continuous
@@ -1242,48 +1255,48 @@ commit is pushed or version is published.</li>
 specification is beyond the scope of this course, the following file
 will cause GitHub to automatically upload our package to PyPI with each
 new release:</p>
-<div class="codewrapper sourceCode" id="cb48">
+<div class="codewrapper sourceCode" id="cb45">
 <h3 class="code-label">YAML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode yaml" tabindex="0"><code class="sourceCode yaml"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Provide a name for the workflow</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Upload Python Package</span></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Tell GitHub when to run the action</span></span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="co"># This will run every time a new release is published</span></span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">release</span><span class="kw">:</span></span>
-<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">types</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">published</span><span class="kw">]</span></span>
-<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span></span>
-<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">deploy</span><span class="kw">:</span></span>
-<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a><span class="co">    # Run the workflow on the latest Ubuntu version</span></span>
-<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
-<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
-<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a><span class="co">      # This will checkout our GitHub project and enter</span></span>
-<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a><span class="co">      # the directory</span></span>
-<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v2</span></span>
-<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a><span class="co">      # This will set up a Python environment</span></span>
-<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Set up Python</span></span>
-<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/setup-python@v2</span></span>
-<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb48-22"><a href="#cb48-22" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">python-version</span><span class="kw">:</span><span class="at"> </span><span class="st">'3.x'</span></span>
-<span id="cb48-23"><a href="#cb48-23" aria-hidden="true" tabindex="-1"></a><span class="co">      # Here we update pip to the latest version and</span></span>
-<span id="cb48-24"><a href="#cb48-24" aria-hidden="true" tabindex="-1"></a><span class="co">      # install 'build'. We won't need 'twine' here.</span></span>
-<span id="cb48-25"><a href="#cb48-25" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install dependencies</span></span>
-<span id="cb48-26"><a href="#cb48-26" aria-hidden="true" tabindex="-1"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb48-27"><a href="#cb48-27" aria-hidden="true" tabindex="-1"></a>          python -m pip install --upgrade pip</span>
-<span id="cb48-28"><a href="#cb48-28" aria-hidden="true" tabindex="-1"></a>          pip install build</span>
-<span id="cb48-29"><a href="#cb48-29" aria-hidden="true" tabindex="-1"></a><span class="co">      # Here we run build to create a wheel and a</span></span>
-<span id="cb48-30"><a href="#cb48-30" aria-hidden="true" tabindex="-1"></a><span class="co">      # .tar.gz source distribution.</span></span>
-<span id="cb48-31"><a href="#cb48-31" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Build package</span></span>
-<span id="cb48-32"><a href="#cb48-32" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> python -m build --sdist --wheel</span></span>
-<span id="cb48-33"><a href="#cb48-33" aria-hidden="true" tabindex="-1"></a><span class="co">      # Finally, we use a pre-defined action to publish</span></span>
-<span id="cb48-34"><a href="#cb48-34" aria-hidden="true" tabindex="-1"></a><span class="co">      # our package in place of twine.</span></span>
-<span id="cb48-35"><a href="#cb48-35" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Publish package</span></span>
-<span id="cb48-36"><a href="#cb48-36" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> pypa/gh-action-pypi-publish@release/v1</span></span>
-<span id="cb48-37"><a href="#cb48-37" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb48-38"><a href="#cb48-38" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">user</span><span class="kw">:</span><span class="at"> __token__</span></span>
-<span id="cb48-39"><a href="#cb48-39" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">password</span><span class="kw">:</span><span class="at"> ${{ secrets.PYPI_API_TOKEN }}</span></span></code></pre>
+<pre class="sourceCode yaml" tabindex="0"><code class="sourceCode yaml"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Provide a name for the workflow</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Upload Python Package</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Tell GitHub when to run the action</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="co"># This will run every time a new release is published</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">release</span><span class="kw">:</span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">types</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">published</span><span class="kw">]</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">deploy</span><span class="kw">:</span></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a><span class="co">    # Run the workflow on the latest Ubuntu version</span></span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a><span class="co">      # This will checkout our GitHub project and enter</span></span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a><span class="co">      # the directory</span></span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v2</span></span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a><span class="co">      # This will set up a Python environment</span></span>
+<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Set up Python</span></span>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/setup-python@v2</span></span>
+<span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb45-22"><a href="#cb45-22" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">python-version</span><span class="kw">:</span><span class="at"> </span><span class="st">'3.x'</span></span>
+<span id="cb45-23"><a href="#cb45-23" aria-hidden="true" tabindex="-1"></a><span class="co">      # Here we update pip to the latest version and</span></span>
+<span id="cb45-24"><a href="#cb45-24" aria-hidden="true" tabindex="-1"></a><span class="co">      # install 'build'. We won't need 'twine' here.</span></span>
+<span id="cb45-25"><a href="#cb45-25" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install dependencies</span></span>
+<span id="cb45-26"><a href="#cb45-26" aria-hidden="true" tabindex="-1"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb45-27"><a href="#cb45-27" aria-hidden="true" tabindex="-1"></a>          python -m pip install --upgrade pip</span>
+<span id="cb45-28"><a href="#cb45-28" aria-hidden="true" tabindex="-1"></a>          pip install build</span>
+<span id="cb45-29"><a href="#cb45-29" aria-hidden="true" tabindex="-1"></a><span class="co">      # Here we run build to create a wheel and a</span></span>
+<span id="cb45-30"><a href="#cb45-30" aria-hidden="true" tabindex="-1"></a><span class="co">      # .tar.gz source distribution.</span></span>
+<span id="cb45-31"><a href="#cb45-31" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Build package</span></span>
+<span id="cb45-32"><a href="#cb45-32" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> python -m build --sdist --wheel</span></span>
+<span id="cb45-33"><a href="#cb45-33" aria-hidden="true" tabindex="-1"></a><span class="co">      # Finally, we use a pre-defined action to publish</span></span>
+<span id="cb45-34"><a href="#cb45-34" aria-hidden="true" tabindex="-1"></a><span class="co">      # our package in place of twine.</span></span>
+<span id="cb45-35"><a href="#cb45-35" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Publish package</span></span>
+<span id="cb45-36"><a href="#cb45-36" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> pypa/gh-action-pypi-publish@release/v1</span></span>
+<span id="cb45-37"><a href="#cb45-37" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb45-38"><a href="#cb45-38" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">user</span><span class="kw">:</span><span class="at"> __token__</span></span>
+<span id="cb45-39"><a href="#cb45-39" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">password</span><span class="kw">:</span><span class="at"> ${{ secrets.PYPI_API_TOKEN }}</span></span></code></pre>
 </div>
 <p>This should be included in the file
 <code>.github/workflows/publish.yml</code>, where the
@@ -1328,7 +1341,6 @@ their development.</li>
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use. 
  -->
-</div>
 </section></div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter"><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link" href="04-history-of-packaging.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
@@ -1382,9 +1394,9 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://LiamPattinson.github.io/python-packaging/05-publishing.html",
   "identifier": "https://LiamPattinson.github.io/python-packaging/05-publishing.html",
-  "dateCreated": "2023-01-17",
-  "dateModified": "2023-01-16",
-  "datePublished": "2023-01-17"
+  "dateCreated": "2023-01-18",
+  "dateModified": "2023-01-18",
+  "datePublished": "2023-01-18"
 }
 
   </script><script>

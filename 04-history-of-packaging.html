@@ -255,7 +255,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Extra: A History of Python Build Tools</h1>
-        <p> Last updated on 2023-01-17 | 
+        <p> Last updated on 2023-01-18 | 
         
         <a href="https://github.com/LiamPattinson/python-packaging/edit/main/episodes/04-history-of-packaging.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
         
@@ -295,7 +295,7 @@ packages changed so much of the years?</li>
 <section id="introduction"><h2 class="section-heading">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <hr class="half-width"><p>In the previous lesson, we showed how to install Python packages
-using the file <code>prproject.toml</code>. However, if you ever find
+using the file <code>pyproject.toml</code>. However, if you ever find
 yourself looking for online help on a Python packaging topic, you’ll
 likely find a large number of alternative methods being recommended.
 Some say you should use a file <code>setup.py</code>, while others
@@ -310,39 +310,30 @@ ones we’ve covered here. The intention here is not to present
 alternative methods so that you can use them in new projects, but rather
 to provide some context to the often confusing information out there,
 and to help if you ever find yourself working on a project that hasn’t
-yet updated to the latest systems.</p>
+yet updated to the latest standards.</p>
 </section><section id="in-the-beginning-there-was-distutils"><h2 class="section-heading">In the beginning, there was <code>distutils</code><a class="anchor" aria-label="anchor" href="#in-the-beginning-there-was-distutils"></a>
 </h2>
-<hr class="half-width"><p>First introduced with Python 2.2, <code>distutils</code> is the
-official Python package that allows users to install and distribute
-their own packages. However, it was deprecated in <a href="https://peps.python.org/pep-0632/" class="external-link">PEP 632</a>, having been
+<hr class="half-width"><p>First introduced with Python 2.2, <code>distutils</code> was a module
+of Python’s standard library that allowed users to install and
+distribute their own packages. However, it was deprecated in <a href="https://peps.python.org/pep-0632/" class="external-link">PEP 632</a>, having been
 superceded by <code>setuptools</code>. The primary issue with
 <code>distutils</code> is that it is strongly coupled to the user’s
-Python version, so the developers found they could not implement some
-features or fixes without breaking inter-version compatibility. There
-were further complaints that <code>distutils</code> was not well
-maintained or documented. Nowadays, it is recommended to use a
-combination of <code>pip</code> and <code>setuptools</code> instead, but
-it will be useful to briefly cover basic <code>distutils</code> usage so
-that we can understand some of the design choices that would follow.</p>
+Python version, and the developers found they could not implement some
+features or fixes without breaking inter-version compatibility.
+Nowadays, it is recommended to use a combination of <code>pip</code> and
+<code>setuptools</code> instead, but it will be useful to briefly cover
+basic <code>distutils</code> usage so that we can understand some of the
+design choices that would follow.</p>
 <p>To use <code>distutils</code> to install a package, the user would
 create a file <code>setup.py</code> and (optionally)
 <code>requirements.txt</code> in the same directory as the top-level
 package:</p>
 <p><code> 📁 epi_models<br> |<br> |____📜 setup.py<br> |____📜
 requirements.txt<br> |____📦 epi_models<br>      |<br>      |____📜
-__init__.py<br>      |____📜 __main__.py<br>      |<br>      |____📁
-models<br>      |    |<br>      |    |____📜 __init__.py<br>
-     |    |____📜 SIR.py<br>      |    |____📜 SEIR.py<br>
-     |    |____📜 SIS.py<br>      |    |____📜 utils.py<br>      |<br>
-     |____📁 plotting<br>           |<br>           |____📜
-__init__.py<br>           |____📜 plot_SIR.py<br>           |____📜
-plot_SEIR.py<br>           |____📜 plot_SIS.py<br></code></p>
-<p>Note that the project directory name is the same as the package name
-– this is a common project layout for Python projects, but we will see
-later how to achieve alternative layouts.</p>
-<p>The file <code>setup.py</code> should contain a script that describes
-the package and some metadata about the author. A very simple one might
+__init__.py<br>      |____📜 __main__.py<br>      |____📁 models<br>
+     |____📁 plotting<br></code></p>
+<p>The file <code>setup.py</code> should contain a script that contains
+metadata about the package and its author(s). A very simple one might
 look like this:</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -360,7 +351,10 @@ look like this:</p>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    packages<span class="op">=</span>[<span class="st">"epi_models"</span>, <span class="st">"epi_models.models"</span>, <span class="st">"epi_models.plotting"</span>],</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre>
 </div>
-<p>To install, <code>setup.py</code> can be run as a script with the
+<p>Note that each subpackage is explicitly listed, unlike modern systems
+that make assumptions about your directory structure and perform
+automatic package discovery.</p>
+<p>To install, <code>setup.py</code> could be run as a script with the
 argument <code>install</code>:</p>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -376,13 +370,15 @@ argument <code>install</code>:</p>
 </h3>
 <div class="callout-content">
 <p>Installing by running <code>setup.py</code> as a script is highly
-discouraged. Use <code>pip</code> instead!</p>
+discouraged. If you’re using a package that still uses
+<code>setup.py</code>, use <code>pip install .</code> as usual.</p>
 </div>
 </div>
 </div>
 <p>This creates a ‘source distribution’ in a new directory
 <code>./build</code>, and adds it to the current environment. We can see
-how this works by reading the output written to the terminal:</p>
+how the package is added to our environmentby reading the output written
+to the terminal:</p>
 <pre class="result"><code>creating /path/to/my/env/lib/python3.8/site-packages/epi_models
 copying build/lib/epi_models/__init__.py -&gt; /path/to/my/env/lib/python3.8/site-packages/epi_models
 creating /path/to/my/env/lib/python3.8/site-packages/epi_models/models
@@ -408,48 +404,37 @@ byte-compiling /path/to/my/env/lib/python3.8/site-packages/epi_models/plotting/p
 byte-compiling /path/to/my/env/lib/python3.8/site-packages/epi_models/plotting/plot_SEIR.py to plot_SEIR.cpython-38.pyc
 byte-compiling /path/to/my/env/lib/python3.8/site-packages/epi_models/plotting/plot_SIR.py to plot_SIR.cpython-38.pyc
 byte-compiling /path/to/my/env/lib/python3.8/site-packages/epi_models/__main__.py to __main__.cpython-38.pyc</code></pre>
-<p>After building a package in the <code>./build</code> directory, which
-simply requires copying over all of our Python files into a special
-directory structure, each file and directory is copied into the
-<code>site-packages</code> directory in our virtual environment. This
-directory is located on Python’s import path, which we can view by
-calling:</p>
-<div class="codewrapper sourceCode" id="cb4">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> sys</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">print</span>(sys.path)</span></code></pre>
-</div>
-<pre class="result"><code>['', '/usr/lib/python38.zip', '/usr/lib/python3.8', '/usr/lib/python3.8/lib-dynload', '/path/to/my/env/lib/python3.8/site-packages']</code></pre>
-<p>We therefore do not need to modify the <code>PYTHONPATH</code>
-environment variable in order to import these modules from anywhere on
-our system.</p>
-<p>The second stage of installing our package is to compile each file
-into Python bytecode. This is a low-level representation of our code
-which is understood by the Python virtual machine on our system, and
-ultimately all Python code is reduced to this form before being imported
-or run. By pre-compiling each of our modules, any future imports will be
-much faster.</p>
-<p>A significant downside of <code>distutils</code> is that there is no
-way to safely uninstall a project once it has been installed, and
-instead the user must manually remove the package from their
-<code>site-packages</code> folder.</p>
-<p><code>distutils</code> also contains many other tools for adding
+<p>There are three stages:</p>
+<ul><li>First, create <code>./build</code> and make a source distribution
+there.</li>
+<li>Create a new directory within
+<code>/path/to/my/env/lib/python3.8/site-packages/</code>, and copy the
+contents of <code>./build/lib</code>.</li>
+<li>Compile each file to Python bytecode so it can be run more quickly
+later.</li>
+</ul><p>The end result is therefore very similar to what happens when we
+install using <code>pyproject.toml</code>. However, a significant
+downside of using <code>distutils</code> and <code>setup.py</code> is
+that there is no way to safely uninstall a project once it has been
+installed, and instead the user must manually remove the package from
+their <code>site-packages</code> folder. The creation of a
+<code>./build</code> directory also tends to clutter up our
+workspace.</p>
+<p><code>distutils</code> contains many other utilities, such as adding
 language extensions written in C. However, it does not allow users to
 specify dependencies, and these are instead expected to be listed in the
 file <code>requirements.txt</code>:</p>
-<pre><code><span><span class="va">matplotlib</span><span class="op">&gt;=</span><span class="fl">3.6</span></span>
-<span><span class="va">pyyaml</span><span class="op">&gt;=</span><span class="fl">6.0</span></span></code></pre>
+<pre><code><span><span class="va">matplotlib</span><span class="op">&gt;=</span><span class="fl">3.6</span></span></code></pre>
 <p>The user can install the requirements by calling:</p>
-<div class="codewrapper sourceCode" id="cb7">
+<div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip <span class="at">-r</span> requirements.txt</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip <span class="at">-r</span> requirements.txt</span></code></pre>
 </div>
 <p>It is not recommended to use <code>distutils</code> for new projects,
-and it will be removed from standard Python distributions starting from
-version 3.12. Listing dependencies in <code>requirements.txt</code> is
-also no longer required.</p>
+and it will be removed from standard Python distributions in version
+3.12. Listing dependencies in <code>requirements.txt</code> is also no
+longer required.</p>
 </section><section id="setuptools-and-egg-files"><h2 class="section-heading">
 <code>setuptools</code> and <code>egg</code> files<a class="anchor" aria-label="anchor" href="#setuptools-and-egg-files"></a>
 </h2>
@@ -462,49 +447,49 @@ better support across multiple Python versions. It has since superceded
 <p>Using <code>setuptools</code>, it is possible to use
 <code>setup.py</code> to define a package in much the same way as
 <code>distutils</code>:</p>
-<div class="codewrapper sourceCode" id="cb8">
+<div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: setup.py</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> setuptools <span class="im">import</span> setup</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>setup(</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span><span class="st">"epi_models"</span>,</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    version<span class="op">=</span><span class="st">"1.0"</span>,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    description<span class="op">=</span><span class="st">"Epidemiology modelling tools in Python"</span>,</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    author<span class="op">=</span><span class="st">"Jordan Smith"</span>,</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    author_email<span class="op">=</span><span class="st">"jsmith@email.net"</span>,</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    url<span class="op">=</span><span class="st">"https://github.com/jsmith1234/epi_models"</span>,</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    packages<span class="op">=</span>[<span class="st">"epi_models"</span>, <span class="st">"epi_models.models"</span>, <span class="st">"epi_models.plotting"</span>],</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    install_requires<span class="op">=</span>[<span class="st">"matplotlib&gt;=3.6"</span>, <span class="st">"pyyaml&gt;=6.0"</span>],</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: setup.py</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> setuptools <span class="im">import</span> setup</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>setup(</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span><span class="st">"epi_models"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    version<span class="op">=</span><span class="st">"1.0"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    description<span class="op">=</span><span class="st">"Epidemiology modelling tools in Python"</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    author<span class="op">=</span><span class="st">"Jordan Smith"</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    author_email<span class="op">=</span><span class="st">"jsmith@email.net"</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    url<span class="op">=</span><span class="st">"https://github.com/jsmith1234/epi_models"</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    packages<span class="op">=</span>[<span class="st">"epi_models"</span>, <span class="st">"epi_models.models"</span>, <span class="st">"epi_models.plotting"</span>],</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    install_requires<span class="op">=</span>[<span class="st">"matplotlib&gt;=3.6"</span>],</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre>
 </div>
 <p>Note the addition of an extra field, <code>install_requires</code>.
 This allows us to specify the dependencies without the extra file
 <code>requirements.txt</code>, and these libraries will be installed
 alongside our package when we install it.</p>
 <p>We can run this file just as we did with <code>distutils</code>:</p>
-<div class="codewrapper sourceCode" id="cb9">
+<div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 setup.py install</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 setup.py install</span></code></pre>
 </div>
 <p>Again, this will create a new directory <code>./build</code>, but it
-will also create a directory <code>./dist</code> containing a file with
-a name such as <code>epi_models-1.0-py3.8.egg</code>, and a directory
-<code>epi_models.egg-info</code> that contains metadata files describing
+will also create a directory <code>./dist</code>. Much as before,
+<code>./build</code> contains a ‘source distribution’ of our code, while
+<code>./dist</code> contains a file with a name such as
+<code>epi_models-1.0-py3.8.egg</code> and a directory
+<code>epi_models.egg-info</code> containing metadata files describing
 our project. The ‘egg’ file is a distributable package format used by
 <code>setuptools</code>, and is essentially just a <code>.zip</code>
-file containing our package with a name specifying its version and its
-Python version compatibility. We can show this on Linux systems using
-the <code>unzip</code> command line utility:</p>
-<div class="codewrapper sourceCode" id="cb10">
+file containing our package with a name specifying both the package
+version and the version of Python it runs on. We can show this on Linux
+systems using the <code>unzip</code> command line utility:</p>
+<div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> <span class="co"># unzip the egg file, put the results in a new folder 'test'</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> unzip dist/epi_models-1.0-py3.8.egg <span class="at">-d</span> test</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> <span class="co"># See what's inside</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls test</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> unzip dist/epi_models-1.0-py3.8.egg <span class="at">-d</span> test</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls test</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -528,29 +513,30 @@ text outputted when we installed:</p>
 <pre class="result"><code>Adding epi-models 1.0 to easy-install.pth file</code></pre>
 <p>If we look in our <code>site-packages</code> directory, we’ll see a
 file <code>easy-install.pth</code>. This is a path configuration file,
-denoted by the extension <code>*.pth</code>, and if any are found within
+denoted by the extension <code>.pth</code>, and if any are found within
 <code>site-packages</code> (or a number of other Python configuration
 directories), any additional items listed in it will be added to
 <code>sys.path</code> whenever Python is loaded up. If we look into this
 file, we find:</p>
-<div class="codewrapper sourceCode" id="cb13">
+<div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cat /path/to/my/env/lib/python3.8/site-packages/easy-install.pth</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cat /path/to/my/env/lib/python3.8/site-packages/easy-install.pth</span></code></pre>
 </div>
 <pre class="result"><code><span><span class="va">.</span><span class="op">/</span><span class="va">epi_models</span><span class="op">-</span><span class="fl">1.0</span><span class="op">-</span><span class="va">py3.8.egg</span></span></code></pre>
-<p>If we again check our <code>sys.path</code> variable in an
-interactive session, we’ll see that this is located on the path. Python
-is capable of running/importing zipped directories, so the egg file that
-was created in <code>./dist</code> and copied to
-<code>site-packages</code> will be used for any future imports.</p>
+<p>Therefore, rather than copying our source distribution into
+<code>site-packages</code>, <code>setuptools</code> has instead copied
+the egg file and added its location to <code>sys.path</code>. This last
+step is necessary, as while Python is capable of running/importing
+zipped directories, it doesn’t automatically search zip files on the
+import path for any modules contained within.</p>
 <p>Although there is still no way to uninstall using
 <code>setup.py</code>, it is possible to remove a package installed this
 way using pip:</p>
-<div class="codewrapper sourceCode" id="cb15">
+<div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip uninstall epi_models</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip uninstall epi_models</span></code></pre>
 </div>
 </section><section id="using-pip-instead-of-running-setup.py"><h2 class="section-heading">Using <code>pip</code> instead of running <code>setup.py</code><a class="anchor" aria-label="anchor" href="#using-pip-instead-of-running-setup.py"></a>
 </h2>
@@ -561,26 +547,17 @@ user’s workspace by creating local <code>./build</code> and
 <code>./dist</code> directories. Both of these problems can be solved
 using <code>pip</code>, which also provides a number of further
 benefits:</p>
-<div class="codewrapper sourceCode" id="cb16">
+<div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install .</span></code></pre>
-</div>
-<p>Alternatively, to ensure we’re using the right version of
-<code>pip</code> on systems that have both Python 2 and Python 3
-installed alongside each other, we may invoke <code>pip</code> as a
-runnable package:</p>
-<div class="codewrapper sourceCode" id="cb17">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip install .</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip install .</span></code></pre>
 </div>
 <p>This will install the library to the current Python environment. It
 can then be uninstalled using:</p>
-<div class="codewrapper sourceCode" id="cb18">
+<div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip uninstall epi_models</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip uninstall epi_models</span></code></pre>
 </div>
 <p>When installing with <code>pip</code> instead of running
 <code>setup.py</code>, no <code>./build</code> or <code>./dist</code>
@@ -605,19 +582,19 @@ come with their code pre-compiled.</p>
 <p>To aid code development, we can also create <em>editable
 installs</em>, in which the user’s changes to the code are automatically
 picked up and there is no need to reinstall:</p>
-<div class="codewrapper sourceCode" id="cb20">
+<div class="codewrapper sourceCode" id="cb17">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip install <span class="at">-e</span> .</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip install <span class="at">-e</span> .</span></code></pre>
 </div>
 <p>This works simply by adding the path of our working directory into
 <code>easy-install.pth</code> within the <code>site-packages</code>
 directory. It will also install any dependencies of the project as
 normal.</p>
-<p>As the usage of <code>setup.py</code> gained further criticism, even
+<p>The usage of <code>setup.py</code> gained further criticism, even
 when used alonside <code>pip</code>. As library writers were able to add
 arbitrary code to this file, setup scripts often became very long and
-confusing to understand for users. They could also contain potentially
+difficult for users to understand. They could also contain potentially
 dangerous (or even malicious) code that may not be apparent at first
 glance. <code>distutils</code> had also supported an alternative method
 of specifying package metadata using an additional file
@@ -639,34 +616,33 @@ __init__.py<br>      |____📜 __main__.py<br>      |____📁 models<b
      |____📁 plotting<br></code></p>
 <p><code>setup.py</code> is still present, but it can be reduced to a
 very simple form:</p>
-<div class="codewrapper sourceCode" id="cb21">
+<div class="codewrapper sourceCode" id="cb18">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: setup.py</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> setuptools <span class="im">import</span> setup</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>setup()</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: setup.py</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> setuptools <span class="im">import</span> setup</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>setup()</span></code></pre>
 </div>
 <p>The <code>setup.py</code> files we used earlier can be easily adapted
 to a corresponding <code>setup.cfg</code>:</p>
-<div class="codewrapper sourceCode" id="cb22">
+<div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">INI<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode ini" tabindex="0"><code class="sourceCode ini"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">; file: setup.cfg</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[metadata]</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="dt">name </span><span class="ot">=</span><span class="st"> epi_models</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="dt">version </span><span class="ot">=</span><span class="st"> </span><span class="fl">1.0</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="dt">description </span><span class="ot">=</span><span class="st"> Epidemiology modelling tools in Python</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="dt">author </span><span class="ot">=</span><span class="st"> Jordan Smith</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="dt">author_email </span><span class="ot">=</span><span class="st"> jsmith@email.net</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="dt">url </span><span class="ot">=</span><span class="st"> "https://github.com/jsmith1234/epi_models"</span></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="kw">[options]</span></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="dt">packages </span><span class="ot">=</span><span class="st"> find:</span></span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="dt">install_requires </span><span class="ot">=</span></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="dt">    matplotlib &gt;</span><span class="ot">=</span><span class="st"> </span><span class="fl">3.6</span></span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="dt">    pyyaml &gt;</span><span class="ot">=</span><span class="st"> </span><span class="fl">6.0</span></span></code></pre>
+<pre class="sourceCode ini" tabindex="0"><code class="sourceCode ini"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">; file: setup.cfg</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[metadata]</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="dt">name </span><span class="ot">=</span><span class="st"> epi_models</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="dt">version </span><span class="ot">=</span><span class="st"> </span><span class="fl">1.0</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="dt">description </span><span class="ot">=</span><span class="st"> Epidemiology modelling tools in Python</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="dt">author </span><span class="ot">=</span><span class="st"> Jordan Smith</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="dt">author_email </span><span class="ot">=</span><span class="st"> jsmith@email.net</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="dt">url </span><span class="ot">=</span><span class="st"> "https://github.com/jsmith1234/epi_models"</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="kw">[options]</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="dt">packages </span><span class="ot">=</span><span class="st"> find:</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="dt">install_requires </span><span class="ot">=</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="dt">    matplotlib &gt;</span><span class="ot">=</span><span class="st"> </span><span class="fl">3.6</span></span></code></pre>
 </div>
 <p>Note that the values on the right hand side of each equals sign are
 all intepretted as strings by default, and double quotes are only needed
@@ -684,20 +660,20 @@ deduce useful information about a package.</p>
 <p>Note that in converting our <code>setup.py</code> to a
 <code>setup.cfg</code>, we are no longer listing each package and
 subpackage, and instead we are using the line:</p>
-<div class="codewrapper sourceCode" id="cb23">
+<div class="codewrapper sourceCode" id="cb20">
 <h3 class="code-label">INI<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode ini" tabindex="0"><code class="sourceCode ini"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="dt">packages </span><span class="ot">=</span><span class="st"> find:</span></span></code></pre>
+<pre class="sourceCode ini" tabindex="0"><code class="sourceCode ini"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="dt">packages </span><span class="ot">=</span><span class="st"> find:</span></span></code></pre>
 </div>
 <p>This instructs <code>setuptools</code> to detect packages itself. We
 could instead specify this manually using:</p>
-<div class="codewrapper sourceCode" id="cb24">
+<div class="codewrapper sourceCode" id="cb21">
 <h3 class="code-label">INI<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode ini" tabindex="0"><code class="sourceCode ini"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="dt">packages </span><span class="ot">=</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="dt">    epi_models</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="dt">    epi_models.models</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="dt">    epi_models.plotting</span></span></code></pre>
+<pre class="sourceCode ini" tabindex="0"><code class="sourceCode ini"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="dt">packages </span><span class="ot">=</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="dt">    epi_models</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="dt">    epi_models.models</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="dt">    epi_models.plotting</span></span></code></pre>
 </div>
 <p>A common alternative project layout is to place the top-level package
 in a directory <code>src</code>:</p>
@@ -707,29 +683,29 @@ setup.cfg<br> |____📁 src<br>      |<br>      |____📦 epi_models<b
 __main__.py<br>           |____📁 models<br>           |____📁
 plotting<br></code></p>
 <p>Our <code>setup.cfg</code> file should be rewritten as follows:</p>
-<div class="codewrapper sourceCode" id="cb25">
+<div class="codewrapper sourceCode" id="cb22">
 <h3 class="code-label">INI<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode ini" tabindex="0"><code class="sourceCode ini"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[options]</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="dt">package_dir </span><span class="ot">=</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="dt">    </span><span class="ot">=</span><span class="st">src</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="dt">packages </span><span class="ot">=</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="dt">    epi_models</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="dt">    epi_models.models</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="dt">    epi_models.plotting</span></span></code></pre>
+<pre class="sourceCode ini" tabindex="0"><code class="sourceCode ini"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[options]</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="dt">package_dir </span><span class="ot">=</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="dt">    </span><span class="ot">=</span><span class="st">src</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="dt">packages </span><span class="ot">=</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="dt">    epi_models</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="dt">    epi_models.models</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="dt">    epi_models.plotting</span></span></code></pre>
 </div>
 <p>We can also continue using <code>packages = find:</code> by adding an
 extra heading to our config file:</p>
-<div class="codewrapper sourceCode" id="cb26">
+<div class="codewrapper sourceCode" id="cb23">
 <h3 class="code-label">INI<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode ini" tabindex="0"><code class="sourceCode ini"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[options]</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="dt">package_dir </span><span class="ot">=</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="dt">    </span><span class="ot">=</span><span class="st">src</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="dt">packages </span><span class="ot">=</span><span class="st"> find:</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="kw">[options.packages.find]</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="dt">where </span><span class="ot">=</span><span class="st"> src</span></span></code></pre>
+<pre class="sourceCode ini" tabindex="0"><code class="sourceCode ini"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[options]</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="dt">package_dir </span><span class="ot">=</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="dt">    </span><span class="ot">=</span><span class="st">src</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="dt">packages </span><span class="ot">=</span><span class="st"> find:</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="kw">[options.packages.find]</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="dt">where </span><span class="ot">=</span><span class="st"> src</span></span></code></pre>
 </div>
 <div id="callout2" class="callout callout">
 <div class="callout-square">
@@ -779,13 +755,13 @@ setup.py<br> |____📜 setup.cfg<br> |____📦 epi_models<br>      |<br>
      |____📜 __init__.py<br>      |____📜 __main__.py<br>      |____📁
 models<br>      |____📁 plotting<br></code></p>
 <p>At a minimum, it should contain the following:</p>
-<div class="codewrapper sourceCode" id="cb27">
+<div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">build-system</span><span class="kw">]</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span><span class="st">"setuptools &gt;= 61"</span><span class="op">]</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">build-system</span><span class="kw">]</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span><span class="st">"setuptools &gt;= 61"</span><span class="op">]</span></span></code></pre>
 </div>
 <p>Following this, we may install our package using <code>pip</code>
 without first having <code>setuptools</code> installed. If we have an
@@ -793,10 +769,10 @@ older version of <code>setuptools</code> installed, <code>pip</code>
 will now fetch the latest version in an isolated virtual environment
 prior to building our project.</p>
 <p>If we try installing however, we may find the following warnings:</p>
-<div class="codewrapper sourceCode" id="cb28">
+<div class="codewrapper sourceCode" id="cb25">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip install .</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip install .</span></code></pre>
 </div>
 <pre class="result"><code>WARNING: Missing build requirements in pyproject.toml for file:///my/file/path.
 WARNING: The project does not specify a build backend, and pip cannot fall back to setuptools without 'wheel'.</code></pre>
@@ -807,17 +783,17 @@ the build backend <code>setuptools.build_meta:__legacy__</code>), and it
 requires the additional package <code>wheel</code> (which we’ll discuss
 further in the next lesson). To explicitly set our build system, we must
 also provide a <code>build-backend</code>:</p>
-<div class="codewrapper sourceCode" id="cb30">
+<div class="codewrapper sourceCode" id="cb27">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">build-system</span><span class="kw">]</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"setuptools &gt;= 65"</span><span class="op">,</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"wheel &gt;= 0.38,</span></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="dt">build-backend</span> <span class="op">=</span> <span class="st">"setuptools.build_meta"</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">build-system</span><span class="kw">]</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"setuptools &gt;= 65"</span><span class="op">,</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"wheel &gt;= 0.38,</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="dt">build-backend</span> <span class="op">=</span> <span class="st">"setuptools.build_meta"</span></span></code></pre>
 </div>
 </section><section id="moving-to-pyproject.toml-only-builds"><h2 class="section-heading">Moving to <code>pyproject.toml</code>-only builds<a class="anchor" aria-label="anchor" href="#moving-to-pyproject.toml-only-builds"></a>
 </h2>
@@ -851,10 +827,10 @@ installs, and therefore the use of <code>setup.py</code> is no longer
 required. However, this feature was only recently implemented in
 <code>pip</code>, so users may need to upgrade if they wish to use this
 feature:</p>
-<div class="codewrapper sourceCode" id="cb31">
+<div class="codewrapper sourceCode" id="cb28">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install <span class="at">--upgrade</span> pip</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install <span class="at">--upgrade</span> pip</span></code></pre>
 </div>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
@@ -930,9 +906,9 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://LiamPattinson.github.io/python-packaging/04-history-of-packaging.html",
   "identifier": "https://LiamPattinson.github.io/python-packaging/04-history-of-packaging.html",
-  "dateCreated": "2023-01-17",
-  "dateModified": "2023-01-17",
-  "datePublished": "2023-01-17"
+  "dateCreated": "2023-01-18",
+  "dateModified": "2023-01-18",
+  "datePublished": "2023-01-18"
 }
 
   </script><script>
