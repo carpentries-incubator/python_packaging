@@ -37,21 +37,22 @@ publishing our code.
 
 Users of our software will expect it to stay consistent over time. If we were to
 suddenly rename a function, or change what arguments it takes, this could break our
-external user's code, which in turn could break a third user's software, etc.
+user's code, which in turn could break another developer's code, etc.
 
-A good solution to this problem is to use 'semantic versioning' for our code. Using
-semanic versioning, we will periodically make a new 'release' of our code, each time
-updating its version number, and the way we change the number informs our users of
-whether the changes to our code will break compatibility. In its most basic form,
-semantic versioning requires 3 numbers, separated by periods, i.e. 1.2.3. These
-numbers stand for MAJOR.MINOR.PATCH, and are typically updated right-to-left. The
-meaning of each number is:
+A good solution to this problem is to use 'semantic versioning', in which the version
+number contains compatibility information in a widely agreed-upon format. Using semanic
+versioning, we will periodically make a new 'release' of our code, each time
+updating its version number, and the way we change the number informs our users
+of whether the changes to our code will break compatibility. In its most basic
+form, semantic versioning requires 3 numbers, separated by periods, i.e. 1.2.3.
+These numbers stand for MAJOR.MINOR.PATCH, and are typically updated
+right-to-left. The meaning of each number is:
 
 - PATCH: We increment the patch number whenever we make an update that doesn't add or
   remove functionality. It can include things such as backwards-compatible bug fixes, 
   internal code restructuring, and performance improvements.
 - MINOR: The minor version should be incremented whenever we add new
-  backwards-compatible features to our code.  This can include the addition of new
+  backwards-compatible features to our code. This can include the addition of new
   functions and classes. Whenever we increment the minor version, the patch version is
   reset to zero.
 - MAJOR: The major version should be incremented whenever we make a change that breaks
@@ -163,8 +164,23 @@ reset to zero.
 :::::::::::::::::: challenge
 
 Our users seem to prefer the `fibonacci_list` function, so we decide to streamline our
-software by removing the original function and renaming the new one `fibonacci`. If the
-previous version was 3.4.5, what should the new version be?
+software by removing the original function and renaming the new one `fibonacci`.
+
+```python
+def fibonacci(n):
+    if n < 0:
+        raise ValueError("n must be greater than or equal to 0")
+    elif n == 0:
+        return [0]
+    else:
+        result = [0, 1]
+        while n > 1:
+            result.append(result[-1] + result[-2])
+            n -= 1
+        return result
+```
+
+If the previous version was 3.4.5, what should the new version be?
 
 ::::::::::::::::::::::::::::
 
@@ -201,12 +217,14 @@ generate version info using `git` tags.
 Something to note about the major and minor version numbers is that they only need to
 be updated if we change the _public API_ of our software. Therefore, if we change the
 behaviour of any functions or classes intended for internal use, and the public API is
-unchanged we only need to update the patch number.
+unchanged, we only need to update the patch number.
 
-We can indicate that a function, class, or variable is only intended for internal use
-by prepending their name with an underscore (i.e. `_myvar`, `_myfunc`, `_MyClass`).
-Alternatively, if our project includes rich documentation, it may be assumed that any
-objects that aren't included in the user API are for internal usage.
+As discussed in our [lesson on packages](02-packages.Rmd),
+e can indicate that a function, class, or variable is only intended for internal use
+by prepending their name with an underscore (i.e. `_myvar`, `_myfunc`, `_MyClass`),
+excluding it from `__all__`, and excluding it from the user API in any published
+documentation (although it may be a good idea to document private objects in a separate
+developer API).
 
 When we update the version of our software and release it publically, we must not
 go back and change it, no matter how tempting the prospect may be! Any fixes to our
@@ -264,11 +282,10 @@ dependencies = [
 ]
 ```
 
-This is because the `~= 0.6` will get the latest release from `0.6.0` to `1.0.0` (not
-included), but in this case version 0.7 might break backwards compatibility with 0.6.
-Note that some unstable projects may also break backwards compatibiliy in their patch
-releases, as the regular rules don't really apply. In these cases, it may be better to
-fix even the patch number:
+This is because the `~= 0.6` will get the latest release which is at least `0.6.0` but
+less than`1.0.0`, but in this case version `0.7` might break backwards compatibility
+with `0.6`. Note that some unstable projects may also break backwards compatibiliy in
+their patch releases. In these cases, it may be better to fix even the patch number:
 
 ```toml
 dependencies = [
@@ -295,11 +312,10 @@ def myfunc():
 ```
 
 When adding deprecations to our code, we should update the minor version, and include
-them in our changelog (discussed later). When we follow through on our deprecations and
-remove features, this should also be clearly stated in the changelog of our major
-release.
+them in our changelog. When we follow through on our deprecations and remove features,
+this should also be clearly stated in the changelog of our major release.
 
-### Advanced Versioning
+### Extra: Advanced Versioning
 
 :::::::::::::::::::::::::::: instructor
 
@@ -310,7 +326,7 @@ This section may be skipped.
 There are many more fine-grained versioning techniques that may be employed as our
 projects grow in complexity, although these are not universally adopted and may only be
 applicable to very large projects with a detailed review process. The full list of
-version types accepted by tools such as pip is listed in [PEP 440][PEP 440], while the
+version types accepted by tools such as `pip` is listed in [PEP 440][PEP 440], while the
 formal specification for semantic versioning can be found at [semver.org][semver]. For
 example, we may provide pre-release specifiers:
 
@@ -321,14 +337,14 @@ example, we may provide pre-release specifiers:
 - 1.1.0b0: The beta version of 1.1.0. This follows 1.1.0aN, and is intended for use by a
   wider pool of users for further testing and feedback. This is usually close to the
   finished product, but some large changes remain possible.
-- 1.1.0rc0: The release-candiate version of 1.1. Sometimes called a 'preview' version, it
-  is not expected that further significant changes will be made in version 1.1, but
+- 1.1.0rc0: The release-candiate version of 1.1. Sometimes called a 'preview' version,
+  it is not expected that further significant changes will be made in version 1.1, but
   some small changes may be included. It comes after 1.1.0bN, but before 1.1.0.
 
 The number following the pre-release specifier is optional, with no number interpretted
 as 0 (i.e. `1.0.0a == 1.0.0a0`). A dot, hyphen, or underscore separator is also allowed,
-e.g. `1.0.0-a1`, `1.1.0.beta.3`, `1.1.0-rc.2`. We may also make _post-releases_ if we wish
-to make minor edits after a release:
+e.g. `1.0.0-a1`, `1.1.0.beta.3`, `1.1.0-rc.2`. We may also make _post-releases_ if we
+wish to make minor edits after a release:
 
 - 1.1.0post0: An update after a release that does not change the distributed software,
   e.g. a change in documentation or release notes. It comes after 1.1.0 but before
@@ -353,7 +369,7 @@ hyphens, e.g. `1.1.0+001`, `1.2.0-alpha-630-g60eca14`.
 Before sharing our software with the world, it is a good idea to let others know what it
 is and how it works! A good README file should explain what a project is for, how users
 can install it, and how to use it. For example, we may use the following file
-`README.md`, written using markdown.
+`README.md`, written using markdown:
 
 ```markdown
     # epi_models
@@ -481,10 +497,15 @@ license = {file = "LICENSE.md"}
 ```
 
 We can instead simply state the name of the license:
+
 ```toml
 [project]
 license = {text = "MIT License"}
 ```
+
+If you're developing code on behalf of an organisation, it's worth checking in with
+their legal team (or at the very least, your supervisor) before deciding on a license.
+
 
 ## Publishing our Software on GitHub
 
@@ -492,7 +513,7 @@ license = {text = "MIT License"}
 code over time. This lesson is not the place for teaching how to use `git`, but it is
 highly recommended that you use it for managing your Python projects.
 
-GitHub is an online service for hosting software projects using `git`, and it is a great
+GitHub is an online service for hosting `git`-based software projects, and it is a great
 way to share our code and collaborate with others.
 
 :::::::::::::::::::: callout
@@ -527,7 +548,7 @@ providing the version number after an `@` sign:
 $ pip install "git+https://github.com/user/project@1.2.3"
 ```
 
-Note that we can also supply a branch name, or a commit hash here:
+Note that we can also supply a branch name or a commit hash here:
 
 ```bash
 $ pip install "git+https://github.com/user/project@branch"
@@ -558,16 +579,16 @@ dependencies = [
 
 However, this is still slower than installing from a dedicated Python package
 repository such as PyPI, which hosts pre-built `.whl` files, and it only allows our
-users to specify a singular version of our code. This means that they may miss out on
+users to specify a single version of our code. This means that they may miss out on
 crucial patch releases. In general, it is a good idea to use GitHub to host our source
 code and to manage its development, and to use a service like PyPI to host packages that
 our users can install.
 
 
-### Consistent Versioning with `setuptools-scm`
+## Extra: Consistent Versioning with `setuptools-scm`
 
 An issue with using GitHub to create new releases is that the project version can
-easily become desynced. The version should be specified in three places:
+easily become desynced. The version needs to be specified in three places:
 
 - `git` tags, determined by releases on GitHub
 - The `version` field in `pyproject.toml`
@@ -600,7 +621,7 @@ name = "epi_models"
 dynamic = ["version"]
 ```
 
-Following this, we should the following section elsewhere in `pyproject.toml`:
+Following this, we should add the following section elsewhere in `pyproject.toml`:
 
 ```toml
 # file: pyproject.toml
@@ -629,12 +650,13 @@ from importlib.metadata import version, PackageNotFoundError
 try:
     __version__ = version("epi_models")
 except PackageNotFoundError:
-    # If the package is not installed, don't add a version
+    # If the package is not installed, don't add __version__
     pass
 ```
 
-Note that `importlib.metadata` was added to the standard Python library in version 3.8.
-Earlier versions will need to instead load `importlib_metadata`:
+Note that `importlib.metadata` was added to the Python standard library in version 3.8.
+Earlier versions will need to instead load an external package `importlib_metadata`,
+which works in the same way. We can account for both using:
 
 ```python
 # file: __init__.py
@@ -645,7 +667,7 @@ except ImportError:
     from importlib_metadata import version, PackageNotFoundError
 ```
 
-We can add this to our `pyproject.toml` as follows:
+We'll also need to account for `importlib_metadata` in our `pyproject.toml` as follows:
 
 ```toml
 # file: pyproject.toml
@@ -655,17 +677,15 @@ dependencies = [
 ]
 ```
 
-Now, our Git tags, `__version__` variable, and `pyproject.toml` `version` will all
-refer to the same place, and there is much less chance of them accidentally falling
-out-of-sync.
+Now, our Git tags, `__version__`, and `pyproject.toml` `version` will automatically be
+kept in sync.
 
-## Publishing our Software on PyPI
+## PyPI, the Python Packaging Index
 
-[PyPI][PyPI], the Python Packaging Index, is the official package repository for the
-Python community. It is equivalent to CRAN, used for the R programming language. This is
-the repository that `pip` uses when we install remote packages from the command line. It
-is recommended to upload packages here if we want our projects to reach a wider
-audience.
+[PyPI][PyPI] is the official package repository for the Python community. It is
+equivalent to CRAN, used for the R programming language. This is the repository that
+`pip` uses when we install remote packages from the command line. It is recommended to
+upload packages here if we want our projects to reach a wider audience.
 
 ![PyPI_screenshot](fig/pypi.png){alt="The Python Packaging Index"}
 
@@ -709,9 +729,13 @@ classifiers = [
 ]
 ```
 
-### `wheels`
+Before discussing how to get our project hosted on PyPI, we'll quickly discuss 'wheel'
+files, which are the standard way for Python to distribute packages.
 
-When we install packages using `pip`, it first creates a 'wheel' file. For example
+## Wheel files
+
+When we install packages using `pip`, it first creates a 'wheel' file, with the
+file extension `.whl`. For example:
 
 ```bash
 $ cd epi_models
@@ -732,47 +756,24 @@ Successfully installed epi-models-0.1.0
 
 The installation goes through several steps:
 
-- `pip` analyses our package and creates a `*.whl` file.
-- The `*.whl` file is stored in a temporary directory.
-- The package is installed to our system from the `*.whl` file.
+- `pip` analyses our package and creates a `.whl` file.
+- The `.whl` file is stored in a temporary directory.
+- The package is installed to our system from the `.whl` file.
 
 After installation, we can find our installed package at
 `/path/to/my/env/lib/python3.8/site-packages/epi_models`, and within we'll find that
 every file has been compiled to Python bytecode, contained within `__pycache__`
-directories:
-
-```bash
-$ ls /path/to/my/env/lib/python3.8/site-packages/epi_models
-```
-
-```result
-__init__.py __main__.py models plotting __pycache__
-```
-
-```bash
-$ ls /path/to/my/env/lib/python3.8/site-packages/epi_models/__pycache__
-```
-
-```result
-__init__.cpython-38.pyc __main__.cpython-38.pyc
-```
-
-Python bytecode is a simpler and lower level language that is understood by the Python
-Virtual Machine (PVM). The Python interpretter always converts our code to bytecode
-before running it, and Python will also compile modules to bytecode when we `import`
-them. By precompiling our modules, it will be much faster to import and run them.
-
-So what is a wheel file, and how does it help with this process?
+directories. So what is a wheel file, and how does it help with this process?
 
 A wheel is a standard package distribution format, defined in [PEP 427][PEP 427]. It
-is essentially a `*.zip` file containing our package contents with a descriptive name.
+is essentially a `.zip` file with a descriptive name that contains our package.
 When we installed our package above it created the following wheel file:
 
 ```
 epi_models-0.1.0-py3-none-any.whl
 ```
 
-The filename has seveal components separated by hyphens. In order, these are:
+The filename has seveal components separated by dashes. In order, these are:
 
 - The package name
 - The package version
@@ -794,7 +795,13 @@ contains all Python files in our package along with any compiled binaries for ex
 written in C. When a wheel file is installed, Python files are compiled to bytecode, and
 the package is installed to the `site-packages` of our environment.
 
-### `build` and `twine`
+As the wheel file contains compatibility information in its name, `pip` can quickly
+check to see whether any wheels uploaded to PyPI are compatible with our system
+whenever we try to install something. In order to meet the needs of as many users as
+possible, it's also possible for us to upload multiple wheels for each release -- one
+for each targeted Python version and operating system.
+
+## `build` and `twine`
 
 So how do we create a wheel file to upload? The standard tool used to create wheel files
 is `build`:
@@ -804,13 +811,13 @@ $ pip install build
 ```
 
 As we already have a `pyproject.toml`, `build` has everything it needs to create a
-wheel file. It can be called simply using
+wheel file. It can be called simply using:
 
 ```bash
 $ python3 -m build
 ```
 
-This will create a new directory `.dist/` containing the following:
+This will create a new directory `./dist` containing the following:
 
 <code>
 &#128193; dist<br>
@@ -828,10 +835,10 @@ $ unzip dist/epi_models-0.1.0-py3-none-any.whl
 
 We'll see that it contains our package along with a second directory
 `epi_models-0.1.0.dist-info`, which contains package metadata such as our license
-and README file. Note that we should remove the unzipped directories before the upload
-stage.
+and README file. Note that we should remove the unzipped directories from `./dist`
+before the upload stage.
 
-The second file `build` created is a `.tar.gz` file -- a gzip compressed tarball. This
+The second file `build` created is a `.tar.gz` file -- a gzip-compressed tarball. This
 is a 'source distribution', which is used as a backup by `pip` if it can't find a
 suitable wheel file to install.
 
@@ -891,7 +898,7 @@ dependencies = [
 ]
 ```
 
-### Automating Package Publishing with GitHub Actions
+## Extra: Automating Package Publishing with GitHub Actions
 
 We saw earlier how to ensure that the version of our package was stored only in the
 Git tags. We can similarly set up our GitHub project to automatically publish our
