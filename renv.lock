@@ -27,10 +27,10 @@
     },
     "Rcpp": {
       "Package": "Rcpp",
-      "Version": "1.0.9",
+      "Version": "1.0.10",
       "Source": "Repository",
-      "Repository": "RSPM",
-      "Hash": "e9c08b94391e9f3f97355841229124f2",
+      "Repository": "CRAN",
+      "Hash": "e749cae40fa9ef469b6050959517453c",
       "Requirements": []
     },
     "askpass": {
@@ -228,10 +228,10 @@
     },
     "fansi": {
       "Package": "fansi",
-      "Version": "1.0.3",
+      "Version": "1.0.4",
       "Source": "Repository",
-      "Repository": "RSPM",
-      "Hash": "83a8afdbe71839506baa9f90eebad7ec",
+      "Repository": "CRAN",
+      "Hash": "1d9e7ad3c8312a192dea7d3db0274fde",
       "Requirements": []
     },
     "fastmap": {
