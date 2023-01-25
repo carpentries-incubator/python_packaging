@@ -256,7 +256,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Publishing our Python Packages</h1>
-        <p> Last updated on 2023-01-24 | 
+        <p> Last updated on 2023-01-25 | 
         
         <a href="https://github.com/LiamPattinson/python-packaging/edit/main/episodes/05-publishing.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
         
@@ -319,8 +319,8 @@ agreed-upon format. Using semanic versioning, we will periodically make
 a new ‘release’ of our code, each time updating its version number, and
 the way we change the number informs our users of whether the changes to
 our code will break compatibility. In its most basic form, semantic
-versioning requires 3 numbers, separated by periods, i.e. 1.2.3. These
-numbers stand for MAJOR.MINOR.PATCH, and are typically updated
+versioning requires 3 numbers, separated by periods, such as 1.2.3.
+These numbers stand for MAJOR.MINOR.PATCH, and are typically updated
 right-to-left. The meaning of each number is:</p>
 <ul><li>PATCH: We increment the patch number whenever we make an update that
 doesn’t add or remove functionality. It can include things such as
@@ -380,7 +380,7 @@ new release, what should the new version number be?</p>
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>2.3.5. This change is backwards compatible, and doesn’t add any new
 features. Instead, it simply fixes a bug.</p>
@@ -427,7 +427,7 @@ be?</p>
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>2.4.8. This change is backwards compatible, and doesn’t add any new
 features. Instead, it just improves the performance of an existing
@@ -473,7 +473,7 @@ be?</p>
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <p>3.3.0. We’ve added new features to our software, but we haven’t
 changed the existing API. Therefore the minor version should be
@@ -520,7 +520,7 @@ be?</p>
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
 <p>4.0.0. By removing a function and changing the behaviour of another,
 we have changed the public API in a manner which is not
@@ -560,7 +560,7 @@ only need to update the patch number.</p>
 <p>As discussed in our <a href="02-packages.html">lesson on
 packages</a>, e can indicate that a function, class, or variable is only
 intended for internal use by prepending their name with an underscore
-(i.e. <code>_myvar</code>, <code>_myfunc</code>, <code>_MyClass</code>),
+(<code>_myvar</code>, <code>_myfunc</code>, <code>_MyClass</code>),
 excluding it from <code>__all__</code>, and excluding it from the user
 API in any published documentation (although it may be a good idea to
 document private objects in a separate developer API).</p>
@@ -683,14 +683,14 @@ changes remain possible.</li>
 will be made in version 1.1, but some small changes may be included. It
 comes after 1.1.0bN, but before 1.1.0.</li>
 </ul><p>The number following the pre-release specifier is optional, with no
-number interpretted as 0 (i.e. <code>1.0.0a == 1.0.0a0</code>). A dot,
-hyphen, or underscore separator is also allowed,
-e.g. <code>1.0.0-a1</code>, <code>1.1.0.beta.3</code>,
+number interpretted as 0 (for example, <code>1.0.0a == 1.0.0a0</code>).
+A dot, hyphen, or underscore separator is also allowed, such as
+<code>1.0.0-a1</code>, <code>1.1.0.beta.3</code>, or
 <code>1.1.0-rc.2</code>. We may also make <em>post-releases</em> if we
 wish to make minor edits after a release:</p>
 <ul><li>1.1.0post0: An update after a release that does not change the
-distributed software, e.g. a change in documentation or release notes.
-It comes after 1.1.0 but before 1.1.1.</li>
+distributed software. For example, a change in documentation or release
+notes. It comes after 1.1.0 but before 1.1.1.</li>
 </ul><p>Similarly, post-release specifiers may have dot, hypen or underscore
 separators, and may exclude the trailing number. The use of ‘rev’ or ‘r’
 in place of ‘post’ is also common. Note that a post-release is
@@ -702,7 +702,7 @@ their work in a new release. If you use a tool such as Git to control
 your versioning, it may automatically generate the local version. In
 general, there is no ordering to local versions. A local version is
 specified with a <code>+</code> followed by a dot-separated list of
-numbers, letters, and hyphens, e.g. <code>1.1.0+001</code>,
+numbers, letters, and hyphens, for example <code>1.1.0+001</code> or
 <code>1.2.0-alpha-630-g60eca14</code>.</p>
 </div>
 </section><section id="preparing-to-publish"><h2 class="section-heading">Preparing to Publish<a class="anchor" aria-label="anchor" href="#preparing-to-publish"></a>
@@ -1113,14 +1113,14 @@ wheel file:</p>
 these are:</p>
 <ul><li>The package name</li>
 <li>The package version</li>
-<li>Language implementation, e.g. <code>py3</code>, <code>py27</code>,
-<code>py2</code>. Packages that are compatible with any Python version
-will be <code>py2.py3</code>. Packages that are only compatible with a
-particular Python implementation, such as CPython, may be listed
-<code>cpy38</code>.</li>
+<li>Language implementation, such as <code>py3</code>,
+<code>py27</code>, or <code>py2</code>. Packages that are compatible
+with any Python version will be <code>py2.py3</code>. Packages that are
+only compatible with a particular Python implementation, such as
+CPython, may be listed <code>cpy38</code>.</li>
 <li>The ABI tag, which stands for ‘Application Binary Interface’. This
-specifies the binary compatibility of the CPython API,
-e.g. <code>abi3</code>. This won’t be relevant unless you’re
+specifies the binary compatibility of the CPython API, and may take a
+value such as <code>abi3</code>. This won’t be relevant unless you’re
 distributing compiled extensions written in C, and will be
 <code>none</code> if your package is pure Python. This is beyond the
 scope of these lessons.</li>
@@ -1274,10 +1274,10 @@ new release:</p>
 <span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
 <span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a><span class="co">      # This will checkout our GitHub project and enter</span></span>
 <span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a><span class="co">      # the directory</span></span>
-<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v2</span></span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v3</span></span>
 <span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a><span class="co">      # This will set up a Python environment</span></span>
 <span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Set up Python</span></span>
-<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/setup-python@v2</span></span>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/setup-python@v4</span></span>
 <span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
 <span id="cb45-22"><a href="#cb45-22" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">python-version</span><span class="kw">:</span><span class="at"> </span><span class="st">'3.x'</span></span>
 <span id="cb45-23"><a href="#cb45-23" aria-hidden="true" tabindex="-1"></a><span class="co">      # Here we update pip to the latest version and</span></span>
@@ -1371,7 +1371,7 @@ any links that you are not going to use.
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
         
         <p><a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">Template licensed under CC-BY 4.0</a> by <a href="https://carpentries.org" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.11.3" class="external-link">sandpaper (0.11.3)</a>,
+        <p>Built with <a href="https://github.com/carpentries/sandpaper" class="external-link">sandpaper (0.11.4)</a>,
         <a href="https://github.com/carpentries/pegboard/tree/0.4.2" class="external-link">pegboard (0.4.2)</a>,
       and <a href="https://github.com/carpentries/varnish/tree/0.2.14" class="external-link">varnish (0.2.14)</a>.</p>
 			</div>
@@ -1393,9 +1393,9 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://LiamPattinson.github.io/python-packaging/05-publishing.html",
   "identifier": "https://LiamPattinson.github.io/python-packaging/05-publishing.html",
-  "dateCreated": "2023-01-18",
-  "dateModified": "2023-01-24",
-  "datePublished": "2023-01-24"
+  "dateCreated": "2023-01-25",
+  "dateModified": "2023-01-25",
+  "datePublished": "2023-01-25"
 }
 
   </script><script>

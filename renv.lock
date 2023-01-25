@@ -643,14 +643,11 @@
     },
     "sandpaper": {
       "Package": "sandpaper",
-      "Version": "0.11.3",
+      "Version": "0.11.4",
       "Source": "Repository",
-      "Repository": "https://carpentries.r-universe.dev",
+      "Repository": "carpentries_archive",
       "Remotes": "ropensci/tinkr, carpentries/pegboard, carpentries/varnish",
-      "RemoteUrl": "https://github.com/carpentries/sandpaper",
-      "RemoteRef": "0.11.3",
-      "RemoteSha": "32e18c8977174e394cbaa5808068750f1586f157",
-      "Hash": "8ba9a1cdde032605b5fa1de027b1fc2a",
+      "Hash": "1fba7ac658628c531427c65be714f30c",
       "Requirements": [
         "assertthat",
         "callr",

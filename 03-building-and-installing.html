@@ -257,7 +257,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Building and Installing Packages using setuptools</h1>
-        <p> Last updated on 2023-01-24 | 
+        <p> Last updated on 2023-01-25 | 
         
         <a href="https://github.com/LiamPattinson/python-packaging/edit/main/episodes/03-building-and-installing.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
         
@@ -303,8 +303,8 @@ method:</p>
 <ul><li>If we have two different versions of a package on our system at
 once, it can be tedious to manually update <code>PYTHONPATH</code>
 whenever we want to switch between them.</li>
-<li>If we have multiple Python environments on our system (e.g. using
-<code>venv</code> or <code>conda</code>), setting
+<li>If we have multiple Python environments on our system (using tools
+such as <code>venv</code> or <code>conda</code>), setting
 <code>PYTHONPATH</code> will affect all of them.</li>
 <li>If we share our software with others and require them to update
 their own <code>PYTHONPATH</code>, they will need to install any
@@ -380,8 +380,9 @@ been developed to manage virtual environments, such as
 <h3 class="callout-title">Callout<a class="anchor" aria-label="anchor" href="#callout1"></a>
 </h3>
 <div class="callout-content">
-<p>Contrary to what some believe, you can <code>pip install</code>
-packages into a <code>conda</code> virtual environment.</p>
+<p>You can <code>pip install</code> packages into a <code>conda</code>
+virtual environment, so much of the advice in this lesson will still
+apply if you prefer to use <code>conda</code>.</p>
 </div>
 </div>
 </div>
@@ -459,12 +460,12 @@ to the system environment by calling:</p>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> deactivate</span></code></pre>
 </div>
-<p>Virtual environments are very useful when we’re testing out code, as
+<p>Virtual environments are very useful when we’re testing our code, as
 they allow us to create a fresh Python environment without any of the
-installed packages we normally use in our own work. This will be
-important later when we add dependencies to our own package, as this
-allows us to test whether our users will be able to install and run our
-code properly.</p>
+installed packages we normally use in our work. This will be important
+later when we add dependencies to our package, as this allows us to test
+whether our users will be able to install and run our code properly
+using a fresh environment.</p>
 </section><section id="an-overview-of-toml-files"><h2 class="section-heading">An Overview of TOML files<a class="anchor" aria-label="anchor" href="#an-overview-of-toml-files"></a>
 </h2>
 <hr class="half-width"><p><code>pyproject.toml</code> is a TOML file, which stands for ‘Tom’s
@@ -474,13 +475,13 @@ formats in common usage, such as YAML, JSON, and INI, but the Python
 community chose TOML as it provides some benefits over the
 competition:</p>
 <ul><li>Designed to be human writable and human readable.</li>
-<li>Can map unambiguously to a hash table (i.e. a <code>dict</code> in
+<li>Can map unambiguously to a hash table (a <code>dict</code> in
 Python).</li>
 <li>It has a formal specification, so has an unambiguous set of
 rules.</li>
 </ul><p>A TOML file contains a series of <code>key = value</code> pairs,
 which may be grouped into sections using a header enclosed in square
-brackets (i.e. <code>[section name]</code>). The values are typed,
+brackets, such as <code>[section name]</code>. The values are typed,
 unlike some other formats where all values are strings. The available
 types are strings, integers, floats, booleans, and dates. It is possible
 to store lists of values in arrays, or store a series of key-value pairs
@@ -509,7 +510,7 @@ in tables. For example:</p>
 <span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">header_table</span><span class="kw">.</span><span class="dt">subtable</span><span class="kw">]</span></span>
 <span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="dt">foo</span> <span class="op">=</span> <span class="st">"bar"</span></span></code></pre>
 </div>
-<p>We can read this using the <code>toml</code> libray in Python:</p>
+<p>We can read this using the <code>toml</code> library in Python:</p>
 <div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -706,53 +707,57 @@ recommended core metadata keys are described below:</p>
 <div class="codewrapper sourceCode" id="cb26">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># name: String, REQUIRED</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"my_project"</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># version: String, REQUIRED</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Should follow PEP 440 rules</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Can be provided dynamically, see the lesson on publishing</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"1.2.3"</span></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co"># description: String</span></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co"># A simple summary of the project</span></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="dt">description</span> <span class="op">=</span> <span class="st">"My wonderful Python package"</span></span>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">project</span><span class="kw">]</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># name: String, REQUIRED</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"my_project"</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="co"># version: String, REQUIRED</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Should follow PEP 440 rules</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Can be provided dynamically, see the lesson on publishing</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"1.2.3"</span></span>
 <span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="co"># readme: String</span></span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Full description of the project.</span></span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Should be the path to your README file, relative to pyproject.toml</span></span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="dt">readme</span> <span class="op">=</span> <span class="st">"README.md"</span></span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a><span class="co"># requires-python: String</span></span>
-<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a><span class="co"># The Python version required by the project</span></span>
-<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a><span class="dt">requires-python</span> <span class="op">=</span> <span class="st">"&gt;=3.8"</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="co"># description: String</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="co"># A simple summary of the project</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="dt">description</span> <span class="op">=</span> <span class="st">"My wonderful Python package"</span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="co"># readme: String</span></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Full description of the project.</span></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Should be the path to your README file, relative to pyproject.toml</span></span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a><span class="dt">readme</span> <span class="op">=</span> <span class="st">"README.md"</span></span>
 <span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a><span class="co"># license: Table</span></span>
-<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a><span class="co"># The license of your project.</span></span>
-<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Can be provided as a file or a text description.</span></span>
-<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Discussed in the lesson on publishing</span></span>
-<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a><span class="dt">license</span> <span class="op">=</span> <span class="op">{</span><span class="dt">file</span><span class="op"> =</span> <span class="st">"LICENSE.md"</span><span class="op">}</span></span>
-<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a><span class="co"># or...</span></span>
-<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a><span class="dt">license</span> <span class="op">=</span> <span class="op">{</span><span class="dt">text</span><span class="op"> =</span> <span class="st">"BDS 3-Clause License"</span><span class="op">}</span></span>
-<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a><span class="co"># authors: Array of Tables</span></span>
-<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Can also be called 'maintainers'.</span></span>
-<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Each entry can have a name and/or an email</span></span>
-<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a><span class="dt">authors</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dt">name</span><span class="op"> =</span> <span class="st">"My Name"</span><span class="op">, </span><span class="dt">email</span><span class="op"> =</span> <span class="st">"my.email@email.net"</span><span class="op">},</span></span>
-<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dt">name</span><span class="op"> =</span> <span class="st">"My Friend"</span><span class="op">, </span><span class="dt">email</span><span class="op"> =</span> <span class="st">"their.email@email.net"</span><span class="op">},</span></span>
-<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span>
-<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a><span class="co"># urls: Table</span></span>
-<span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Should describe where to find useful info for your project</span></span>
-<span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a><span class="dt">urls</span> <span class="op">=</span> <span class="op">{</span><span class="dt">source</span><span class="op"> =</span> <span class="st">"github.com/MyProfile/my_project"</span><span class="op">, </span><span class="dt">documentation</span><span class="op"> =</span> <span class="st">"my_project.readthedocs.io/en/latest"</span><span class="op">}</span></span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a><span class="co"># requires-python: String</span></span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a><span class="co"># The Python version required by the project</span></span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a><span class="dt">requires-python</span> <span class="op">=</span> <span class="st">"&gt;=3.8"</span></span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a><span class="co"># license: Table</span></span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a><span class="co"># The license of your project.</span></span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Can be provided as a file or a text description.</span></span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Discussed in the lesson on publishing</span></span>
+<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a><span class="dt">license</span> <span class="op">=</span> <span class="op">{</span><span class="dt">file</span><span class="op"> =</span> <span class="st">"LICENSE.md"</span><span class="op">}</span></span>
+<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a><span class="co"># or...</span></span>
+<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a><span class="dt">license</span> <span class="op">=</span> <span class="op">{</span><span class="dt">text</span><span class="op"> =</span> <span class="st">"BDS 3-Clause License"</span><span class="op">}</span></span>
+<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a><span class="co"># authors: Array of Tables</span></span>
+<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Can also be called 'maintainers'.</span></span>
+<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Each entry can have a name and/or an email</span></span>
+<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a><span class="dt">authors</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dt">name</span><span class="op"> =</span> <span class="st">"My Name"</span><span class="op">, </span><span class="dt">email</span><span class="op"> =</span> <span class="st">"my.email@email.net"</span><span class="op">},</span></span>
+<span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dt">name</span><span class="op"> =</span> <span class="st">"My Friend"</span><span class="op">, </span><span class="dt">email</span><span class="op"> =</span> <span class="st">"their.email@email.net"</span><span class="op">},</span></span>
+<span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span>
 <span id="cb26-41"><a href="#cb26-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-42"><a href="#cb26-42" aria-hidden="true" tabindex="-1"></a><span class="co"># dependencies: Array of Strings</span></span>
-<span id="cb26-43"><a href="#cb26-43" aria-hidden="true" tabindex="-1"></a><span class="co"># A list of requirements for our package</span></span>
-<span id="cb26-44"><a href="#cb26-44" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb26-45"><a href="#cb26-45" aria-hidden="true" tabindex="-1"></a>    <span class="st">"numpy &gt;= 1.20"</span><span class="op">,</span></span>
-<span id="cb26-46"><a href="#cb26-46" aria-hidden="true" tabindex="-1"></a>    <span class="st">"pyyaml"</span><span class="op">,</span></span>
-<span id="cb26-47"><a href="#cb26-47" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
+<span id="cb26-42"><a href="#cb26-42" aria-hidden="true" tabindex="-1"></a><span class="co"># urls: Table</span></span>
+<span id="cb26-43"><a href="#cb26-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Should describe where to find useful info for your project</span></span>
+<span id="cb26-44"><a href="#cb26-44" aria-hidden="true" tabindex="-1"></a><span class="dt">urls</span> <span class="op">=</span> <span class="op">{</span><span class="dt">source</span><span class="op"> =</span> <span class="st">"github.com/MyProfile/my_project"</span><span class="op">, </span><span class="dt">documentation</span><span class="op"> =</span> <span class="st">"my_project.readthedocs.io/en/latest"</span><span class="op">}</span></span>
+<span id="cb26-45"><a href="#cb26-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-46"><a href="#cb26-46" aria-hidden="true" tabindex="-1"></a><span class="co"># dependencies: Array of Strings</span></span>
+<span id="cb26-47"><a href="#cb26-47" aria-hidden="true" tabindex="-1"></a><span class="co"># A list of requirements for our package</span></span>
+<span id="cb26-48"><a href="#cb26-48" aria-hidden="true" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb26-49"><a href="#cb26-49" aria-hidden="true" tabindex="-1"></a>    <span class="st">"numpy &gt;= 1.20"</span><span class="op">,</span></span>
+<span id="cb26-50"><a href="#cb26-50" aria-hidden="true" tabindex="-1"></a>    <span class="st">"pyyaml"</span><span class="op">,</span></span>
+<span id="cb26-51"><a href="#cb26-51" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span></code></pre>
 </div>
 <p>Note that some of the longer tables in our TOML file can be written
 using non-inline tables if it improved readability:</p>
@@ -788,11 +793,12 @@ the packages we wish to install:</p>
 <pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">tool</span><span class="kw">.</span><span class="dt">setuptools</span><span class="kw">]</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="dt">pacakges</span> <span class="op">=</span> <span class="op">[</span><span class="st">"my_package"</span><span class="op">,</span> <span class="st">"my_other_package"</span><span class="op">]</span></span></code></pre>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="dt">packages</span> <span class="op">=</span> <span class="op">[</span><span class="st">"my_package"</span><span class="op">,</span> <span class="st">"my_other_package"</span><span class="op">]</span></span></code></pre>
 </div>
 <p>Note that this is not part of the <a href="https://peps.python.org/pep-0621/" class="external-link">PEP 621</a> standard, and
-instead is a method specific to <code>setuptools</code>. Finally, we may
-set up custom package discovery:</p>
+therefore instead of being listed under the <code>[project]</code>
+header, it is a method specific to <code>setuptools</code>. Finally, we
+may set up custom package discovery:</p>
 <div class="codewrapper sourceCode" id="cb29">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -1092,7 +1098,7 @@ any links that you are not going to use.
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
         
         <p><a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">Template licensed under CC-BY 4.0</a> by <a href="https://carpentries.org" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.11.3" class="external-link">sandpaper (0.11.3)</a>,
+        <p>Built with <a href="https://github.com/carpentries/sandpaper" class="external-link">sandpaper (0.11.4)</a>,
         <a href="https://github.com/carpentries/pegboard/tree/0.4.2" class="external-link">pegboard (0.4.2)</a>,
       and <a href="https://github.com/carpentries/varnish/tree/0.2.14" class="external-link">varnish (0.2.14)</a>.</p>
 			</div>
@@ -1114,9 +1120,9 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://LiamPattinson.github.io/python-packaging/03-building-and-installing.html",
   "identifier": "https://LiamPattinson.github.io/python-packaging/03-building-and-installing.html",
-  "dateCreated": "2023-01-18",
-  "dateModified": "2023-01-24",
-  "datePublished": "2023-01-24"
+  "dateCreated": "2023-01-25",
+  "dateModified": "2023-01-25",
+  "datePublished": "2023-01-25"
 }
 
   </script><script>
