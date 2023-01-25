@@ -25,3 +25,4 @@ any links that you are not going to use.
 [TestPyPI]: https://test.pypi.org
 [classifiers]: https://pypi.org/classifiers
 [pypi_token]: https://pypi.org/help/#apitoken
+[sc-git]: https://swcarpentry.github.io/git-novice/

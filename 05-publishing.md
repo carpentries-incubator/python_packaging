@@ -44,7 +44,7 @@ number contains compatibility information in a widely agreed-upon format. Using 
 versioning, we will periodically make a new 'release' of our code, each time
 updating its version number, and the way we change the number informs our users
 of whether the changes to our code will break compatibility. In its most basic
-form, semantic versioning requires 3 numbers, separated by periods, i.e. 1.2.3.
+form, semantic versioning requires 3 numbers, separated by periods, such as 1.2.3.
 These numbers stand for MAJOR.MINOR.PATCH, and are typically updated
 right-to-left. The meaning of each number is:
 
@@ -221,7 +221,7 @@ unchanged, we only need to update the patch number.
 
 As discussed in our [lesson on packages](02-packages.Rmd),
 e can indicate that a function, class, or variable is only intended for internal use
-by prepending their name with an underscore (i.e. `_myvar`, `_myfunc`, `_MyClass`),
+by prepending their name with an underscore (`_myvar`, `_myfunc`, `_MyClass`),
 excluding it from `__all__`, and excluding it from the user API in any published
 documentation (although it may be a good idea to document private objects in a separate
 developer API).
@@ -342,12 +342,12 @@ example, we may provide pre-release specifiers:
   some small changes may be included. It comes after 1.1.0bN, but before 1.1.0.
 
 The number following the pre-release specifier is optional, with no number interpretted
-as 0 (i.e. `1.0.0a == 1.0.0a0`). A dot, hyphen, or underscore separator is also allowed,
-e.g. `1.0.0-a1`, `1.1.0.beta.3`, `1.1.0-rc.2`. We may also make _post-releases_ if we
-wish to make minor edits after a release:
+as 0 (for example, `1.0.0a == 1.0.0a0`). A dot, hyphen, or underscore separator is also
+allowed, such as `1.0.0-a1`, `1.1.0.beta.3`, or `1.1.0-rc.2`. We may also make
+_post-releases_ if we wish to make minor edits after a release:
 
-- 1.1.0post0: An update after a release that does not change the distributed software,
-  e.g. a change in documentation or release notes. It comes after 1.1.0 but before
+- 1.1.0post0: An update after a release that does not change the distributed software.
+  For example, a change in documentation or release notes. It comes after 1.1.0 but before
   1.1.1.
 
 Similarly, post-release specifiers may have dot, hypen or underscore separators, and
@@ -360,7 +360,7 @@ progress on a new development but has not finalised their work in a new release.
 use a tool such as Git to control your versioning, it may automatically generate
 the local version. In general, there is no ordering to local versions. A local version
 is specified with a `+` followed by a dot-separated list of numbers, letters, and
-hyphens, e.g. `1.1.0+001`, `1.2.0-alpha-630-g60eca14`.
+hyphens, for example `1.1.0+001` or `1.2.0-alpha-630-g60eca14`.
 
 ## Preparing to Publish
 
@@ -777,13 +777,14 @@ The filename has seveal components separated by dashes. In order, these are:
 
 - The package name
 - The package version
-- Language implementation, e.g. `py3`, `py27`, `py2`. Packages that are compatible with
-  any Python version will be `py2.py3`. Packages that are only compatible with a
+- Language implementation, such as `py3`, `py27`, or `py2`. Packages that are compatible
+  with any Python version will be `py2.py3`. Packages that are only compatible with a
   particular Python implementation, such as CPython, may be listed `cpy38`.
 - The ABI tag, which stands for 'Application Binary Interface'. This specifies the
-  binary compatibility of the CPython API, e.g. `abi3`. This won't be relevant unless
-  you're distributing compiled extensions written in C, and will be `none` if your
-  package is pure Python. This is beyond the scope of these lessons.
+  binary compatibility of the CPython API, and may take a value such as `abi3`. This
+  won't be relevant unless you're distributing compiled extensions written in C, and
+  will be `none` if your package is pure Python. This is beyond the scope of these
+  lessons.
 - Platform tag, which specifies which operating system your package is compatible with.
   `any` means it will run on Windows, Mac or Linux, while it may say something like
   `macosx_10_9_x86_64` if it includes compiled C extensions for Mac OSX 10.9 on an
@@ -931,10 +932,10 @@ jobs:
     steps:
       # This will checkout our GitHub project and enter
       # the directory
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       # This will set up a Python environment
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.x'
       # Here we update pip to the latest version and

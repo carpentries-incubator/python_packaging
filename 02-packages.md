@@ -242,10 +242,9 @@ When writing `__init__.py` files, it is important to consider what we _don't_ im
 Note that we did not import any functions from `utils.py`, as these are only intended
 for use within the `models` sub-package, and there's no need to expose these
 implementation details to the user. A well crafted `__init__.py` allows us to define a
-_public API_ while keeping the internals private, which makes it much easier to develop
-our project further without breaking things for the end-user. The following sub-section
-introduces the `__all__` variable, which allows us to more rigorously define a public
-API.
+_public API_, which is the portion of our code that we expect our users to interact
+with.  The following sub-section introduces the `__all__` variable, which allows us to
+more rigorously define a public API.
 
 As the contents of `__init__.py` is run whenever the package or any sub-packages/modules
 are imported, we can also use `__init__.py` to perform any additional package-level
@@ -256,10 +255,11 @@ the package. In this way, `__init__.py` performs a similar role for a package as
 
 ## Using `__all__` to control `from module import *`
 
-`__all__` is an optional variable that we may set in our modules and packages (i.e. in
-`__init__.py`). It should be a list of strings matching the names of all objects --
-including functions, classes, constants and variables -- that we wish to be considered
-'public' features that the user may wish to use.
+`__all__` is an optional variable that we may set in our modules and packages (to assign
+it to a package, it should be defined in `__init__.py`). It should be a list of strings
+matching the names of all objects -- including functions, classes, constants and
+variables -- that we wish to be considered 'public' features that the user may wish to
+use.
 
 `__all__` also changes the behaviour of `from module import *`. By default, this would
 import all objects within the namespace of `module`, and bring them into the current
@@ -301,13 +301,13 @@ NameError: name 'SIS_model' is not defined
 ### 'Private' variables in Python
 
 It is common for Python programmers to mark objects as private by prefixing their
-names with an underscore, e.g. `_private_variable`, `_PrivateClass`, etc. For an added
-layer of protection, variables set in class instances with two underscores, i.e.
+names with an underscore. For example, `_private_variable` or `_PrivateClass`. For an added
+layer of protection, variables set in class instances with two underscores, such as
 `self.__x`, will have their names mangled when viewed from outside the class, but they
 will still be locatable and modifiable by a determined individual.
 
 Python programmers will also sometimes use a _trailing_ underscore, and this is commonly
-used to avoid a name clash with a built-in object, e.g.:
+used to avoid a name clash with a built-in object:
 
 ```python
 >>> lambda = 10 # Fails! Raises SyntaxError
@@ -357,11 +357,14 @@ def plot_SIR_model(S, I, R):
     plt.legend()
     plt.show()
 
-if __name__ == "__main__":
+def main():
     S, I, R = SIR_model(
         pop_size=8000000, beta=0.5, gamma=0.1, days=150, I_0=10
     )
     plot_SIR_model(S, I, R)
+
+if __name__ == "__main__":
+    main()
 ```
 
 If we jump into the directory `epi_models/plotting`, and call the following, we
@@ -416,29 +419,15 @@ We can also add script-like behaviour to packages by adding a `__main__.py` file
 
 As the module name of this file is already `__main__`, there's no need to use the
 `if __name__ == "__main__"` idiom, and we may write this file as if it were a simple
-script. If we wish to run the scripting interface from `plot_SIR.py`, we can do so by
-slightly refactoring `plot_SIR.py` such that the contents of the
-`if __name__ == "__main__"` section are wrapped up in a function `main()`:
+script. If we wish to run the scripting interface from `plot_SIR.py`, we can do so
+simply by importing and calling the function `main()`:
 
-```python
-# file: plot_SIR.py
-
-def main():
-    S, I, R = SIR_model(
-        pop_size=8000000, beta=0.5, gamma=0.1, days=150, I_0=10
-    )
-    plot_SIR_model(S, I, R)
-
-if __name__ == "__main__":
-    main()
-```
-
-This can then be reused in `__main__.py`:
 
 ```python
 # file: __main__.py
 
 from plotting.plot_SIR import main
+
 main()
 ```
 

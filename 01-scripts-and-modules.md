@@ -22,15 +22,37 @@ exercises: 2
 
 ## Python as a Scripting Language
 
-Python is frequently used as a scripting language by scientists and engineers due to its
-expressiveness, simplicity, and its rich ecosystem of third-party libraries.  In this
-context, a 'script' can be understood as file containing Python commands that we might
-run on the command line.  This may be a linear series of simple expressions, but it can
-also include functions and classes:
+Python is frequently used as a _scripting language_ by scientists and engineers due to
+its expressiveness, simplicity, and its rich ecosystem of third-party libraries. There
+isn't a hard line between a scripting language and a non-scripting language, but some
+differences include:
 
-```bash
-$ python3 my_script.py
-```
+- Scripts are not compiled to an executable or library object (such as `.so` or `.dll`)
+  before use, and are instead _interpreted_ directly from the source code. A
+  non-scripting language, such as C++, must be compiled to machine code before it can
+  be used.
+- Scripts must be run using some other compiled program, such as `python` or `bash`.
+- Scripts are typically short programs that leverage the power of complex libraries to
+  accomplish some task. They focus more on gluing together existing tools than
+  performing their own low-level computations.
+
+Python is a very general-purpose language, and it meets the criteria of both a scripting
+language and a non-scripting language depending on how we choose to use it:
+
+- Python can be run as an interactive session simply by calling `python` at the command
+  line. This is typical of a scripting language.
+- It is possible to write a linear series of Python expressions in a file, and run this
+  using the Python interpretter --again, like a scripting language.
+- Python code can be bundled in _modules_ and _packages_ which can then be `import`-ed
+  into other Python programs/scripts. These are typically pre-compiled into 'bytecode'
+  to improve performance. This is closer to the behaviour of a fully compiled language.
+
+Typically, a Python project will begin as something that is inarguably a 'script', but
+as it develops it will take on the character of a 'program'. A single file containing
+a linear series of commands may develop into a _module_ of reusable functions, and
+this may develop further into a _package_ of related modules. Developing our software in
+this way allows our programs to grow in complexity in a much more sustainable manner,
+and grants much more flexibility to how users can interact with our code.
 
 Throughout this course, we'll develop an example library that might be used for
 epidemiology modelling, though it isn't necessary to understand how this works in
@@ -155,10 +177,7 @@ variables we defined in the script will be accessible within the _namespace_
 
 ```python
 >>> import SIR_model_script
->>> print(type(SIR_model_script.S))
-```
-```output
-<class 'list'>
+>>> print(SIR_model_script.S)
 ```
 
 The current namespace includes all of the objects defined in our interpretter session,
@@ -170,20 +189,15 @@ current namespace, but not the module itself, we can instead call:
 
 ```python
 >>> from SIR_model_script import *
->>> print(type(S))
+>>> print(S)
 ```
-```output
-<class 'list'>
-```
+
 Alternatively, if we only want a few objects brought into the current namespace, we can
 use:
 
 ```python
 >>> from SIR_model_script import S, I, R
->>> print(type(S), type(I), type(R))
-```
-```output
-<class 'list'> <class 'list'> <class 'list'>
+>>> print(S, I, R)
 ```
 
 ::::::::::::::: callout
@@ -405,7 +419,9 @@ reusable modules in the same file.
 ## Maintaining Script-Like Functionality
 
 If we wish, we can also maintain the script-like behaviour using the
-`if __name__ == "__main__".py` idiom at the bottom of the file `SIR_model.py`:
+`if __name__ == "__main__".py` idiom at the bottom of the file `SIR_model.py`. Here,
+we create a special `if` block at the bottom of our module, and within this we call
+each of our functions in turn, using the outputs of one as inputs to the next:
 
 ```python
 # file: SIR_model.py
@@ -474,6 +490,26 @@ It prints `"name_test"`
 
 ::::::::::::::::::::::::::::
 
+As we'll see later, it can also be handy to bundle the contents of our
+`if __name__ == "__main__"` block into a function, as then we can `import` that function
+and access our script-like behaviour in another way. This function can take any name,
+but is often called `main`:
+
+```python
+# file: SIR_model.py
+
+def main():
+    S, I, R = SIR_model(
+        pop_size=8000000, beta=0.5, gamma=0.1, days=150, I_0=10
+    )
+    plot_SIR_model(S, I, R)
+
+if __name__ == "__main__":
+    main()
+```
+
+We'll use this format later when discussing ways to make runnable _packages_.
+
 ## Managing PYTHONPATH
 
 Our script is now `import`-able, so the `SIR_model` function can be used from any other
@@ -491,6 +527,9 @@ file `~/.bashrc`.
 
 <!-- TODO: include Windows explanation -->
 
+However, this is not recommended as a long-term solution, as a custom `PYTHONPATH` can
+cause dependency conflicts between different packages on our system and can be difficult
+to debug.
 In a later chapter, we will show how to install our own modules using the `pip` package
 manager, which gives us much more control over how we integrate our modules into our
 Python environments (which may be managed using tools such as `venv` or `conda`), and
@@ -511,8 +550,8 @@ user can call. There are two issues with the implementation as it stands:
 
 We can improve the function with a few changes:
 
-- Rather than using Matplotlib's 'implicit' API (i.e. using `plt.plot()`), which manages
-  global Matplotlib objects, use the 'explicit' API, sometimes called the
+- Rather than using Matplotlib's 'implicit' API (such as by using `plt.plot()`), which
+  manages global Matplotlib objects, use the 'explicit' API, sometimes called the
   'object-oriented' API. This requires handling `Figure` and `Axes` objects directly.
 - Optionally take in an `Axes` object. This way, the user can choose to set up their own
   `Figure` and `Axes`, and our function can write to it.
@@ -594,11 +633,14 @@ a file if the user runs our script:
 ```python
 # file: SIR_model.py
 
-if __name__ == "__main__":
+def main():
     S, I, R = SIR_model(
         pop_size=8000000, beta=0.5, gamma=0.1, days=150, I_0=10
     )
     plot_SIR_model(S, I, R, save_to="SIR_model.png")
+
+if __name__ == "__main__":
+    main()
 ```
 An issue with our example is that it still requires the user to manually edit the file
 if they wish to change the input or outputs.  This problem can be solved by instead
@@ -609,7 +651,7 @@ taking arguments from the command line. A simple interface can be created using
 # file: SIR_model.py
 import sys
 
-if __name__ == "__main__":
+def main():
     # Note: sys.argv[0] is the name of our program!
     pop_size = int(sys.argv[1])
     beta = float(sys.argv[2])
@@ -626,6 +668,9 @@ if __name__ == "__main__":
         I_0=I_0,
     )
     plot_SIR_model(S, I, R, save_to=output)
+
+if __name__ == "__main__":
+    main()
 ```
 
 However, this requires the user to provide every argument in order, and doesn't allow
@@ -636,7 +681,7 @@ library. The comments in the code below explain how this works:
 # file: SIR_model.py
 from argparse import ArgumentParser
 
-if __name__ == "__main__":
+def main():
     # Create an argument parser object. We can provide
     # some info about our program here.
     parser = ArgumentParser(
@@ -685,6 +730,9 @@ if __name__ == "__main__":
         I_0=args.i0,
     )
     plot_SIR_model(S, I, R, save_to=args.output)
+
+if __name__ == "__main__":
+    main()
 ```
 
 We can now run our script using inputs from the command line:

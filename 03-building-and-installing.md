@@ -27,8 +27,8 @@ a few disadvantages to this method:
 
 - If we have two different versions of a package on our system at once, it can be
   tedious to manually update `PYTHONPATH` whenever we want to switch between them.
-- If we have multiple Python environments on our system (e.g. using `venv` or `conda`),
-  setting `PYTHONPATH` will affect all of them.
+- If we have multiple Python environments on our system (using tools such as `venv` or
+  `conda`), setting `PYTHONPATH` will affect all of them.
 - If we share our software with others and require them to update their own
   `PYTHONPATH`, they will need to install any requirements for our package separately,
   which can be error prone.
@@ -92,8 +92,8 @@ powerful third-party tool. We'll focus on `venv` here, but both tools work simil
 
 :::::::::::::::::::::: callout
 
-Contrary to what some believe, you can `pip install` packages into a `conda` virtual
-environment.
+You can `pip install` packages into a `conda` virtual environment, so much of the advice
+in this lesson will still apply if you prefer to use `conda`.
 
 ::::::::::::::::::::::::::::::
 
@@ -167,11 +167,11 @@ environment by calling:
 $ deactivate
 ```
 
-Virtual environments are very useful when we're testing out code, as they allow us to
+Virtual environments are very useful when we're testing our code, as they allow us to
 create a fresh Python environment without any of the installed packages we normally use
-in our own work. This will be important later when we add dependencies to our own
-package, as this allows us to test whether our users will be able to install and run our
-code properly.
+in our work. This will be important later when we add dependencies to our package, as
+this allows us to test whether our users will be able to install and run our
+code properly using a fresh environment.
 
 
 ## An Overview of TOML files
@@ -182,11 +182,11 @@ configuration file formats in common usage, such as YAML, JSON, and INI, but the
 community chose TOML as it provides some benefits over the competition:
 
 - Designed to be human writable and human readable.
-- Can map unambiguously to a hash table (i.e. a `dict` in Python).
+- Can map unambiguously to a hash table (a `dict` in Python).
 - It has a formal specification, so has an unambiguous set of rules.
 
 A TOML file contains a series of `key = value` pairs, which may be grouped into sections
-using a header enclosed in square brackets (i.e. `[section name]`). The values are
+using a header enclosed in square brackets, such as `[section name]`. The values are
 typed, unlike some other formats where all values are strings. The available types are
 strings, integers, floats, booleans, and dates. It is possible to store lists of values
 in arrays, or store a series of key-value pairs in tables. For example:
@@ -214,7 +214,7 @@ dob = 2002-03-05
 foo = "bar"
 ```
 
-We can read this using the `toml` libray in Python:
+We can read this using the `toml` library in Python:
 
 ```bash
 $ python3 -m pip install toml
@@ -413,6 +413,10 @@ synonyms for some metadata entries, and additional tool-specific metadata. Some 
 the recommended core metadata keys are described below:
 
 ```toml
+# file: pyproject.toml
+
+[project]
+
 # name: String, REQUIRED
 name = "my_project"
 
@@ -504,11 +508,12 @@ wish to install:
 # file: pyproject.toml
 
 [tool.setuptools]
-pacakges = ["my_package", "my_other_package"]
+packages = ["my_package", "my_other_package"]
 ```
 
-Note that this is not part of the [PEP 621][PEP 621] standard, and instead is a method
-specific to `setuptools`. Finally, we may set up custom package discovery:
+Note that this is not part of the [PEP 621][PEP 621] standard, and therefore instead
+of being listed under the `[project]` header, it is a method specific to `setuptools`.
+Finally, we may set up custom package discovery:
 
 ```toml
 # file: pyproject.toml
