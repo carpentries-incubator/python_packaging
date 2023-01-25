@@ -256,10 +256,11 @@ the package. In this way, `__init__.py` performs a similar role for a package as
 
 ## Using `__all__` to control `from module import *`
 
-`__all__` is an optional variable that we may set in our modules and packages (i.e. in
-`__init__.py`). It should be a list of strings matching the names of all objects --
-including functions, classes, constants and variables -- that we wish to be considered
-'public' features that the user may wish to use.
+`__all__` is an optional variable that we may set in our modules and packages (to assign
+it to a package, it should be defined in `__init__.py`). It should be a list of strings
+matching the names of all objects -- including functions, classes, constants and
+variables -- that we wish to be considered 'public' features that the user may wish to
+use.
 
 `__all__` also changes the behaviour of `from module import *`. By default, this would
 import all objects within the namespace of `module`, and bring them into the current
@@ -301,13 +302,13 @@ NameError: name 'SIS_model' is not defined
 ### 'Private' variables in Python
 
 It is common for Python programmers to mark objects as private by prefixing their
-names with an underscore, e.g. `_private_variable`, `_PrivateClass`, etc. For an added
-layer of protection, variables set in class instances with two underscores, i.e.
+names with an underscore. For example, `_private_variable` or `_PrivateClass`. For an added
+layer of protection, variables set in class instances with two underscores, such as
 `self.__x`, will have their names mangled when viewed from outside the class, but they
 will still be locatable and modifiable by a determined individual.
 
 Python programmers will also sometimes use a _trailing_ underscore, and this is commonly
-used to avoid a name clash with a built-in object, e.g.:
+used to avoid a name clash with a built-in object:
 
 ```python
 >>> lambda = 10 # Fails! Raises SyntaxError
