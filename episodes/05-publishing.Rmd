@@ -932,10 +932,10 @@ jobs:
     steps:
       # This will checkout our GitHub project and enter
       # the directory
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       # This will set up a Python environment
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.x'
       # Here we update pip to the latest version and

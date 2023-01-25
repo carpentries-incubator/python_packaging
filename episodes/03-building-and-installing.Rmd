@@ -167,11 +167,11 @@ environment by calling:
 $ deactivate
 ```
 
-Virtual environments are very useful when we're testing out code, as they allow us to
+Virtual environments are very useful when we're testing our code, as they allow us to
 create a fresh Python environment without any of the installed packages we normally use
-in our own work. This will be important later when we add dependencies to our own
-package, as this allows us to test whether our users will be able to install and run our
-code properly.
+in our work. This will be important later when we add dependencies to our package, as
+this allows us to test whether our users will be able to install and run our
+code properly using a fresh environment.
 
 
 ## An Overview of TOML files
@@ -214,7 +214,7 @@ dob = 2002-03-05
 foo = "bar"
 ```
 
-We can read this using the `toml` libray in Python:
+We can read this using the `toml` library in Python:
 
 ```bash
 $ python3 -m pip install toml
@@ -511,8 +511,9 @@ wish to install:
 packages = ["my_package", "my_other_package"]
 ```
 
-Note that this is not part of the [PEP 621][PEP 621] standard, and instead is a method
-specific to `setuptools`. Finally, we may set up custom package discovery:
+Note that this is not part of the [PEP 621][PEP 621] standard, and therefore instead
+of being listed under the `[project]` header, it is a method specific to `setuptools`.
+Finally, we may set up custom package discovery:
 
 ```toml
 # file: pyproject.toml
