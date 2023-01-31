@@ -448,14 +448,14 @@
     },
     "pegboard": {
       "Package": "pegboard",
-      "Version": "0.4.2",
+      "Version": "0.4.3",
       "Source": "Repository",
       "Repository": "https://carpentries.r-universe.dev",
       "Remotes": "ropensci/tinkr",
       "RemoteUrl": "https://github.com/carpentries/pegboard",
-      "RemoteRef": "0.4.2",
-      "RemoteSha": "51d5b5e887b7d178be2915d8e60171f352dcf632",
-      "Hash": "a55dd7a6f1d201febd67e3f5ae01c966",
+      "RemoteRef": "0.4.3",
+      "RemoteSha": "e815ea1a34f6eda01a3c9ab9643e35aa051e1938",
+      "Hash": "b2469cb3b358de968c3ded8faa1c4615",
       "Requirements": [
         "R6",
         "commonmark",
@@ -645,7 +645,7 @@
       "Package": "sandpaper",
       "Version": "0.11.4",
       "Source": "Repository",
-      "Repository": "carpentries_archive",
+      "Repository": "carpentries",
       "Remotes": "ropensci/tinkr, carpentries/pegboard, carpentries/varnish",
       "Hash": "1fba7ac658628c531427c65be714f30c",
       "Requirements": [
