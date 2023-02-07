@@ -20,6 +20,10 @@ exercises: 0
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
+<!-- Package unicode &#128230; -->
+<!-- Folder unicode &#128193; -->
+<!-- File unicode &#128220; -->
+
 ## Packages
 
 In the previous lesson, we showed how to convert a simple Python script into a reusable
@@ -29,40 +33,61 @@ over multiple files. Separating logically distinct units of code into their own 
 will help others to understand how our project works, and it allows us to control which
 features of our code are exposed to users at the top level.
 
-The primary tool for organising a project spread across multiple files is the _package_.
+The primary tool for organising a project across multiple files is the _package_.
 Packages are very similar to modules, and they are defined by the directory structure we
 use to organise our files.
 
-As an example of how to use packages, we'll return to the SIR model introduced in the
-previous lesson. After some more time spent developing this project, we may have added 
-additional epidemiology models, such as the SEIR model which introduces a new population
-category of those who are Exposed to a pathogen, but not yet infectious themselves (this
-models diseases such as COVID-19 fairly well). We could also add a SIS model, which is
-similar to the SIR model, but Recovered individuals do not gain immunity to the
-pathogen, and instead return to the Susceptible population (this can apply to the common
-cold and some types of flu). A good way to organise our code might be the following
-directory structure:
-
-<!-- Package unicode &#128230; -->
-<!-- Folder unicode &#128193; -->
-<!-- File unicode &#128220; -->
+To demonstrate how to create a package, we'll convert our SIR model module from the last
+lesson into a package. Let's say we have it stored within a directory `epi_models` --
+short for epidemiology models:
 
 <code>
-&#128193; my_project<br>
+&#128193; epi\_models<br>
 |<br>
-|\_\_\_\_&#128230; epi_models<br>
+|\_\_\_\_&#128220; SIR.py<br>
+</code>
+
+To convert this to a package, we'll simply create a new directory -- also called
+`epi_models` -- and move our Python module to it:
+
+```bash
+$ cd /path/to/my/workspace/epi_models
+$ mkdir epi_models
+$ mv SIR.py epi_models
+```
+
+We'll also add a new empty file called `__init__.py`:
+
+```bash
+$ touch epi_models/__init__.py
+```
+
+Our directory structure should now be:
+
+<code>
+&#128193; epi\_models<br>
+|<br>
+|\_\_\_\_&#128230; epi\_models<br>
 \ \ \ \ \ |<br>
 \ \ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
 \ \ \ \ \ |\_\_\_\_&#128220; SIR.py<br>
-\ \ \ \ \ |\_\_\_\_&#128220; SEIR.py<br>
-\ \ \ \ \ |\_\_\_\_&#128220; SIS.py<br>
 </code>
 
-Each model has its own file under the directory `epi_models`, and we've also added a
-new file `__init__.py`. The presence of an `__init__.py` file marks the `epi_models`
-directory as a package, and the contents of this file are run when the package or any
-modules within are imported. For now, this file can be left empty -- we'll explain how
-to use this file to set up and control our package in the next section.
+That's all we need for a basic package! But why did we need to create a new directory
+with the same name, and what is `__init__.py` for?
+
+- The top-level directory can be thought of as the _project directory_, while the
+  directory contained within is the _package directory_. Later, we will add new files to
+  the project directory containing descriptive metadata for our package, and this will
+  allow us to build, install, and publish the package. It is important for these files
+  to be kept outside of the package itself.
+- The choice to give the package directory the same name as the project directory is
+  simply a common convention for Python projects, and it'll make it easier for to build,
+  install and publish our package later. We'll cover alternative directory layouts in
+  our lesson on [building and installing packages](03-building-and-installing.Rmd).
+- The presence of an  `__init__.py` file marks a directory as a package, and the
+  contents of this file are run when the package or any modules within are imported.
+  We'll explain how to use this file to set up and control our package in a later section.
 
 :::::::::::::::::::::::::::::: discussion
 
@@ -80,8 +105,47 @@ for the package clearer.
 
 ::::::::::::::::::::::::::::::::::::::
 
-To import our functions, we can now enter the `my_project` directory and call the
-following in an interactive session:
+Now that we've created a basic package, it is straightforward to expand it to contain
+additional modules. For example, we may choose to add new epidemiology models, such as
+the SEIR model which introduces a new population category of those who are Exposed to a
+pathogen, but not yet infectious themselves (this models diseases such as COVID-19
+fairly well). We could also add a SIS model, which is similar to the SIR model, but
+Recovered individuals do not gain immunity to the pathogen, and instead return to the
+Susceptible population (this can apply to the common cold and some types of flu). These
+new modules should be added to the package directory:
+
+<code>
+&#128193; epi\_models<br>
+|<br>
+|\_\_\_\_&#128230; epi\_models<br>
+\ \ \ \ \ |<br>
+\ \ \ \ \ |\_\_\_\_&#128220; \_\_init\_\_.py<br>
+\ \ \ \ \ |\_\_\_\_&#128220; SIR.py<br>
+\ \ \ \ \ |\_\_\_\_&#128220; SEIR.py<br>
+\ \ \ \ \ |\_\_\_\_&#128220; SIS.py<br>
+</code>
+
+These new modules might contain similar functions to `SIR.py`. For example, `SEIR.py`
+may contain:
+
+```python
+# file: SEIR.py
+
+def SEIR_model(pop_size, alpha, beta, gamma, days, I_0):
+    # Function to solve the SEIR model
+    # Returns lists S, E, I, R
+    pass
+
+def plot_SEIR_model(S, E, I, R):
+    # Function to plot S, E, I, R over time
+    pass
+```
+
+We won't worry about how these functions should be implemented for now. `SIS.py` should
+contain similar functions.
+
+To import our functions, we can now enter the top-level `epi_models` directory and call
+the following in an interactive session:
 
 ```python
 >>> import epi_models.SIR
@@ -97,13 +161,21 @@ lesson:
 ```python
 >>> # Assign an alias to the import
 >>> import epi_models.SEIR as SEIR
->>> S, E, I, R = SEIR.SEIR_model(*args)
+>>> S, E, I, R = SEIR.SEIR_model(
+        pop_size=8000000, alpha=0.2, beta=0.5, gamma=0.1, days=150, I_0=10
+    )
+
 >>> # Use 'from ... import ...' to get the function directly
 >>> from epi_models.SEIR import SEIR_model
->>> S, E, I, R = SEIR_model(*args)
+>>> S, E, I, R = SEIR_model(
+        pop_size=8000000, alpha=0.2, beta=0.5, gamma=0.1, days=150, I_0=10
+    )
+
 >>> # Import everything into the current namespace (not recommended!)
 >>> from epi_models.SIS import *
->>> S, E, I, R = SEIR_model(*args)
+>>> S, E, I, R = SEIR_model(
+        pop_size=8000000, alpha=0.2, beta=0.5, gamma=0.1, days=150, I_0=10
+    )
 ```
 
 As our project develops, we may decide that we need a further level of organisation.
@@ -112,7 +184,7 @@ we may decide to move these into their own directories. To do this, we can defin
 _sub-packages_ within our top-level package:
 
 <code>
-&#128193; my_project<br>
+&#128193; epi\_models<br>
 |<br>
 |\_\_\_\_&#128230; epi\_models<br>
 \ \ \ \ \ |<br>
@@ -149,7 +221,7 @@ to import other modules using _relative imports_. To show how these work, we'll 
 an extra file `utils.py` inside the `models` subpackage.
 
 <code>
-&#128193; my_project<br>
+&#128193; epi\_models<br>
 |<br>
 |\_\_\_\_&#128230; epi\_models<br>
 \ \ \ \ \ |<br>
@@ -227,6 +299,7 @@ add the following to `epi_models/__init__.py`
 
 ```python
 # file: epi_models/__init__.py
+
 from .models import SIR_model, SEIR_model, SIS_model
 ```
 
@@ -243,7 +316,7 @@ Note that we did not import any functions from `utils.py`, as these are only int
 for use within the `models` sub-package, and there's no need to expose these
 implementation details to the user. A well crafted `__init__.py` allows us to define a
 _public API_, which is the portion of our code that we expect our users to interact
-with.  The following sub-section introduces the `__all__` variable, which allows us to
+with.  The following section introduces the `__all__` variable, which allows us to
 more rigorously define a public API.
 
 As the contents of `__init__.py` is run whenever the package or any sub-packages/modules
@@ -394,7 +467,7 @@ sub-package/module, and we don't include `.py` at the end.
 We can also add script-like behaviour to packages by adding a `__main__.py` file:
 
 <code>
-&#128193; my_project<br>
+&#128193; epi\_models<br>
 |<br>
 |\_\_\_\_&#128230; epi\_models<br>
 \ \ \ \ \ |<br>
