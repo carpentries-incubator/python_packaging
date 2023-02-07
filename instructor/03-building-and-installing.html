@@ -307,17 +307,19 @@ once, it can be tedious to manually update <code>PYTHONPATH</code>
 whenever we want to switch between them.</li>
 <li>If we have multiple Python environments on our system (using tools
 such as <code>venv</code> or <code>conda</code>), setting
-<code>PYTHONPATH</code> will affect all of them.</li>
+<code>PYTHONPATH</code> will affect all of them. This can lead to
+unexpected dependency conflicts that can be very hard to debug.</li>
 <li>If we share our software with others and require them to update
 their own <code>PYTHONPATH</code>, they will need to install any
 requirements for our package separately, which can be error prone.</li>
 </ul><p>It would be preferable if we could install our package using
 <code>pip</code>, the same way that we would normally install external
-Python packages. However, if we try the following:</p>
+Python packages. However, if we enter the top level directory of our
+project and try the following:</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd my_project</span>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd /path/to/my/workspace/epi_models</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip install .</span></code></pre>
 </div>
 <p>We get the following error:</p>
@@ -570,9 +572,8 @@ can be achieved with this file:</p>
 the command line</li>
 <li>Configure our development tools.</li>
 </ul><p>To make our package <code>pip</code>-installable, we should add the
-file <code>pyproject.toml</code> to the directory that contains our
-package. It is common for this directory to have the same name as the
-package itself:</p>
+file <code>pyproject.toml</code> to the top-level
+<code>epi_models</code> directory:</p>
 <p><code> 📁 epi_models<br> |<br> |____📜 pyproject.toml<br> |____📦
 epi_models<br>      |<br>      |____📜 __init__.py<br>      |____📜
 __main__.py<br>      |<br>      |____📁 models<br>      |    |<br>
@@ -1122,7 +1123,7 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://LiamPattinson.github.io/python-packaging/instructor/03-building-and-installing.html",
   "identifier": "https://LiamPattinson.github.io/python-packaging/instructor/03-building-and-installing.html",
-  "dateCreated": "2023-01-25",
+  "dateCreated": "2023-02-07",
   "dateModified": "2023-02-07",
   "datePublished": "2023-02-07"
 }
