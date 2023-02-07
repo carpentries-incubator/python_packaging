@@ -28,16 +28,18 @@ a few disadvantages to this method:
 - If we have two different versions of a package on our system at once, it can be
   tedious to manually update `PYTHONPATH` whenever we want to switch between them.
 - If we have multiple Python environments on our system (using tools such as `venv` or
-  `conda`), setting `PYTHONPATH` will affect all of them.
+  `conda`), setting `PYTHONPATH` will affect all of them. This can lead to unexpected
+  dependency conflicts that can be very hard to debug.
 - If we share our software with others and require them to update their own
   `PYTHONPATH`, they will need to install any requirements for our package separately,
   which can be error prone.
 
 It would be preferable if we could install our package using `pip`, the same way that
-we would normally install external Python packages. However, if we try the following:
+we would normally install external Python packages. However, if we enter the top level
+directory of our project and try the following:
 
 ```bash
-$ cd my_project
+$ cd /path/to/my/workspace/epi_models
 $ python3 -m pip install .
 ```
 
@@ -268,9 +270,7 @@ can be achieved with this file:
 - Configure our development tools.
 
 To make our package `pip`-installable, we should add the file `pyproject.toml` to the
-directory that contains our package. It is common for this directory to have the same
-name as the package itself:
-
+top-level `epi_models` directory:
 
 <code>
 &#128193; epi\_models<br>
