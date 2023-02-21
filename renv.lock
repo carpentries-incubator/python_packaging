@@ -29,7 +29,7 @@
       "Package": "Rcpp",
       "Version": "1.0.10",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Hash": "e749cae40fa9ef469b6050959517453c",
       "Requirements": []
     },
@@ -230,7 +230,7 @@
       "Package": "fansi",
       "Version": "1.0.4",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Hash": "1d9e7ad3c8312a192dea7d3db0274fde",
       "Requirements": []
     },
@@ -321,10 +321,10 @@
     },
     "httpuv": {
       "Package": "httpuv",
-      "Version": "1.6.8",
+      "Version": "1.6.9",
       "Source": "Repository",
       "Repository": "RSPM",
-      "Hash": "08e611aee165b27f8ff18770285fb535",
+      "Hash": "1046aa31a57eae8b357267a56a0b6d8b",
       "Requirements": [
         "R6",
         "Rcpp",
@@ -572,10 +572,7 @@
       "Package": "ragg",
       "Version": "1.2.5",
       "Source": "Repository",
-      "Repository": "https://carpentries.r-universe.dev",
-      "RemoteUrl": "https://github.com/r-lib/ragg",
-      "RemoteRef": "v1.2.5",
-      "RemoteSha": "dafb0d8e0308c4db56abed2290f32a1ca0719307",
+      "Repository": "RSPM",
       "Hash": "690bc058ea2b1b8a407d3cfe3dce3ef9",
       "Requirements": [
         "systemfonts",
@@ -643,14 +640,14 @@
     },
     "sandpaper": {
       "Package": "sandpaper",
-      "Version": "0.11.5",
+      "Version": "0.11.6",
       "Source": "Repository",
       "Repository": "https://carpentries.r-universe.dev",
       "Remotes": "ropensci/tinkr, carpentries/pegboard, carpentries/varnish",
       "RemoteUrl": "https://github.com/carpentries/sandpaper",
-      "RemoteRef": "0.11.5",
-      "RemoteSha": "33dc18cafe1a9b38704e4cadcf2a1887db06b00f",
-      "Hash": "afa3702db340faa4e170257110a766a2",
+      "RemoteRef": "0.11.6",
+      "RemoteSha": "1d3213291c4f298e5c8b9d42e629fdeae734626c",
+      "Hash": "e8bf984b77f69b374662a4a6640d6d68",
       "Requirements": [
         "assertthat",
         "callr",
@@ -781,15 +778,14 @@
       "Repository": "https://carpentries.r-universe.dev",
       "RemoteUrl": "https://github.com/ropensci/tinkr",
       "RemoteRef": "HEAD",
-      "RemoteSha": "7917da83faee43d303dbd00d683eb99eb5ee885c",
-      "Hash": "e7c727b5d61710c1d76cac821c97fcd2",
+      "RemoteSha": "b2e0459483d8e713bcea4cec35fb9042d51da0a3",
+      "Hash": "cb7e23a00386f36777b1bf15ca931c59",
       "Requirements": [
         "R6",
         "commonmark",
         "glue",
         "magrittr",
         "purrr",
-        "stringr",
         "xml2",
         "xslt",
         "yaml"
@@ -858,7 +854,7 @@
       "Package": "whisker",
       "Version": "0.4.1",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Hash": "c6abfa47a46d281a7d5159d0a8891e88",
       "Requirements": []
     },
