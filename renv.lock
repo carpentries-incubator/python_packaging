@@ -142,10 +142,10 @@
     },
     "commonmark": {
       "Package": "commonmark",
-      "Version": "1.8.1",
+      "Version": "1.9.0",
       "Source": "Repository",
       "Repository": "RSPM",
-      "Hash": "b6e3e947d1d7ebf3d2bdcea1bde63fe7"
+      "Hash": "d691c61bff84bd63c383874d2d0c3307"
     },
     "cpp11": {
       "Package": "cpp11",
@@ -742,10 +742,10 @@
     },
     "sandpaper": {
       "Package": "sandpaper",
-      "Version": "0.11.9",
+      "Version": "0.11.11.001",
       "Source": "Repository",
       "Repository": "carpentries",
-      "Remotes": "ropensci/tinkr, carpentries/pegboard, carpentries/varnish,\n        rstudio/renv",
+      "Remotes": "ropensci/tinkr, carpentries/pegboard, carpentries/varnish, rstudio/renv",
       "Requirements": [
         "assertthat",
         "callr",
@@ -771,7 +771,7 @@
         "whisker",
         "yaml"
       ],
-      "Hash": "73bd51a22a20a4c0f1828cddef632e77"
+      "Hash": "ba857a97bea2eec142228a8a01e8b25c"
     },
     "sass": {
       "Package": "sass",
@@ -789,7 +789,7 @@
     },
     "servr": {
       "Package": "servr",
-      "Version": "0.25",
+      "Version": "0.26",
       "Source": "Repository",
       "Repository": "RSPM",
       "Requirements": [
@@ -799,7 +799,7 @@
         "mime",
         "xfun"
       ],
-      "Hash": "fff3eeed2ebb27fc33abbd6d953610a4"
+      "Hash": "fd76750552bad91bbb9b89662f3a3f87"
     },
     "stringi": {
       "Package": "stringi",
@@ -866,9 +866,9 @@
     },
     "tibble": {
       "Package": "tibble",
-      "Version": "3.2.0",
+      "Version": "3.2.1",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "CRAN",
       "Requirements": [
         "R",
         "fansi",
@@ -881,7 +881,7 @@
         "utils",
         "vctrs"
       ],
-      "Hash": "37695ff125982007d42a59ad10982ff2"
+      "Hash": "a84e2cc86d07289b3b6f5069df7a004c"
     },
     "tinkr": {
       "Package": "tinkr",
