@@ -144,7 +144,7 @@
       "Package": "commonmark",
       "Version": "1.9.0",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "CRAN",
       "Hash": "d691c61bff84bd63c383874d2d0c3307"
     },
     "cpp11": {
@@ -519,7 +519,10 @@
       "Package": "openssl",
       "Version": "2.0.6",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "https://carpentries.r-universe.dev",
+      "RemoteUrl": "https://github.com/jeroen/openssl",
+      "RemoteRef": "v2.0.6",
+      "RemoteSha": "72aa50a79b99bb1eb57a2668b1c437b1adecbabb",
       "Requirements": [
         "askpass"
       ],
@@ -528,12 +531,14 @@
     "pegboard": {
       "Package": "pegboard",
       "Version": "0.4.3",
-      "Source": "Repository",
-      "Repository": "https://carpentries.r-universe.dev",
-      "Remotes": "ropensci/tinkr",
-      "RemoteUrl": "https://github.com/carpentries/pegboard",
-      "RemoteRef": "0.4.3",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "carpentries",
+      "RemoteRepo": "pegboard",
+      "RemoteRef": "main",
       "RemoteSha": "e815ea1a34f6eda01a3c9ab9643e35aa051e1938",
+      "Remotes": "ropensci/tinkr",
       "Requirements": [
         "R6",
         "commonmark",
@@ -545,13 +550,13 @@
         "xslt",
         "yaml"
       ],
-      "Hash": "b2469cb3b358de968c3ded8faa1c4615"
+      "Hash": "d580eb0853c43d8036aaa8e81f17f2d0"
     },
     "pillar": {
       "Package": "pillar",
-      "Version": "1.8.1",
+      "Version": "1.9.0",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "CRAN",
       "Requirements": [
         "cli",
         "fansi",
@@ -562,7 +567,7 @@
         "utils",
         "vctrs"
       ],
-      "Hash": "f2316df30902c81729ae9de95ad5a608"
+      "Hash": "15da5a8412f317beeee6175fbc76f4bb"
     },
     "pkgconfig": {
       "Package": "pkgconfig",
@@ -634,14 +639,14 @@
     },
     "ps": {
       "Package": "ps",
-      "Version": "1.7.2",
+      "Version": "1.7.3",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "CRAN",
       "Requirements": [
         "R",
         "utils"
       ],
-      "Hash": "68dd03d98a5efd1eb3012436de45ba83"
+      "Hash": "ebaacc87f539b1100e285e9e5d6496ad"
     },
     "purrr": {
       "Package": "purrr",
@@ -742,10 +747,13 @@
     },
     "sandpaper": {
       "Package": "sandpaper",
-      "Version": "0.11.11.001",
+      "Version": "0.11.13",
       "Source": "Repository",
-      "Repository": "carpentries",
-      "Remotes": "ropensci/tinkr, carpentries/pegboard, carpentries/varnish, rstudio/renv",
+      "Repository": "https://carpentries.r-universe.dev",
+      "Remotes": "ropensci/tinkr, carpentries/pegboard, carpentries/varnish",
+      "RemoteUrl": "https://github.com/carpentries/sandpaper",
+      "RemoteRef": "0.11.13",
+      "RemoteSha": "bd6c0b5bd195b32a93a78764e96d5230ee517542",
       "Requirements": [
         "assertthat",
         "callr",
@@ -771,7 +779,7 @@
         "whisker",
         "yaml"
       ],
-      "Hash": "ba857a97bea2eec142228a8a01e8b25c"
+      "Hash": "7b847e65a217e97e69c42dc7b03c5260"
     },
     "sass": {
       "Package": "sass",
@@ -791,7 +799,7 @@
       "Package": "servr",
       "Version": "0.26",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "CRAN",
       "Requirements": [
         "R",
         "httpuv",
@@ -886,11 +894,13 @@
     "tinkr": {
       "Package": "tinkr",
       "Version": "0.1.0.9000",
-      "Source": "Repository",
-      "Repository": "https://carpentries.r-universe.dev",
-      "RemoteUrl": "https://github.com/ropensci/tinkr",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "b2e0459483d8e713bcea4cec35fb9042d51da0a3",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "ropensci",
+      "RemoteRepo": "tinkr",
+      "RemoteRef": "main",
+      "RemoteSha": "c50a2f000fcabc484a6c8b1d4fa0bd19407ed403",
       "Requirements": [
         "R6",
         "commonmark",
@@ -901,7 +911,7 @@
         "xslt",
         "yaml"
       ],
-      "Hash": "cb7e23a00386f36777b1bf15ca931c59"
+      "Hash": "529a6b35c4a238e2e8425a146d24f075"
     },
     "tinytex": {
       "Package": "tinytex",
