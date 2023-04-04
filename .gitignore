@@ -223,3 +223,4 @@ cython_debug/
 
 # vim files
 *.swp
+renv/sandbox
