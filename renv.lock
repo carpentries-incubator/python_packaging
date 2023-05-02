@@ -97,14 +97,14 @@
     },
     "cachem": {
       "Package": "cachem",
-      "Version": "1.0.7",
+      "Version": "1.0.8",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "fastmap",
         "rlang"
       ],
-      "Hash": "cda74447c42f529de601fe4d4050daef"
+      "Hash": "c35768291560ce302c0a6589f92e837d"
     },
     "callr": {
       "Package": "callr",
@@ -278,7 +278,7 @@
     },
     "fontawesome": {
       "Package": "fontawesome",
-      "Version": "0.5.0",
+      "Version": "0.5.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -286,18 +286,18 @@
         "htmltools",
         "rlang"
       ],
-      "Hash": "e80750aec5717dedc019ad7ee40e4a7c"
+      "Hash": "1e22b8cabbad1eae951a75e9f8b52378"
     },
     "fs": {
       "Package": "fs",
-      "Version": "1.6.1",
+      "Version": "1.6.2",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R",
         "methods"
       ],
-      "Hash": "f4dcd23b67e33d851d2079f703e8b985"
+      "Hash": "94af08e0aa9675a16fadbb3aaaa90d2a"
     },
     "gert": {
       "Package": "gert",
@@ -538,14 +538,14 @@
     },
     "pegboard": {
       "Package": "pegboard",
-      "Version": "0.5.1",
+      "Version": "0.5.3",
       "Source": "GitHub",
       "RemoteType": "github",
-      "RemoteHost": "api.github.com",
       "RemoteUsername": "carpentries",
       "RemoteRepo": "pegboard",
       "RemoteRef": "main",
-      "RemoteSha": "f7cb787f7a18463375e7f8e3363c514007b64425",
+      "RemoteSha": "aae8083f519fb74a753e0765bc83e73b31ac42eb",
+      "RemoteHost": "api.github.com",
       "Remotes": "ropensci/tinkr",
       "Requirements": [
         "R6",
@@ -558,7 +558,7 @@
         "xslt",
         "yaml"
       ],
-      "Hash": "2e33fe68f9761908c0c320ac196bcb40"
+      "Hash": "e00fe52859abc9290b08f56ec995593a"
     },
     "pillar": {
       "Package": "pillar",
@@ -619,7 +619,7 @@
     },
     "processx": {
       "Package": "processx",
-      "Version": "3.8.0",
+      "Version": "3.8.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -628,7 +628,7 @@
         "ps",
         "utils"
       ],
-      "Hash": "a33ee2d9bf07564efb888ad98410da84"
+      "Hash": "d75b4059d781336efba24021915902b4"
     },
     "promises": {
       "Package": "promises",
@@ -647,14 +647,14 @@
     },
     "ps": {
       "Package": "ps",
-      "Version": "1.7.4",
+      "Version": "1.7.5",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R",
         "utils"
       ],
-      "Hash": "d88be14c6790aa6fd7b27a2079a45a85"
+      "Hash": "709d852d33178db54b17c722e5b1e594"
     },
     "purrr": {
       "Package": "purrr",
@@ -694,24 +694,24 @@
     },
     "renv": {
       "Package": "renv",
-      "Version": "0.17.2",
+      "Version": "0.17.3",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "utils"
       ],
-      "Hash": "aaf3c7f769695266a2113db67a25148b"
+      "Hash": "4543b8cd233ae25c6aba8548be9e747e"
     },
     "rlang": {
       "Package": "rlang",
-      "Version": "1.1.0",
+      "Version": "1.1.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R",
         "utils"
       ],
-      "Hash": "dc079ccd156cde8647360f473c1fa718"
+      "Hash": "a85c767b55f0bf9b7ad16c6d7baee5bb"
     },
     "rmarkdown": {
       "Package": "rmarkdown",
@@ -756,13 +756,13 @@
     },
     "sandpaper": {
       "Package": "sandpaper",
-      "Version": "0.11.13",
+      "Version": "0.11.15",
       "Source": "Repository",
-      "RemoteType": "repository",
+      "Repository": "https://carpentries.r-universe.dev",
       "Remotes": "ropensci/tinkr, carpentries/pegboard, carpentries/varnish",
       "RemoteUrl": "https://github.com/carpentries/sandpaper",
-      "RemoteRef": "0.11.13",
-      "RemoteSha": "bd6c0b5bd195b32a93a78764e96d5230ee517542",
+      "RemoteRef": "0.11.15",
+      "RemoteSha": "3d088c7fe81191d665cb8a812aff737e5c1b145f",
       "Requirements": [
         "assertthat",
         "callr",
@@ -788,7 +788,7 @@
         "whisker",
         "yaml"
       ],
-      "Hash": "e20816779e56a86633882244ea75f74d"
+      "Hash": "73bc3206476c3dec358a9b7c85ae4bc1"
     },
     "sass": {
       "Package": "sass",
@@ -921,13 +921,13 @@
     },
     "tinytex": {
       "Package": "tinytex",
-      "Version": "0.44",
+      "Version": "0.45",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "xfun"
       ],
-      "Hash": "c0f007e2eeed7722ce13d42b84a22e07"
+      "Hash": "e4e357f28c2edff493936b6cb30c3d65"
     },
     "usethis": {
       "Package": "usethis",
@@ -972,7 +972,7 @@
     },
     "vctrs": {
       "Package": "vctrs",
-      "Version": "0.6.1",
+      "Version": "0.6.2",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -982,7 +982,7 @@
         "lifecycle",
         "rlang"
       ],
-      "Hash": "06eceb3a5d716fd0654cc23ca3d71a99"
+      "Hash": "a745bda7aff4734c17294bb41d4e4607"
     },
     "whisker": {
       "Package": "whisker",
@@ -1006,28 +1006,25 @@
     },
     "xfun": {
       "Package": "xfun",
-      "Version": "0.38",
+      "Version": "0.39",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "stats",
         "tools"
       ],
-      "Hash": "1ed71215d45e85562d3b1b29a068ccec"
+      "Hash": "8f56e9acb54fb525e66464d57ab58bcb"
     },
     "xml2": {
       "Package": "xml2",
-      "Version": "1.3.3",
+      "Version": "1.3.4",
       "Source": "Repository",
-      "RemoteType": "repository",
-      "RemoteUrl": "https://github.com/r-lib/xml2",
-      "RemoteRef": "v1.3.3",
-      "RemoteSha": "71eac14ecff168232c85995378816aafc630c417",
+      "Repository": "RSPM",
       "Requirements": [
         "R",
         "methods"
       ],
-      "Hash": "41fe39a9dc0c768f0405c3d8145ba53c"
+      "Hash": "7dc765ac9b909487326a7d471fdd3821"
     },
     "xslt": {
       "Package": "xslt",
@@ -1049,10 +1046,10 @@
     },
     "zip": {
       "Package": "zip",
-      "Version": "2.2.2",
+      "Version": "2.3.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "c42bfcec3fa6a0cce17ce1f8bc684f88"
+      "Hash": "d98c94dacb7e0efcf83b0a133a705504"
     }
   }
 }
