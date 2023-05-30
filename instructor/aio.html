@@ -548,13 +548,13 @@ namespace, we can use:</p>
 <pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> SIR_model_script <span class="im">import</span> S, I, R</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">print</span>(S, I, R)</span></code></pre>
 </div>
-<div id="callout1" class="callout callout">
+<div id="the-dangers-of-from-module-import" class="callout callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
 <div id="the-dangers-of-from-module-import" class="callout-inner">
 <h3 class="callout-title">The dangers of
-<code>from module import *</code><a class="anchor" aria-label="anchor" href="#callout1"></a>
+<code>from module import *</code><a class="anchor" aria-label="anchor" href="#the-dangers-of-from-module-import"></a>
 </h3>
 <div class="callout-content">
 <p>Using <code>from module import *</code> is considered harmful by many
@@ -1424,12 +1424,12 @@ as a package, and the contents of this file are run when the package or
 any modules within are imported. We’ll explain how to use this file to
 set up and control our package in a later section.</li>
 </ul>
-<div id="discussion1" class="callout discussion">
+<div id="namespace-packages" class="callout discussion">
 <div class="callout-square">
 <i class="callout-icon" data-feather="message-circle"></i>
 </div>
 <div id="namespace-packages" class="callout-inner">
-<h3 class="callout-title">Namespace Packages<a class="anchor" aria-label="anchor" href="#discussion1"></a>
+<h3 class="callout-title">Namespace Packages<a class="anchor" aria-label="anchor" href="#namespace-packages"></a>
 </h3>
 <div class="callout-content">
 <p>Since Python 3.3, if you omit <code>__init__.py</code>, you may find
@@ -1688,12 +1688,12 @@ fine:</p>
   File "&lt;stdin&gt;", line 1, in &lt;module&gt;
 NameError: name 'SIS_model' is not defined</code></pre>
 </div>
-<div id="discussion2" class="callout discussion">
+<div id="private-variables-in-python" class="callout discussion">
 <div class="callout-square">
 <i class="callout-icon" data-feather="message-circle"></i>
 </div>
 <div id="private-variables-in-python" class="callout-inner">
-<h3 class="callout-title">‘Private’ variables in Python<a class="anchor" aria-label="anchor" href="#discussion2"></a>
+<h3 class="callout-title">‘Private’ variables in Python<a class="anchor" aria-label="anchor" href="#private-variables-in-python"></a>
 </h3>
 <div class="callout-content">
 <p>It is common for Python programmers to mark objects as private by
@@ -2296,12 +2296,12 @@ project. For modern Python projects, it is recommended to write only
 <code>pyproject.toml</code>. This was introduced by <a href="https://peps.python.org/pep-0517/" class="external-link">PEP 517</a>, <a href="https://peps.python.org/pep-0518/" class="external-link">PEP 518</a> and <a href="https://peps.python.org/pep-0621/" class="external-link">PEP 621</a> as a standard way
 to define a Python project, and all tools that build, install, and
 publish Python packages are expected to use it.</p>
-<div id="discussion1" class="callout discussion">
+<div id="what-is-setup.py" class="callout discussion">
 <div class="callout-square">
 <i class="callout-icon" data-feather="message-circle"></i>
 </div>
 <div id="what-is-setup.py" class="callout-inner">
-<h3 class="callout-title">What is <code>setup.py</code>?<a class="anchor" aria-label="anchor" href="#discussion1"></a>
+<h3 class="callout-title">What is <code>setup.py</code>?<a class="anchor" aria-label="anchor" href="#what-is-setup.py"></a>
 </h3>
 <div class="callout-content">
 <p><code>setup.py</code> serves a similar role to
@@ -3097,7 +3097,7 @@ packages changed so much of the years?</li>
   Instructor Note
   </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <p>This lesson can be skipped entirely if you’re aiming for a purely
 practical lesson.</p>
@@ -4835,9 +4835,9 @@ any links that you are not going to use.
         <p>Materials licensed under <a href="../LICENSE.html">CC-BY 4.0</a> by the authors</p>
         
         <p><a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">Template licensed under CC-BY 4.0</a> by <a href="https://carpentries.org" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.11.16" class="external-link">sandpaper (0.11.16)</a>,
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.12.2" class="external-link">sandpaper (0.12.2)</a>,
         <a href="https://github.com/carpentries/pegboard" class="external-link">pegboard (0.5.3)</a>,
-      and <a href="https://github.com/carpentries/varnish/tree/0.2.16" class="external-link">varnish (0.2.16)</a>.</p>
+      and <a href="https://github.com/carpentries/varnish/tree/0.2.17" class="external-link">varnish (0.2.17)</a>.</p>
 			</div>
 		</footer>
 </div> <!-- / div.container -->
@@ -4859,8 +4859,8 @@ any links that you are not going to use.
   "url": "https://LiamPattinson.github.io/python-packaging/instructor/aio.html",
   "identifier": "https://LiamPattinson.github.io/python-packaging/instructor/aio.html",
   "dateCreated": "2023-05-02",
-  "dateModified": "2023-05-16",
-  "datePublished": "2023-05-16"
+  "dateModified": "2023-05-30",
+  "datePublished": "2023-05-30"
 }
 
   </script><script>
