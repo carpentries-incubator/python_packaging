@@ -1,105 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/01-introduction.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/01-introduction.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/01-scripts-and-modules.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/01-scripts-and-modules.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/02-packages.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/02-packages.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/03-building-and-installing.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/03-building-and-installing.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/04-history-of-packaging.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/04-history-of-packaging.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/05-publishing.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/05-publishing.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/404.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/404.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/CODE_OF_CONDUCT.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/CODE_OF_CONDUCT.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/LICENSE.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/TODO.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/TODO.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/aio.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/aio.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/images.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/images.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/index.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/index.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/instructor/01-introduction.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/instructor/01-introduction.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/instructor/01-scripts-and-modules.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/instructor/01-scripts-and-modules.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/instructor/02-packages.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/instructor/02-packages.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/instructor/03-building-and-installing.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/instructor/03-building-and-installing.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/instructor/04-history-of-packaging.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/instructor/04-history-of-packaging.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/instructor/05-publishing.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/instructor/05-publishing.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/instructor/404.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/instructor/404.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/instructor/CODE_OF_CONDUCT.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/instructor/CODE_OF_CONDUCT.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/instructor/LICENSE.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/instructor/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/instructor/TODO.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/instructor/TODO.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/instructor/aio.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/instructor/aio.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/instructor/images.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/instructor/images.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/instructor/index.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/instructor/index.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/instructor/instructor-notes.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/instructor/instructor-notes.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/instructor/key-points.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/instructor/key-points.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/instructor/keypoints.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/instructor/keypoints.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/instructor/profiles.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/instructor/profiles.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/instructor-notes.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/instructor-notes.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/key-points.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/key-points.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/keypoints.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/keypoints.html</loc>
   </url>
   <url>
-    <loc>https://LiamPattinson.github.io/python-packaging/profiles.html</loc>
+    <loc>https://carpentries-incubator.github.io/python_packaging/profiles.html</loc>
   </url>
 </urlset>
