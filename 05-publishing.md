@@ -862,7 +862,16 @@ by uploading to TestPyPI:
 $ twine upload --repository testpypi dist/*
 ```
 
-After checking that everything looks right on TestPyPI, we may proceed with installing
+Note that there is a registration process for TestPyPI, and a separate one for PyPI.
+Once uploaded to TestPyPI we can check that everything looks correct using the web interface.
+If you choose to `pip` download from TestPyPI you may need to specify that the dependencies are gotten 
+from PyPI proper by using the `--extra-indec-url` flag. This is because the dependencies may not be available through TestPyPI.
+
+```bash
+$. pip install -i https://test.pypi.org/pypi/ --extra-index-url https://pypi.org/simple epi_models==0.1.0
+```
+
+Once we are happy that all looks correct on TestPyPI we may proceed with installing
 our package to PyPI:
 
 ```bash
