@@ -184,11 +184,14 @@
       "Package": "curl",
       "Version": "5.0.0",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "RemoteType": "repository",
+      "RemoteUrl": "https://github.com/jeroen/curl",
+      "RemoteRef": "v5.0.0",
+      "RemoteSha": "4ba39ef7082c2eb14ff621df95008278a7e46466",
       "Requirements": [
         "R"
       ],
-      "Hash": "e4f97056611e8e6b8b852d13b7400cf1"
+      "Hash": "61a76fc723b02b38cb5b68e3ed6fe3e6"
     },
     "desc": {
       "Package": "desc",
