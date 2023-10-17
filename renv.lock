@@ -686,12 +686,15 @@
       "Package": "ragg",
       "Version": "1.2.5",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "RemoteType": "repository",
+      "RemoteUrl": "https://github.com/r-lib/ragg",
+      "RemoteRef": "v1.2.5",
+      "RemoteSha": "dafb0d8e0308c4db56abed2290f32a1ca0719307",
       "Requirements": [
         "systemfonts",
         "textshaping"
       ],
-      "Hash": "690bc058ea2b1b8a407d3cfe3dce3ef9"
+      "Hash": "fa83fe2ea7fc41d5033a0759a8172910"
     },
     "rappdirs": {
       "Package": "rappdirs",
@@ -871,7 +874,6 @@
       "Package": "systemfonts",
       "Version": "1.0.4",
       "Source": "Repository",
-      "Repository": "https://carpentries.r-universe.dev",
       "RemoteType": "repository",
       "RemoteUrl": "https://github.com/r-lib/systemfonts",
       "RemoteRef": "v1.0.4",
@@ -886,7 +888,6 @@
       "Package": "textshaping",
       "Version": "0.3.6",
       "Source": "Repository",
-      "Repository": "https://carpentries.r-universe.dev",
       "RemoteType": "repository",
       "RemoteUrl": "https://github.com/r-lib/textshaping",
       "RemoteRef": "v0.3.6",
