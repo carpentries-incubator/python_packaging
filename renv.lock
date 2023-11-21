@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.3.1",
+    "Version": "4.3.2",
     "Repositories": [
       {
         "Name": "carpentries",
@@ -184,7 +184,6 @@
       "Package": "curl",
       "Version": "5.0.1",
       "Source": "Repository",
-      "Repository": "https://carpentries.r-universe.dev",
       "RemoteType": "repository",
       "RemoteUrl": "https://github.com/jeroen/curl",
       "RemoteRef": "v5.0.1",
@@ -390,7 +389,10 @@
       "Package": "httpuv",
       "Version": "1.6.11",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "RemoteType": "repository",
+      "RemoteUrl": "https://github.com/rstudio/httpuv",
+      "RemoteRef": "v1.6.11",
+      "RemoteSha": "3d75acb3dac8984cfe1884890bf6f1d6d813c754",
       "Requirements": [
         "R",
         "R6",
@@ -399,7 +401,7 @@
         "promises",
         "utils"
       ],
-      "Hash": "838602f54e32c1a0f8cc80708cefcefa"
+      "Hash": "e88cbd41fb60622779e1d9d9ae611210"
     },
     "httr": {
       "Package": "httr",
@@ -772,7 +774,6 @@
       "Package": "sandpaper",
       "Version": "0.12.4",
       "Source": "Repository",
-      "Repository": "https://carpentries.r-universe.dev",
       "RemoteType": "repository",
       "Remotes": "ropensci/tinkr, carpentries/pegboard, carpentries/varnish",
       "RemoteUrl": "https://github.com/carpentries/sandpaper",
