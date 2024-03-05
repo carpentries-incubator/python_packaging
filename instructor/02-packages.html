@@ -329,15 +329,15 @@ it:</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd /path/to/my/workspace/epi_models</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> mkdir epi_models</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> mv SIR.py epi_models</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">$</span> cd /path/to/my/workspace/epi_models</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="ex">$</span> mkdir epi_models</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="ex">$</span> mv SIR.py epi_models</span></code></pre>
 </div>
 <p>We’ll also add a new empty file called <code>__init__.py</code>:</p>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> touch epi_models/__init__.py</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">$</span> touch epi_models/__init__.py</span></code></pre>
 </div>
 <p>Our directory structure should now be:</p>
 <p><code> 📁 epi_models<br> |<br> |____📦 epi_models<br>      |<br>
@@ -400,16 +400,16 @@ SEIR.py<br>      |____📜 SIS.py<br></code></p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: SEIR.py</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SEIR_model(pop_size, alpha, beta, gamma, days, I_0):</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Function to solve the SEIR model</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Returns lists S, E, I, R</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_SEIR_model(S, E, I, R):</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Function to plot S, E, I, R over time</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># file: SEIR.py</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="kw">def</span> SEIR_model(pop_size, alpha, beta, gamma, days, I_0):</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    <span class="co"># Function to solve the SEIR model</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>    <span class="co"># Returns lists S, E, I, R</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="kw">def</span> plot_SEIR_model(S, E, I, R):</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>    <span class="co"># Function to plot S, E, I, R over time</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>    <span class="cf">pass</span></span></code></pre>
 </div>
 <p>We won’t worry about how these functions should be implemented for
 now. <code>SIS.py</code> should contain similar functions.</p>
@@ -419,10 +419,10 @@ interactive session:</p>
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> epi_models.SIR</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> S, I, R <span class="op">=</span> epi_models.SIR.SIR_model(</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        pop_size<span class="op">=</span><span class="dv">8000000</span>, beta<span class="op">=</span><span class="fl">0.5</span>, gamma<span class="op">=</span><span class="fl">0.1</span>, days<span class="op">=</span><span class="dv">150</span>, I_0<span class="op">=</span><span class="dv">10</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> epi_models.SIR</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> S, I, R <span class="op">=</span> epi_models.SIR.SIR_model(</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>        pop_size<span class="op">=</span><span class="dv">8000000</span>, beta<span class="op">=</span><span class="fl">0.5</span>, gamma<span class="op">=</span><span class="fl">0.1</span>, days<span class="op">=</span><span class="dv">150</span>, I_0<span class="op">=</span><span class="dv">10</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    )</span></code></pre>
 </div>
 <p>Having to type the package name and the module name every time can be
 inconvenient, so it’s a good idea to use the alternative
@@ -430,23 +430,23 @@ inconvenient, so it’s a good idea to use the alternative
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Assign an alias to the import</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> epi_models.SEIR <span class="im">as</span> SEIR</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> S, E, I, R <span class="op">=</span> SEIR.SEIR_model(</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        pop_size<span class="op">=</span><span class="dv">8000000</span>, alpha<span class="op">=</span><span class="fl">0.2</span>, beta<span class="op">=</span><span class="fl">0.5</span>, gamma<span class="op">=</span><span class="fl">0.1</span>, days<span class="op">=</span><span class="dv">150</span>, I_0<span class="op">=</span><span class="dv">10</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Use 'from ... import ...' to get the function directly</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> epi_models.SEIR <span class="im">import</span> SEIR_model</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> S, E, I, R <span class="op">=</span> SEIR_model(</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        pop_size<span class="op">=</span><span class="dv">8000000</span>, alpha<span class="op">=</span><span class="fl">0.2</span>, beta<span class="op">=</span><span class="fl">0.5</span>, gamma<span class="op">=</span><span class="fl">0.1</span>, days<span class="op">=</span><span class="dv">150</span>, I_0<span class="op">=</span><span class="dv">10</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Import everything into the current namespace (not recommended!)</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> epi_models.SIS <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> S, E, I, R <span class="op">=</span> SEIR_model(</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        pop_size<span class="op">=</span><span class="dv">8000000</span>, alpha<span class="op">=</span><span class="fl">0.2</span>, beta<span class="op">=</span><span class="fl">0.5</span>, gamma<span class="op">=</span><span class="fl">0.1</span>, days<span class="op">=</span><span class="dv">150</span>, I_0<span class="op">=</span><span class="dv">10</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Assign an alias to the import</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> epi_models.SEIR <span class="im">as</span> SEIR</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> S, E, I, R <span class="op">=</span> SEIR.SEIR_model(</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>        pop_size<span class="op">=</span><span class="dv">8000000</span>, alpha<span class="op">=</span><span class="fl">0.2</span>, beta<span class="op">=</span><span class="fl">0.5</span>, gamma<span class="op">=</span><span class="fl">0.1</span>, days<span class="op">=</span><span class="dv">150</span>, I_0<span class="op">=</span><span class="dv">10</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>    )</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Use 'from ... import ...' to get the function directly</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> epi_models.SEIR <span class="im">import</span> SEIR_model</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> S, E, I, R <span class="op">=</span> SEIR_model(</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>        pop_size<span class="op">=</span><span class="dv">8000000</span>, alpha<span class="op">=</span><span class="fl">0.2</span>, beta<span class="op">=</span><span class="fl">0.5</span>, gamma<span class="op">=</span><span class="fl">0.1</span>, days<span class="op">=</span><span class="dv">150</span>, I_0<span class="op">=</span><span class="dv">10</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>    )</span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Import everything into the current namespace (not recommended!)</span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> epi_models.SIS <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> S, E, I, R <span class="op">=</span> SEIR_model(</span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a>        pop_size<span class="op">=</span><span class="dv">8000000</span>, alpha<span class="op">=</span><span class="fl">0.2</span>, beta<span class="op">=</span><span class="fl">0.5</span>, gamma<span class="op">=</span><span class="fl">0.1</span>, days<span class="op">=</span><span class="dv">150</span>, I_0<span class="op">=</span><span class="dv">10</span></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a>    )</span></code></pre>
 </div>
 <p>As our project develops, we may decide that we need a further level
 of organisation. For example, if our modelling tools and our plotting
@@ -466,9 +466,9 @@ now import each function using:</p>
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> epi_models.models.SIR <span class="im">as</span> SIR</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Alternatively, get a single function instead of a whole module:</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> epi_models.plotting.plot_SEIR <span class="im">import</span> plot_SEIR_model</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> epi_models.models.SIR <span class="im">as</span> SIR</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Alternatively, get a single function instead of a whole module:</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> epi_models.plotting.plot_SEIR <span class="im">import</span> plot_SEIR_model</span></code></pre>
 </div>
 </section><section id="relative-imports"><h2 class="section-heading">Relative Imports<a class="anchor" aria-label="anchor" href="#relative-imports"></a>
 </h2>
@@ -491,7 +491,7 @@ from <code>utils.py</code> using the following syntax:</p>
 <div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> .utils <span class="im">import</span> some_func</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="im">from</span> .utils <span class="im">import</span> some_func</span></code></pre>
 </div>
 <p>The dot preceding the module name instructs Python to search inside
 the current (sub-)package to find a module with a matching name.</p>
@@ -501,7 +501,7 @@ the modelling functions. In that case, we can add the following to
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ..models.SIR <span class="im">import</span> SIR_model</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="im">from</span> ..models.SIR <span class="im">import</span> SIR_model</span></code></pre>
 </div>
 <p>Here, the double dots indicate that we should look one package higher
 than the current sub-package.</p>
@@ -518,11 +518,11 @@ directory. Let’s add the following lines:</p>
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: epi_models/models/__init__.py</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> .SIR <span class="im">import</span> SIR_model</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> .SEIR <span class="im">import</span> SEIR_model</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> .SIS <span class="im">import</span> SIS_model</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># file: epi_models/models/__init__.py</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="im">from</span> .SIR <span class="im">import</span> SIR_model</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="im">from</span> .SEIR <span class="im">import</span> SEIR_model</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="im">from</span> .SIS <span class="im">import</span> SIS_model</span></code></pre>
 </div>
 <p>When <code>SIR_model</code>, <code>SEIR_model</code> and
 <code>SIS_model</code> are brought into the local namespace in
@@ -531,9 +531,9 @@ directory. Let’s add the following lines:</p>
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> epi_models.models <span class="im">import</span> SIR_model</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Equivalent to:</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> epi_models.models.SIR <span class="im">import</span> SIR_model</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> epi_models.models <span class="im">import</span> SIR_model</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Equivalent to:</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> epi_models.models.SIR <span class="im">import</span> SIR_model</span></code></pre>
 </div>
 <p>If we wish to expose these functions to the user at the top level
 package, we can also add the following to
@@ -541,9 +541,9 @@ package, we can also add the following to
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: epi_models/__init__.py</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> .models <span class="im">import</span> SIR_model, SEIR_model, SIS_model</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co"># file: epi_models/__init__.py</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="im">from</span> .models <span class="im">import</span> SIR_model, SEIR_model, SIS_model</span></code></pre>
 </div>
 <p>Note that we can import these names directly from the
 <code>models</code> sub-package instead of going to each of the modules
@@ -551,7 +551,7 @@ in turn. It is now much easier for users to access these functions:</p>
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> epi_models <span class="im">import</span> SIR_model</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> epi_models <span class="im">import</span> SIR_model</span></code></pre>
 </div>
 <p>When writing <code>__init__.py</code> files, it is important to
 consider what we <em>don’t</em> import. Note that we did not import any
@@ -591,17 +591,17 @@ following:</p>
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: epi_models/__init__.py</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> .models <span class="im">import</span> SIR_model, SEIR_model, SIS_model</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>__all__ <span class="op">=</span> [<span class="st">"SIR_model"</span>, <span class="st">"SEIR_model"</span>] <span class="co"># Note SIS_model is missing!</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># file: epi_models/__init__.py</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="im">from</span> .models <span class="im">import</span> SIR_model, SEIR_model, SIS_model</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>__all__ <span class="op">=</span> [<span class="st">"SIR_model"</span>, <span class="st">"SEIR_model"</span>] <span class="co"># Note SIS_model is missing!</span></span></code></pre>
 </div>
 <p>Calling the following in an interactive session would work just
 fine:</p>
 <div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> epi_models <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> SIR_model</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> epi_models <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> SIR_model</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -612,7 +612,7 @@ fine:</p>
 <div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> SIS_model</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> SIS_model</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -642,8 +642,8 @@ built-in object:</p>
 <div class="codewrapper sourceCode" id="cb18">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="kw">lambda</span> <span class="op">=</span> <span class="dv">10</span> <span class="co"># Fails! Raises SyntaxError</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> lambda_ <span class="op">=</span> <span class="dv">10</span> <span class="co"># Works just fine</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="kw">lambda</span> <span class="op">=</span> <span class="dv">10</span> <span class="co"># Fails! Raises SyntaxError</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> lambda_ <span class="op">=</span> <span class="dv">10</span> <span class="co"># Works just fine</span></span></code></pre>
 </div>
 <p>A combination of the private naming convention, well chosen
 <code>__all__</code> variables, and thorough documentation is more than
@@ -663,50 +663,50 @@ excludes the enhancements added in the ‘extra’ section last lesson:</p>
 <div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: plot_SIR.py</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_SIR_model(S, I, R):</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Plot the results of a SIR simulation.</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co">    S: List[float]</span></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="co">        Number of susceptible people on each day.</span></span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="co">    I: List[float]</span></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="co">        Number of infected people on each day.</span></span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="co">    R: List[float]</span></span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="co">        Number of recovered people on each day.</span></span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="co">    -------</span></span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="co">    None</span></span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>    plt.plot(<span class="bu">range</span>(<span class="bu">len</span>(S)), S, label<span class="op">=</span><span class="st">"S"</span>)</span>
-<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>    plt.plot(<span class="bu">range</span>(<span class="bu">len</span>(I)), I, label<span class="op">=</span><span class="st">"I"</span>)</span>
-<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>    plt.plot(<span class="bu">range</span>(<span class="bu">len</span>(R)), R, label<span class="op">=</span><span class="st">"R"</span>)</span>
-<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">"Time /days"</span>)</span>
-<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">"Population"</span>)</span>
-<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>    plt.legend()</span>
-<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
-<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main():</span>
-<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>    S, I, R <span class="op">=</span> SIR_model(</span>
-<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>        pop_size<span class="op">=</span><span class="dv">8000000</span>, beta<span class="op">=</span><span class="fl">0.5</span>, gamma<span class="op">=</span><span class="fl">0.1</span>, days<span class="op">=</span><span class="dv">150</span>, I_0<span class="op">=</span><span class="dv">10</span></span>
-<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>    plot_SIR_model(S, I, R)</span>
-<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
-<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>    main()</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="co"># file: plot_SIR.py</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="kw">def</span> plot_SIR_model(S, I, R):</span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="co">    Plot the results of a SIR simulation.</span></span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a><span class="co">    S: List[float]</span></span>
+<span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a><span class="co">        Number of susceptible people on each day.</span></span>
+<span id="cb19-13"><a href="#cb19-13" tabindex="-1"></a><span class="co">    I: List[float]</span></span>
+<span id="cb19-14"><a href="#cb19-14" tabindex="-1"></a><span class="co">        Number of infected people on each day.</span></span>
+<span id="cb19-15"><a href="#cb19-15" tabindex="-1"></a><span class="co">    R: List[float]</span></span>
+<span id="cb19-16"><a href="#cb19-16" tabindex="-1"></a><span class="co">        Number of recovered people on each day.</span></span>
+<span id="cb19-17"><a href="#cb19-17" tabindex="-1"></a></span>
+<span id="cb19-18"><a href="#cb19-18" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb19-19"><a href="#cb19-19" tabindex="-1"></a><span class="co">    -------</span></span>
+<span id="cb19-20"><a href="#cb19-20" tabindex="-1"></a><span class="co">    None</span></span>
+<span id="cb19-21"><a href="#cb19-21" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb19-22"><a href="#cb19-22" tabindex="-1"></a>    plt.plot(<span class="bu">range</span>(<span class="bu">len</span>(S)), S, label<span class="op">=</span><span class="st">"S"</span>)</span>
+<span id="cb19-23"><a href="#cb19-23" tabindex="-1"></a>    plt.plot(<span class="bu">range</span>(<span class="bu">len</span>(I)), I, label<span class="op">=</span><span class="st">"I"</span>)</span>
+<span id="cb19-24"><a href="#cb19-24" tabindex="-1"></a>    plt.plot(<span class="bu">range</span>(<span class="bu">len</span>(R)), R, label<span class="op">=</span><span class="st">"R"</span>)</span>
+<span id="cb19-25"><a href="#cb19-25" tabindex="-1"></a>    plt.xlabel(<span class="st">"Time /days"</span>)</span>
+<span id="cb19-26"><a href="#cb19-26" tabindex="-1"></a>    plt.ylabel(<span class="st">"Population"</span>)</span>
+<span id="cb19-27"><a href="#cb19-27" tabindex="-1"></a>    plt.legend()</span>
+<span id="cb19-28"><a href="#cb19-28" tabindex="-1"></a>    plt.show()</span>
+<span id="cb19-29"><a href="#cb19-29" tabindex="-1"></a></span>
+<span id="cb19-30"><a href="#cb19-30" tabindex="-1"></a><span class="kw">def</span> main():</span>
+<span id="cb19-31"><a href="#cb19-31" tabindex="-1"></a>    S, I, R <span class="op">=</span> SIR_model(</span>
+<span id="cb19-32"><a href="#cb19-32" tabindex="-1"></a>        pop_size<span class="op">=</span><span class="dv">8000000</span>, beta<span class="op">=</span><span class="fl">0.5</span>, gamma<span class="op">=</span><span class="fl">0.1</span>, days<span class="op">=</span><span class="dv">150</span>, I_0<span class="op">=</span><span class="dv">10</span></span>
+<span id="cb19-33"><a href="#cb19-33" tabindex="-1"></a>    )</span>
+<span id="cb19-34"><a href="#cb19-34" tabindex="-1"></a>    plot_SIR_model(S, I, R)</span>
+<span id="cb19-35"><a href="#cb19-35" tabindex="-1"></a></span>
+<span id="cb19-36"><a href="#cb19-36" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
+<span id="cb19-37"><a href="#cb19-37" tabindex="-1"></a>    main()</span></code></pre>
 </div>
 <p>If we jump into the directory <code>epi_models/plotting</code>, and
 call the following, we get an error:</p>
 <div class="codewrapper sourceCode" id="cb20">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 plot_SIR.py</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="ex">$</span> python3 plot_SIR.py</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -723,7 +723,7 @@ package using the <code>-m</code> flag:</p>
 <div class="codewrapper sourceCode" id="cb22">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> epi_models.plotting.plot_SIR</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> epi_models.plotting.plot_SIR</span></code></pre>
 </div>
 <p>Note that we use dots rather than slashes to separate the names of
 each sub-package/module, and we don’t include <code>.py</code> at the
@@ -746,11 +746,11 @@ simply by importing and calling the function <code>main()</code>:</p>
 <div class="codewrapper sourceCode" id="cb23">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: __main__.py</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotting.plot_SIR <span class="im">import</span> main</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>main()</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="co"># file: __main__.py</span></span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a><span class="im">from</span> plotting.plot_SIR <span class="im">import</span> main</span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>main()</span></code></pre>
 </div>
 <p>If we add a different scripting interface for each model type, we can
 use <code>sys.argv</code> to read the user’s model choice from the
@@ -758,27 +758,27 @@ command line:</p>
 <div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: __main__.py</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotting.plot_SIR <span class="im">import</span> main <span class="im">as</span> SIR_main</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotting.plot_SEIR <span class="im">import</span> main <span class="im">as</span> SEIR_main</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotting.plot_SIS <span class="im">import</span> main <span class="im">as</span> SIS_main</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Read model type from the command line</span></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sys.argv[<span class="dv">1</span>]</span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the chosen model</span></span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> model <span class="op">==</span> <span class="st">"SIR"</span>:</span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    SIR_main()</span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> model <span class="op">==</span> <span class="st">"SEIR"</span>:</span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>    SEIR_main()</span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> model <span class="op">==</span> <span class="st">"SIS"</span>:</span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>    SIS_main()</span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">RuntimeError</span>(</span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">"First cmd line arg should be 'SIR', 'SEIR', or 'SIS'"</span></span>
-<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="co"># file: __main__.py</span></span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a><span class="im">from</span> plotting.plot_SIR <span class="im">import</span> main <span class="im">as</span> SIR_main</span>
+<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a><span class="im">from</span> plotting.plot_SEIR <span class="im">import</span> main <span class="im">as</span> SEIR_main</span>
+<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a><span class="im">from</span> plotting.plot_SIS <span class="im">import</span> main <span class="im">as</span> SIS_main</span>
+<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a></span>
+<span id="cb24-8"><a href="#cb24-8" tabindex="-1"></a><span class="co"># Read model type from the command line</span></span>
+<span id="cb24-9"><a href="#cb24-9" tabindex="-1"></a>model <span class="op">=</span> sys.argv[<span class="dv">1</span>]</span>
+<span id="cb24-10"><a href="#cb24-10" tabindex="-1"></a></span>
+<span id="cb24-11"><a href="#cb24-11" tabindex="-1"></a><span class="co"># Run the chosen model</span></span>
+<span id="cb24-12"><a href="#cb24-12" tabindex="-1"></a><span class="cf">if</span> model <span class="op">==</span> <span class="st">"SIR"</span>:</span>
+<span id="cb24-13"><a href="#cb24-13" tabindex="-1"></a>    SIR_main()</span>
+<span id="cb24-14"><a href="#cb24-14" tabindex="-1"></a><span class="cf">elif</span> model <span class="op">==</span> <span class="st">"SEIR"</span>:</span>
+<span id="cb24-15"><a href="#cb24-15" tabindex="-1"></a>    SEIR_main()</span>
+<span id="cb24-16"><a href="#cb24-16" tabindex="-1"></a><span class="cf">elif</span> model <span class="op">==</span> <span class="st">"SIS"</span>:</span>
+<span id="cb24-17"><a href="#cb24-17" tabindex="-1"></a>    SIS_main()</span>
+<span id="cb24-18"><a href="#cb24-18" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb24-19"><a href="#cb24-19" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">RuntimeError</span>(</span>
+<span id="cb24-20"><a href="#cb24-20" tabindex="-1"></a>        <span class="st">"First cmd line arg should be 'SIR', 'SEIR', or 'SIS'"</span></span>
+<span id="cb24-21"><a href="#cb24-21" tabindex="-1"></a>    )</span></code></pre>
 </div>
 <p>If you do intend to add scripting behaviour to your packages, it is
 highly recommended to read the ‘extra’ sections in this lesson and the
@@ -792,112 +792,112 @@ discussed in the ‘extra’ sections last lesson:</p>
 <div class="codewrapper sourceCode" id="cb25">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> argparse <span class="im">import</span> ArgumentParser</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ..models.SIR <span class="im">import</span> SIR_model</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_SIR_model(S, I, R, ax<span class="op">=</span><span class="va">None</span>, save_to<span class="op">=</span><span class="va">None</span>, show<span class="op">=</span><span class="va">False</span>):</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Plot the results of a SIR simulation.</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="co">    S: List[float]</span></span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="co">        Number of susceptible people on each day.</span></span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="co">    I: List[float]</span></span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="co">        Number of infected people on each day.</span></span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="co">    R: List[float]</span></span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="co">        Number of recovered people on each day.</span></span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="co">    ax: Optional[plt.Axes], default None</span></span>
-<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="co">        Axes object on which to create the plot.</span></span>
-<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="co">        A new Axes is created if this is None.</span></span>
-<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="co">    save_to: Optional[str], default None</span></span>
-<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a><span class="co">        Name of the file to save the plot to.</span></span>
-<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a><span class="co">        Does not save if None.</span></span>
-<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a><span class="co">    show: bool, default False</span></span>
-<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a><span class="co">        If True, call plt.show() on completion.</span></span>
-<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
-<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a><span class="co">    -------</span></span>
-<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a><span class="co">    plt.Axes</span></span>
-<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a><span class="co">        The axes object the results have been plotted to.</span></span>
-<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Use plt.subplots to create Figure and Axes objects</span></span>
-<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># if one is not provided.</span></span>
-<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ax <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>        fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create plot</span></span>
-<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a>    ax.plot(<span class="bu">range</span>(<span class="bu">len</span>(S)), S, label<span class="op">=</span><span class="st">"S"</span>)</span>
-<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a>    ax.plot(<span class="bu">range</span>(<span class="bu">len</span>(I)), I, label<span class="op">=</span><span class="st">"I"</span>)</span>
-<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a>    ax.plot(<span class="bu">range</span>(<span class="bu">len</span>(R)), R, label<span class="op">=</span><span class="st">"R"</span>)</span>
-<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">"Time /days"</span>)</span>
-<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">"Population"</span>)</span>
-<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a>    ax.legend()</span>
-<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Optionally save the figure</span></span>
-<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> save_to <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb25-46"><a href="#cb25-46" aria-hidden="true" tabindex="-1"></a>        fig <span class="op">=</span> ax.get_figure()</span>
-<span id="cb25-47"><a href="#cb25-47" aria-hidden="true" tabindex="-1"></a>        fig.savefig(save_to)</span>
-<span id="cb25-48"><a href="#cb25-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-49"><a href="#cb25-49" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Optionally show the figure</span></span>
-<span id="cb25-50"><a href="#cb25-50" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> show:</span>
-<span id="cb25-51"><a href="#cb25-51" aria-hidden="true" tabindex="-1"></a>        plt.show()</span>
-<span id="cb25-52"><a href="#cb25-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-53"><a href="#cb25-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ax</span>
-<span id="cb25-54"><a href="#cb25-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-55"><a href="#cb25-55" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main():</span>
-<span id="cb25-56"><a href="#cb25-56" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create an argument parser object. We can provide</span></span>
-<span id="cb25-57"><a href="#cb25-57" aria-hidden="true" tabindex="-1"></a>    <span class="co"># some info about our program here.</span></span>
-<span id="cb25-58"><a href="#cb25-58" aria-hidden="true" tabindex="-1"></a>    parser <span class="op">=</span> ArgumentParser(</span>
-<span id="cb25-59"><a href="#cb25-59" aria-hidden="true" tabindex="-1"></a>        prog<span class="op">=</span><span class="st">"SIR_model"</span>,</span>
-<span id="cb25-60"><a href="#cb25-60" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">"Solves SIR model and creates a plot"</span>,</span>
-<span id="cb25-61"><a href="#cb25-61" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb25-62"><a href="#cb25-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-63"><a href="#cb25-63" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add each argument to the parser. We can specify</span></span>
-<span id="cb25-64"><a href="#cb25-64" aria-hidden="true" tabindex="-1"></a>    <span class="co"># the types of each argument. Optional arguments</span></span>
-<span id="cb25-65"><a href="#cb25-65" aria-hidden="true" tabindex="-1"></a>    <span class="co"># should have single character names with a hypen,</span></span>
-<span id="cb25-66"><a href="#cb25-66" aria-hidden="true" tabindex="-1"></a>    <span class="co"># or longer names with a double dash.</span></span>
-<span id="cb25-67"><a href="#cb25-67" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(</span>
-<span id="cb25-68"><a href="#cb25-68" aria-hidden="true" tabindex="-1"></a>        <span class="st">"-p"</span>, <span class="st">"--pop_size"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">int</span>, default<span class="op">=</span><span class="dv">10000000</span>,</span>
-<span id="cb25-69"><a href="#cb25-69" aria-hidden="true" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Total population size"</span>,</span>
-<span id="cb25-70"><a href="#cb25-70" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb25-71"><a href="#cb25-71" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(</span>
-<span id="cb25-72"><a href="#cb25-72" aria-hidden="true" tabindex="-1"></a>        <span class="st">"-b"</span>, <span class="st">"--beta"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">float</span>, default<span class="op">=</span><span class="fl">0.5</span>,</span>
-<span id="cb25-73"><a href="#cb25-73" aria-hidden="true" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Average no. of new infections per infected person per day"</span>,</span>
-<span id="cb25-74"><a href="#cb25-74" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb25-75"><a href="#cb25-75" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(</span>
-<span id="cb25-76"><a href="#cb25-76" aria-hidden="true" tabindex="-1"></a>        <span class="st">"-g"</span>, <span class="st">"--gamma"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">float</span>, default<span class="op">=</span><span class="fl">0.1</span>,</span>
-<span id="cb25-77"><a href="#cb25-77" aria-hidden="true" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Inverse of average number of days taken to recover"</span>,</span>
-<span id="cb25-78"><a href="#cb25-78" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb25-79"><a href="#cb25-79" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(</span>
-<span id="cb25-80"><a href="#cb25-80" aria-hidden="true" tabindex="-1"></a>        <span class="st">"-d"</span>, <span class="st">"--days"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">int</span>, default<span class="op">=</span><span class="dv">150</span>,</span>
-<span id="cb25-81"><a href="#cb25-81" aria-hidden="true" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Number of days to run the simulation"</span>,</span>
-<span id="cb25-82"><a href="#cb25-82" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb25-83"><a href="#cb25-83" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(</span>
-<span id="cb25-84"><a href="#cb25-84" aria-hidden="true" tabindex="-1"></a>        <span class="st">"-i"</span>, <span class="st">"--i0"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">int</span>, default<span class="op">=</span><span class="dv">10</span>,</span>
-<span id="cb25-85"><a href="#cb25-85" aria-hidden="true" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Number of infected people at the start of the simulation"</span>,</span>
-<span id="cb25-86"><a href="#cb25-86" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb25-87"><a href="#cb25-87" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(</span>
-<span id="cb25-88"><a href="#cb25-88" aria-hidden="true" tabindex="-1"></a>        <span class="st">"-o"</span>, <span class="st">"--output"</span>, default<span class="op">=</span><span class="st">"SIR_model.png"</span>,</span>
-<span id="cb25-89"><a href="#cb25-89" aria-hidden="true" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Output file to save plot to"</span>,</span>
-<span id="cb25-90"><a href="#cb25-90" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb25-91"><a href="#cb25-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-92"><a href="#cb25-92" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get each argument from the command line</span></span>
-<span id="cb25-93"><a href="#cb25-93" aria-hidden="true" tabindex="-1"></a>    args <span class="op">=</span> parser.parse_args()</span>
-<span id="cb25-94"><a href="#cb25-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-95"><a href="#cb25-95" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Run our code</span></span>
-<span id="cb25-96"><a href="#cb25-96" aria-hidden="true" tabindex="-1"></a>    S, I, R <span class="op">=</span> SIR_model(</span>
-<span id="cb25-97"><a href="#cb25-97" aria-hidden="true" tabindex="-1"></a>        pop_size<span class="op">=</span>args.pop_size,</span>
-<span id="cb25-98"><a href="#cb25-98" aria-hidden="true" tabindex="-1"></a>        beta<span class="op">=</span>args.beta,</span>
-<span id="cb25-99"><a href="#cb25-99" aria-hidden="true" tabindex="-1"></a>        gamma<span class="op">=</span>args.gamma,</span>
-<span id="cb25-100"><a href="#cb25-100" aria-hidden="true" tabindex="-1"></a>        days<span class="op">=</span>args.days,</span>
-<span id="cb25-101"><a href="#cb25-101" aria-hidden="true" tabindex="-1"></a>        I_0<span class="op">=</span>args.i0,</span>
-<span id="cb25-102"><a href="#cb25-102" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb25-103"><a href="#cb25-103" aria-hidden="true" tabindex="-1"></a>    plot_SIR_model(S, I, R, save_to<span class="op">=</span>args.output)</span>
-<span id="cb25-104"><a href="#cb25-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-105"><a href="#cb25-105" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
-<span id="cb25-106"><a href="#cb25-106" aria-hidden="true" tabindex="-1"></a>    main()</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a><span class="im">from</span> argparse <span class="im">import</span> ArgumentParser</span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a><span class="im">from</span> ..models.SIR <span class="im">import</span> SIR_model</span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a><span class="kw">def</span> plot_SIR_model(S, I, R, ax<span class="op">=</span><span class="va">None</span>, save_to<span class="op">=</span><span class="va">None</span>, show<span class="op">=</span><span class="va">False</span>):</span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a><span class="co">    Plot the results of a SIR simulation.</span></span>
+<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb25-10"><a href="#cb25-10" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb25-11"><a href="#cb25-11" tabindex="-1"></a><span class="co">    S: List[float]</span></span>
+<span id="cb25-12"><a href="#cb25-12" tabindex="-1"></a><span class="co">        Number of susceptible people on each day.</span></span>
+<span id="cb25-13"><a href="#cb25-13" tabindex="-1"></a><span class="co">    I: List[float]</span></span>
+<span id="cb25-14"><a href="#cb25-14" tabindex="-1"></a><span class="co">        Number of infected people on each day.</span></span>
+<span id="cb25-15"><a href="#cb25-15" tabindex="-1"></a><span class="co">    R: List[float]</span></span>
+<span id="cb25-16"><a href="#cb25-16" tabindex="-1"></a><span class="co">        Number of recovered people on each day.</span></span>
+<span id="cb25-17"><a href="#cb25-17" tabindex="-1"></a><span class="co">    ax: Optional[plt.Axes], default None</span></span>
+<span id="cb25-18"><a href="#cb25-18" tabindex="-1"></a><span class="co">        Axes object on which to create the plot.</span></span>
+<span id="cb25-19"><a href="#cb25-19" tabindex="-1"></a><span class="co">        A new Axes is created if this is None.</span></span>
+<span id="cb25-20"><a href="#cb25-20" tabindex="-1"></a><span class="co">    save_to: Optional[str], default None</span></span>
+<span id="cb25-21"><a href="#cb25-21" tabindex="-1"></a><span class="co">        Name of the file to save the plot to.</span></span>
+<span id="cb25-22"><a href="#cb25-22" tabindex="-1"></a><span class="co">        Does not save if None.</span></span>
+<span id="cb25-23"><a href="#cb25-23" tabindex="-1"></a><span class="co">    show: bool, default False</span></span>
+<span id="cb25-24"><a href="#cb25-24" tabindex="-1"></a><span class="co">        If True, call plt.show() on completion.</span></span>
+<span id="cb25-25"><a href="#cb25-25" tabindex="-1"></a></span>
+<span id="cb25-26"><a href="#cb25-26" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb25-27"><a href="#cb25-27" tabindex="-1"></a><span class="co">    -------</span></span>
+<span id="cb25-28"><a href="#cb25-28" tabindex="-1"></a><span class="co">    plt.Axes</span></span>
+<span id="cb25-29"><a href="#cb25-29" tabindex="-1"></a><span class="co">        The axes object the results have been plotted to.</span></span>
+<span id="cb25-30"><a href="#cb25-30" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb25-31"><a href="#cb25-31" tabindex="-1"></a>    <span class="co"># Use plt.subplots to create Figure and Axes objects</span></span>
+<span id="cb25-32"><a href="#cb25-32" tabindex="-1"></a>    <span class="co"># if one is not provided.</span></span>
+<span id="cb25-33"><a href="#cb25-33" tabindex="-1"></a>    <span class="cf">if</span> ax <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb25-34"><a href="#cb25-34" tabindex="-1"></a>        fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb25-35"><a href="#cb25-35" tabindex="-1"></a></span>
+<span id="cb25-36"><a href="#cb25-36" tabindex="-1"></a>    <span class="co"># Create plot</span></span>
+<span id="cb25-37"><a href="#cb25-37" tabindex="-1"></a>    ax.plot(<span class="bu">range</span>(<span class="bu">len</span>(S)), S, label<span class="op">=</span><span class="st">"S"</span>)</span>
+<span id="cb25-38"><a href="#cb25-38" tabindex="-1"></a>    ax.plot(<span class="bu">range</span>(<span class="bu">len</span>(I)), I, label<span class="op">=</span><span class="st">"I"</span>)</span>
+<span id="cb25-39"><a href="#cb25-39" tabindex="-1"></a>    ax.plot(<span class="bu">range</span>(<span class="bu">len</span>(R)), R, label<span class="op">=</span><span class="st">"R"</span>)</span>
+<span id="cb25-40"><a href="#cb25-40" tabindex="-1"></a>    ax.set_xlabel(<span class="st">"Time /days"</span>)</span>
+<span id="cb25-41"><a href="#cb25-41" tabindex="-1"></a>    ax.set_ylabel(<span class="st">"Population"</span>)</span>
+<span id="cb25-42"><a href="#cb25-42" tabindex="-1"></a>    ax.legend()</span>
+<span id="cb25-43"><a href="#cb25-43" tabindex="-1"></a></span>
+<span id="cb25-44"><a href="#cb25-44" tabindex="-1"></a>    <span class="co"># Optionally save the figure</span></span>
+<span id="cb25-45"><a href="#cb25-45" tabindex="-1"></a>    <span class="cf">if</span> save_to <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb25-46"><a href="#cb25-46" tabindex="-1"></a>        fig <span class="op">=</span> ax.get_figure()</span>
+<span id="cb25-47"><a href="#cb25-47" tabindex="-1"></a>        fig.savefig(save_to)</span>
+<span id="cb25-48"><a href="#cb25-48" tabindex="-1"></a></span>
+<span id="cb25-49"><a href="#cb25-49" tabindex="-1"></a>    <span class="co"># Optionally show the figure</span></span>
+<span id="cb25-50"><a href="#cb25-50" tabindex="-1"></a>    <span class="cf">if</span> show:</span>
+<span id="cb25-51"><a href="#cb25-51" tabindex="-1"></a>        plt.show()</span>
+<span id="cb25-52"><a href="#cb25-52" tabindex="-1"></a></span>
+<span id="cb25-53"><a href="#cb25-53" tabindex="-1"></a>    <span class="cf">return</span> ax</span>
+<span id="cb25-54"><a href="#cb25-54" tabindex="-1"></a></span>
+<span id="cb25-55"><a href="#cb25-55" tabindex="-1"></a><span class="kw">def</span> main():</span>
+<span id="cb25-56"><a href="#cb25-56" tabindex="-1"></a>    <span class="co"># Create an argument parser object. We can provide</span></span>
+<span id="cb25-57"><a href="#cb25-57" tabindex="-1"></a>    <span class="co"># some info about our program here.</span></span>
+<span id="cb25-58"><a href="#cb25-58" tabindex="-1"></a>    parser <span class="op">=</span> ArgumentParser(</span>
+<span id="cb25-59"><a href="#cb25-59" tabindex="-1"></a>        prog<span class="op">=</span><span class="st">"SIR_model"</span>,</span>
+<span id="cb25-60"><a href="#cb25-60" tabindex="-1"></a>        description<span class="op">=</span><span class="st">"Solves SIR model and creates a plot"</span>,</span>
+<span id="cb25-61"><a href="#cb25-61" tabindex="-1"></a>    )</span>
+<span id="cb25-62"><a href="#cb25-62" tabindex="-1"></a></span>
+<span id="cb25-63"><a href="#cb25-63" tabindex="-1"></a>    <span class="co"># Add each argument to the parser. We can specify</span></span>
+<span id="cb25-64"><a href="#cb25-64" tabindex="-1"></a>    <span class="co"># the types of each argument. Optional arguments</span></span>
+<span id="cb25-65"><a href="#cb25-65" tabindex="-1"></a>    <span class="co"># should have single character names with a hypen,</span></span>
+<span id="cb25-66"><a href="#cb25-66" tabindex="-1"></a>    <span class="co"># or longer names with a double dash.</span></span>
+<span id="cb25-67"><a href="#cb25-67" tabindex="-1"></a>    parser.add_argument(</span>
+<span id="cb25-68"><a href="#cb25-68" tabindex="-1"></a>        <span class="st">"-p"</span>, <span class="st">"--pop_size"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">int</span>, default<span class="op">=</span><span class="dv">10000000</span>,</span>
+<span id="cb25-69"><a href="#cb25-69" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Total population size"</span>,</span>
+<span id="cb25-70"><a href="#cb25-70" tabindex="-1"></a>    )</span>
+<span id="cb25-71"><a href="#cb25-71" tabindex="-1"></a>    parser.add_argument(</span>
+<span id="cb25-72"><a href="#cb25-72" tabindex="-1"></a>        <span class="st">"-b"</span>, <span class="st">"--beta"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">float</span>, default<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb25-73"><a href="#cb25-73" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Average no. of new infections per infected person per day"</span>,</span>
+<span id="cb25-74"><a href="#cb25-74" tabindex="-1"></a>    )</span>
+<span id="cb25-75"><a href="#cb25-75" tabindex="-1"></a>    parser.add_argument(</span>
+<span id="cb25-76"><a href="#cb25-76" tabindex="-1"></a>        <span class="st">"-g"</span>, <span class="st">"--gamma"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">float</span>, default<span class="op">=</span><span class="fl">0.1</span>,</span>
+<span id="cb25-77"><a href="#cb25-77" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Inverse of average number of days taken to recover"</span>,</span>
+<span id="cb25-78"><a href="#cb25-78" tabindex="-1"></a>    )</span>
+<span id="cb25-79"><a href="#cb25-79" tabindex="-1"></a>    parser.add_argument(</span>
+<span id="cb25-80"><a href="#cb25-80" tabindex="-1"></a>        <span class="st">"-d"</span>, <span class="st">"--days"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">int</span>, default<span class="op">=</span><span class="dv">150</span>,</span>
+<span id="cb25-81"><a href="#cb25-81" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Number of days to run the simulation"</span>,</span>
+<span id="cb25-82"><a href="#cb25-82" tabindex="-1"></a>    )</span>
+<span id="cb25-83"><a href="#cb25-83" tabindex="-1"></a>    parser.add_argument(</span>
+<span id="cb25-84"><a href="#cb25-84" tabindex="-1"></a>        <span class="st">"-i"</span>, <span class="st">"--i0"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">int</span>, default<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb25-85"><a href="#cb25-85" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Number of infected people at the start of the simulation"</span>,</span>
+<span id="cb25-86"><a href="#cb25-86" tabindex="-1"></a>    )</span>
+<span id="cb25-87"><a href="#cb25-87" tabindex="-1"></a>    parser.add_argument(</span>
+<span id="cb25-88"><a href="#cb25-88" tabindex="-1"></a>        <span class="st">"-o"</span>, <span class="st">"--output"</span>, default<span class="op">=</span><span class="st">"SIR_model.png"</span>,</span>
+<span id="cb25-89"><a href="#cb25-89" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Output file to save plot to"</span>,</span>
+<span id="cb25-90"><a href="#cb25-90" tabindex="-1"></a>    )</span>
+<span id="cb25-91"><a href="#cb25-91" tabindex="-1"></a></span>
+<span id="cb25-92"><a href="#cb25-92" tabindex="-1"></a>    <span class="co"># Get each argument from the command line</span></span>
+<span id="cb25-93"><a href="#cb25-93" tabindex="-1"></a>    args <span class="op">=</span> parser.parse_args()</span>
+<span id="cb25-94"><a href="#cb25-94" tabindex="-1"></a></span>
+<span id="cb25-95"><a href="#cb25-95" tabindex="-1"></a>    <span class="co"># Run our code</span></span>
+<span id="cb25-96"><a href="#cb25-96" tabindex="-1"></a>    S, I, R <span class="op">=</span> SIR_model(</span>
+<span id="cb25-97"><a href="#cb25-97" tabindex="-1"></a>        pop_size<span class="op">=</span>args.pop_size,</span>
+<span id="cb25-98"><a href="#cb25-98" tabindex="-1"></a>        beta<span class="op">=</span>args.beta,</span>
+<span id="cb25-99"><a href="#cb25-99" tabindex="-1"></a>        gamma<span class="op">=</span>args.gamma,</span>
+<span id="cb25-100"><a href="#cb25-100" tabindex="-1"></a>        days<span class="op">=</span>args.days,</span>
+<span id="cb25-101"><a href="#cb25-101" tabindex="-1"></a>        I_0<span class="op">=</span>args.i0,</span>
+<span id="cb25-102"><a href="#cb25-102" tabindex="-1"></a>    )</span>
+<span id="cb25-103"><a href="#cb25-103" tabindex="-1"></a>    plot_SIR_model(S, I, R, save_to<span class="op">=</span>args.output)</span>
+<span id="cb25-104"><a href="#cb25-104" tabindex="-1"></a></span>
+<span id="cb25-105"><a href="#cb25-105" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
+<span id="cb25-106"><a href="#cb25-106" tabindex="-1"></a>    main()</span></code></pre>
 </div>
 <p>This will work if we run
 <code>python3 -m epi_models.plotting.plot_SIR</code>, but it won’t work
@@ -911,34 +911,34 @@ these work using the following simple example:</p>
 <div class="codewrapper sourceCode" id="cb26">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: subparsers.py</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> argparse <span class="im">import</span> ArgumentParser</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>parser <span class="op">=</span> ArgumentParser(description<span class="op">=</span><span class="st">"A test program"</span>)</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># set up subparsers, make them required</span></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>subparsers <span class="op">=</span> parser.add_subparsers(required<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co"># add two subcommands: cmd1 and cmd2</span></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>parser1 <span class="op">=</span> subparsers.add_parser(<span class="st">"cmd1"</span>)</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>parser2 <span class="op">=</span> subparsers.add_parser(<span class="st">"cmd2"</span>)</span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="co"># add some args to each</span></span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>parser1.add_argument(<span class="st">"foo"</span>)</span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>parser1.add_argument(<span class="st">"bar"</span>)</span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>parser2.add_argument(<span class="st">"baz"</span>)</span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a><span class="co"># parse args and print what we get</span></span>
-<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>args <span class="op">=</span> parser.parse_args()</span>
-<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(args)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="co"># file: subparsers.py</span></span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a><span class="im">from</span> argparse <span class="im">import</span> ArgumentParser</span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a>parser <span class="op">=</span> ArgumentParser(description<span class="op">=</span><span class="st">"A test program"</span>)</span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a><span class="co"># set up subparsers, make them required</span></span>
+<span id="cb26-8"><a href="#cb26-8" tabindex="-1"></a>subparsers <span class="op">=</span> parser.add_subparsers(required<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb26-9"><a href="#cb26-9" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" tabindex="-1"></a><span class="co"># add two subcommands: cmd1 and cmd2</span></span>
+<span id="cb26-11"><a href="#cb26-11" tabindex="-1"></a>parser1 <span class="op">=</span> subparsers.add_parser(<span class="st">"cmd1"</span>)</span>
+<span id="cb26-12"><a href="#cb26-12" tabindex="-1"></a>parser2 <span class="op">=</span> subparsers.add_parser(<span class="st">"cmd2"</span>)</span>
+<span id="cb26-13"><a href="#cb26-13" tabindex="-1"></a></span>
+<span id="cb26-14"><a href="#cb26-14" tabindex="-1"></a><span class="co"># add some args to each</span></span>
+<span id="cb26-15"><a href="#cb26-15" tabindex="-1"></a>parser1.add_argument(<span class="st">"foo"</span>)</span>
+<span id="cb26-16"><a href="#cb26-16" tabindex="-1"></a>parser1.add_argument(<span class="st">"bar"</span>)</span>
+<span id="cb26-17"><a href="#cb26-17" tabindex="-1"></a>parser2.add_argument(<span class="st">"baz"</span>)</span>
+<span id="cb26-18"><a href="#cb26-18" tabindex="-1"></a></span>
+<span id="cb26-19"><a href="#cb26-19" tabindex="-1"></a><span class="co"># parse args and print what we get</span></span>
+<span id="cb26-20"><a href="#cb26-20" tabindex="-1"></a>args <span class="op">=</span> parser.parse_args()</span>
+<span id="cb26-21"><a href="#cb26-21" tabindex="-1"></a><span class="bu">print</span>(args)</span></code></pre>
 </div>
 <p>If we try running this with no arguments, it breaks! If we check how
 it should work using <code>--help</code>:</p>
 <div class="codewrapper sourceCode" id="cb27">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 subparsers.py <span class="at">--help</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="ex">$</span> python3 subparsers.py <span class="at">--help</span></span></code></pre>
 </div>
 <pre class="result"><code>usage: subparsers.py [-h] {cmd1,cmd2} ...
 
@@ -955,7 +955,7 @@ each subcommand:</p>
 <div class="codewrapper sourceCode" id="cb29">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 subparsers.py cmd1 <span class="at">--help</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="ex">$</span> python3 subparsers.py cmd1 <span class="at">--help</span></span></code></pre>
 </div>
 <pre class="result"><code>usage: subparsers.py cmd1 [-h] foo bar
 
@@ -969,7 +969,7 @@ optional arguments:
 <div class="codewrapper sourceCode" id="cb31">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 subparsers.py cmd1 1 2</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="ex">$</span> python3 subparsers.py cmd1 1 2</span></code></pre>
 </div>
 <pre class="result"><code><span><span class="fu">Namespace</span><span class="op">(</span>bar<span class="op">=</span><span class="st">'2'</span>, foo<span class="op">=</span><span class="st">'1'</span><span class="op">)</span></span></code></pre>
 <p>We see that <code>foo</code> and <code>bar</code> are defined within
@@ -977,7 +977,7 @@ optional arguments:
 <div class="codewrapper sourceCode" id="cb33">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 subparsers.py cmd2 3</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="ex">$</span> python3 subparsers.py cmd2 3</span></code></pre>
 </div>
 <pre class="result"><code><span><span class="fu">Namespace</span><span class="op">(</span>baz<span class="op">=</span><span class="st">'3'</span><span class="op">)</span></span></code></pre>
 <p>We can therefore use subparsers to set up multiple independent
@@ -994,46 +994,46 @@ runs the code using <code>args</code>:</p>
 <div class="codewrapper sourceCode" id="cb35">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: plot_SIR.py</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _add_arguments(parser):</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"-p"</span>, <span class="st">"--pop_size"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">int</span>, default<span class="op">=</span><span class="dv">10000000</span>,</span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Total population size"</span>,</span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(</span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"-b"</span>, <span class="st">"--beta"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">float</span>, default<span class="op">=</span><span class="fl">0.5</span>,</span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Average no. of new infections per infected person per day"</span>,</span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(</span>
-<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"-g"</span>, <span class="st">"--gamma"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">float</span>, default<span class="op">=</span><span class="fl">0.1</span>,</span>
-<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Inverse of average number of days taken to recover"</span>,</span>
-<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(</span>
-<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">"-d"</span>, <span class="st">"--days"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">int</span>, default<span class="op">=</span><span class="dv">150</span>,</span>
-<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Number of days to run the simulation"</span>,</span>
-<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(</span>
-<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">"-i"</span>, <span class="st">"--i0"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">int</span>, default<span class="op">=</span><span class="dv">10</span>,</span>
-<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Number of infected people at the start of the simulation"</span>,</span>
-<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(</span>
-<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">"-o"</span>, <span class="st">"--output"</span>, default<span class="op">=</span><span class="st">"SIR_model.png"</span>,</span>
-<span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Output file to save plot to"</span>,</span>
-<span id="cb35-28"><a href="#cb35-28" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb35-29"><a href="#cb35-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-30"><a href="#cb35-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-31"><a href="#cb35-31" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main(args):</span>
-<span id="cb35-32"><a href="#cb35-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Run our code</span></span>
-<span id="cb35-33"><a href="#cb35-33" aria-hidden="true" tabindex="-1"></a>    S, I, R <span class="op">=</span> SIR_model(</span>
-<span id="cb35-34"><a href="#cb35-34" aria-hidden="true" tabindex="-1"></a>        pop_size<span class="op">=</span>args.pop_size,</span>
-<span id="cb35-35"><a href="#cb35-35" aria-hidden="true" tabindex="-1"></a>        beta<span class="op">=</span>args.beta,</span>
-<span id="cb35-36"><a href="#cb35-36" aria-hidden="true" tabindex="-1"></a>        gamma<span class="op">=</span>args.gamma,</span>
-<span id="cb35-37"><a href="#cb35-37" aria-hidden="true" tabindex="-1"></a>        days<span class="op">=</span>args.days,</span>
-<span id="cb35-38"><a href="#cb35-38" aria-hidden="true" tabindex="-1"></a>        I_0<span class="op">=</span>args.i0,</span>
-<span id="cb35-39"><a href="#cb35-39" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb35-40"><a href="#cb35-40" aria-hidden="true" tabindex="-1"></a>    plot_SIR_model(S, I, R, save_to<span class="op">=</span>args.output)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="co"># file: plot_SIR.py</span></span>
+<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a><span class="kw">def</span> _add_arguments(parser):</span>
+<span id="cb35-4"><a href="#cb35-4" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" tabindex="-1"></a>    parser.add_argument(</span>
+<span id="cb35-6"><a href="#cb35-6" tabindex="-1"></a>        <span class="st">"-p"</span>, <span class="st">"--pop_size"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">int</span>, default<span class="op">=</span><span class="dv">10000000</span>,</span>
+<span id="cb35-7"><a href="#cb35-7" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Total population size"</span>,</span>
+<span id="cb35-8"><a href="#cb35-8" tabindex="-1"></a>    )</span>
+<span id="cb35-9"><a href="#cb35-9" tabindex="-1"></a>    parser.add_argument(</span>
+<span id="cb35-10"><a href="#cb35-10" tabindex="-1"></a>        <span class="st">"-b"</span>, <span class="st">"--beta"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">float</span>, default<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb35-11"><a href="#cb35-11" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Average no. of new infections per infected person per day"</span>,</span>
+<span id="cb35-12"><a href="#cb35-12" tabindex="-1"></a>    )</span>
+<span id="cb35-13"><a href="#cb35-13" tabindex="-1"></a>    parser.add_argument(</span>
+<span id="cb35-14"><a href="#cb35-14" tabindex="-1"></a>        <span class="st">"-g"</span>, <span class="st">"--gamma"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">float</span>, default<span class="op">=</span><span class="fl">0.1</span>,</span>
+<span id="cb35-15"><a href="#cb35-15" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Inverse of average number of days taken to recover"</span>,</span>
+<span id="cb35-16"><a href="#cb35-16" tabindex="-1"></a>    )</span>
+<span id="cb35-17"><a href="#cb35-17" tabindex="-1"></a>    parser.add_argument(</span>
+<span id="cb35-18"><a href="#cb35-18" tabindex="-1"></a>        <span class="st">"-d"</span>, <span class="st">"--days"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">int</span>, default<span class="op">=</span><span class="dv">150</span>,</span>
+<span id="cb35-19"><a href="#cb35-19" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Number of days to run the simulation"</span>,</span>
+<span id="cb35-20"><a href="#cb35-20" tabindex="-1"></a>    )</span>
+<span id="cb35-21"><a href="#cb35-21" tabindex="-1"></a>    parser.add_argument(</span>
+<span id="cb35-22"><a href="#cb35-22" tabindex="-1"></a>        <span class="st">"-i"</span>, <span class="st">"--i0"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">int</span>, default<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb35-23"><a href="#cb35-23" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Number of infected people at the start of the simulation"</span>,</span>
+<span id="cb35-24"><a href="#cb35-24" tabindex="-1"></a>    )</span>
+<span id="cb35-25"><a href="#cb35-25" tabindex="-1"></a>    parser.add_argument(</span>
+<span id="cb35-26"><a href="#cb35-26" tabindex="-1"></a>        <span class="st">"-o"</span>, <span class="st">"--output"</span>, default<span class="op">=</span><span class="st">"SIR_model.png"</span>,</span>
+<span id="cb35-27"><a href="#cb35-27" tabindex="-1"></a>        <span class="bu">help</span><span class="op">=</span><span class="st">"Output file to save plot to"</span>,</span>
+<span id="cb35-28"><a href="#cb35-28" tabindex="-1"></a>    )</span>
+<span id="cb35-29"><a href="#cb35-29" tabindex="-1"></a></span>
+<span id="cb35-30"><a href="#cb35-30" tabindex="-1"></a></span>
+<span id="cb35-31"><a href="#cb35-31" tabindex="-1"></a><span class="kw">def</span> main(args):</span>
+<span id="cb35-32"><a href="#cb35-32" tabindex="-1"></a>    <span class="co"># Run our code</span></span>
+<span id="cb35-33"><a href="#cb35-33" tabindex="-1"></a>    S, I, R <span class="op">=</span> SIR_model(</span>
+<span id="cb35-34"><a href="#cb35-34" tabindex="-1"></a>        pop_size<span class="op">=</span>args.pop_size,</span>
+<span id="cb35-35"><a href="#cb35-35" tabindex="-1"></a>        beta<span class="op">=</span>args.beta,</span>
+<span id="cb35-36"><a href="#cb35-36" tabindex="-1"></a>        gamma<span class="op">=</span>args.gamma,</span>
+<span id="cb35-37"><a href="#cb35-37" tabindex="-1"></a>        days<span class="op">=</span>args.days,</span>
+<span id="cb35-38"><a href="#cb35-38" tabindex="-1"></a>        I_0<span class="op">=</span>args.i0,</span>
+<span id="cb35-39"><a href="#cb35-39" tabindex="-1"></a>    )</span>
+<span id="cb35-40"><a href="#cb35-40" tabindex="-1"></a>    plot_SIR_model(S, I, R, save_to<span class="op">=</span>args.output)</span></code></pre>
 </div>
 <p>The <code>if __name__ == "__main__"</code> section should be tasked
 with creating an <code>ArgumentParser</code> and coordinating
@@ -1041,16 +1041,16 @@ everything:</p>
 <div class="codewrapper sourceCode" id="cb36">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: plot_SIR.py</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    parser <span class="op">=</span> ArgumentParser(</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>        prog<span class="op">=</span><span class="st">"SIR_model"</span>,</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">"Solves SIR model and creates a plot"</span>,</span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    _add_arguments(parser)</span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    args <span class="op">=</span> parser.parse_args()</span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>    main(args)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="co"># file: plot_SIR.py</span></span>
+<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
+<span id="cb36-4"><a href="#cb36-4" tabindex="-1"></a>    parser <span class="op">=</span> ArgumentParser(</span>
+<span id="cb36-5"><a href="#cb36-5" tabindex="-1"></a>        prog<span class="op">=</span><span class="st">"SIR_model"</span>,</span>
+<span id="cb36-6"><a href="#cb36-6" tabindex="-1"></a>        description<span class="op">=</span><span class="st">"Solves SIR model and creates a plot"</span>,</span>
+<span id="cb36-7"><a href="#cb36-7" tabindex="-1"></a>    )</span>
+<span id="cb36-8"><a href="#cb36-8" tabindex="-1"></a>    _add_arguments(parser)</span>
+<span id="cb36-9"><a href="#cb36-9" tabindex="-1"></a>    args <span class="op">=</span> parser.parse_args()</span>
+<span id="cb36-10"><a href="#cb36-10" tabindex="-1"></a>    main(args)</span></code></pre>
 </div>
 <p>As the <code>_add_arguments(parser)</code> function doesn’t care
 whether it’s supplied with a parser or a subparser, this will work just
@@ -1066,45 +1066,45 @@ line interface for <code>epi_models</code>:</p>
 <div class="codewrapper sourceCode" id="cb37">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: __main__.py</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> argparse <span class="im">import</span> ArgumentParser</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Import each _add_arguments and main, giving each an alias</span></span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> .plotting.plot_SIR <span class="im">import</span> main <span class="im">as</span> SIR_main</span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> .plotting.plot_SEIR <span class="im">import</span> main <span class="im">as</span> SEIR_main</span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> .plotting.plot_SIS <span class="im">import</span> main <span class="im">as</span> SIS_main</span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> .plotting.plot_SIR <span class="im">import</span> _add_arguments <span class="im">as</span> add_SIR_arguments</span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> .plotting.plot_SIR <span class="im">import</span> _add_arguments <span class="im">as</span> add_SEIR_arguments</span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> .plotting.plot_SIR <span class="im">import</span> _add_arguments <span class="im">as</span> add_SIS_arguments</span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Create top-level ArgumentParser</span></span>
-<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>parser <span class="op">=</span> ArgumentParser(</span>
-<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>    prog<span class="op">=</span><span class="st">"epi_models"</span>,</span>
-<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>    description<span class="op">=</span><span class="st">"Tool for solving epidemiology models"</span>,</span>
-<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up subparsers, adding a new one for each model</span></span>
-<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>subparsers <span class="op">=</span> parser.add_subparsers(required<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a>SIR_parser <span class="op">=</span> subparsers.add_parser(<span class="st">"SIR"</span>)</span>
-<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a>SEIR_parser <span class="op">=</span> subparsers.add_parser(<span class="st">"SEIR"</span>)</span>
-<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a>SIS_parser <span class="op">=</span> subparsers.add_parser(<span class="st">"SIS"</span>)</span>
-<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Setup each subparser using each model's _add_arguments</span></span>
-<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a>add_SIR_arguments(SIR_parser)</span>
-<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a>add_SEIR_arguments(SEIR_parser)</span>
-<span id="cb37-28"><a href="#cb37-28" aria-hidden="true" tabindex="-1"></a>add_SIS_arguments(SIS_parser)</span>
-<span id="cb37-29"><a href="#cb37-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure each parser knows which function to call.</span></span>
-<span id="cb37-31"><a href="#cb37-31" aria-hidden="true" tabindex="-1"></a><span class="co"># set_defaults can be used to set a new arg which</span></span>
-<span id="cb37-32"><a href="#cb37-32" aria-hidden="true" tabindex="-1"></a><span class="co"># isn't set on the command line.</span></span>
-<span id="cb37-33"><a href="#cb37-33" aria-hidden="true" tabindex="-1"></a>SIR_parser.set_defaults(main<span class="op">=</span>SIR_main)</span>
-<span id="cb37-34"><a href="#cb37-34" aria-hidden="true" tabindex="-1"></a>SEIR_parser.set_defaults(main<span class="op">=</span>SEIR_main)</span>
-<span id="cb37-35"><a href="#cb37-35" aria-hidden="true" tabindex="-1"></a>SIS_parser.set_defaults(main<span class="op">=</span>SIS_main)</span>
-<span id="cb37-36"><a href="#cb37-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-37"><a href="#cb37-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract command line arguments and run</span></span>
-<span id="cb37-38"><a href="#cb37-38" aria-hidden="true" tabindex="-1"></a>args <span class="op">=</span> parser.parse_args()</span>
-<span id="cb37-39"><a href="#cb37-39" aria-hidden="true" tabindex="-1"></a>args.main(args)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a><span class="co"># file: __main__.py</span></span>
+<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" tabindex="-1"></a><span class="im">from</span> argparse <span class="im">import</span> ArgumentParser</span>
+<span id="cb37-4"><a href="#cb37-4" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" tabindex="-1"></a><span class="co"># Import each _add_arguments and main, giving each an alias</span></span>
+<span id="cb37-6"><a href="#cb37-6" tabindex="-1"></a><span class="im">from</span> .plotting.plot_SIR <span class="im">import</span> main <span class="im">as</span> SIR_main</span>
+<span id="cb37-7"><a href="#cb37-7" tabindex="-1"></a><span class="im">from</span> .plotting.plot_SEIR <span class="im">import</span> main <span class="im">as</span> SEIR_main</span>
+<span id="cb37-8"><a href="#cb37-8" tabindex="-1"></a><span class="im">from</span> .plotting.plot_SIS <span class="im">import</span> main <span class="im">as</span> SIS_main</span>
+<span id="cb37-9"><a href="#cb37-9" tabindex="-1"></a><span class="im">from</span> .plotting.plot_SIR <span class="im">import</span> _add_arguments <span class="im">as</span> add_SIR_arguments</span>
+<span id="cb37-10"><a href="#cb37-10" tabindex="-1"></a><span class="im">from</span> .plotting.plot_SIR <span class="im">import</span> _add_arguments <span class="im">as</span> add_SEIR_arguments</span>
+<span id="cb37-11"><a href="#cb37-11" tabindex="-1"></a><span class="im">from</span> .plotting.plot_SIR <span class="im">import</span> _add_arguments <span class="im">as</span> add_SIS_arguments</span>
+<span id="cb37-12"><a href="#cb37-12" tabindex="-1"></a></span>
+<span id="cb37-13"><a href="#cb37-13" tabindex="-1"></a><span class="co"># Create top-level ArgumentParser</span></span>
+<span id="cb37-14"><a href="#cb37-14" tabindex="-1"></a>parser <span class="op">=</span> ArgumentParser(</span>
+<span id="cb37-15"><a href="#cb37-15" tabindex="-1"></a>    prog<span class="op">=</span><span class="st">"epi_models"</span>,</span>
+<span id="cb37-16"><a href="#cb37-16" tabindex="-1"></a>    description<span class="op">=</span><span class="st">"Tool for solving epidemiology models"</span>,</span>
+<span id="cb37-17"><a href="#cb37-17" tabindex="-1"></a>)</span>
+<span id="cb37-18"><a href="#cb37-18" tabindex="-1"></a></span>
+<span id="cb37-19"><a href="#cb37-19" tabindex="-1"></a><span class="co"># Set up subparsers, adding a new one for each model</span></span>
+<span id="cb37-20"><a href="#cb37-20" tabindex="-1"></a>subparsers <span class="op">=</span> parser.add_subparsers(required<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb37-21"><a href="#cb37-21" tabindex="-1"></a>SIR_parser <span class="op">=</span> subparsers.add_parser(<span class="st">"SIR"</span>)</span>
+<span id="cb37-22"><a href="#cb37-22" tabindex="-1"></a>SEIR_parser <span class="op">=</span> subparsers.add_parser(<span class="st">"SEIR"</span>)</span>
+<span id="cb37-23"><a href="#cb37-23" tabindex="-1"></a>SIS_parser <span class="op">=</span> subparsers.add_parser(<span class="st">"SIS"</span>)</span>
+<span id="cb37-24"><a href="#cb37-24" tabindex="-1"></a></span>
+<span id="cb37-25"><a href="#cb37-25" tabindex="-1"></a><span class="co"># Setup each subparser using each model's _add_arguments</span></span>
+<span id="cb37-26"><a href="#cb37-26" tabindex="-1"></a>add_SIR_arguments(SIR_parser)</span>
+<span id="cb37-27"><a href="#cb37-27" tabindex="-1"></a>add_SEIR_arguments(SEIR_parser)</span>
+<span id="cb37-28"><a href="#cb37-28" tabindex="-1"></a>add_SIS_arguments(SIS_parser)</span>
+<span id="cb37-29"><a href="#cb37-29" tabindex="-1"></a></span>
+<span id="cb37-30"><a href="#cb37-30" tabindex="-1"></a><span class="co"># Ensure each parser knows which function to call.</span></span>
+<span id="cb37-31"><a href="#cb37-31" tabindex="-1"></a><span class="co"># set_defaults can be used to set a new arg which</span></span>
+<span id="cb37-32"><a href="#cb37-32" tabindex="-1"></a><span class="co"># isn't set on the command line.</span></span>
+<span id="cb37-33"><a href="#cb37-33" tabindex="-1"></a>SIR_parser.set_defaults(main<span class="op">=</span>SIR_main)</span>
+<span id="cb37-34"><a href="#cb37-34" tabindex="-1"></a>SEIR_parser.set_defaults(main<span class="op">=</span>SEIR_main)</span>
+<span id="cb37-35"><a href="#cb37-35" tabindex="-1"></a>SIS_parser.set_defaults(main<span class="op">=</span>SIS_main)</span>
+<span id="cb37-36"><a href="#cb37-36" tabindex="-1"></a></span>
+<span id="cb37-37"><a href="#cb37-37" tabindex="-1"></a><span class="co"># Extract command line arguments and run</span></span>
+<span id="cb37-38"><a href="#cb37-38" tabindex="-1"></a>args <span class="op">=</span> parser.parse_args()</span>
+<span id="cb37-39"><a href="#cb37-39" tabindex="-1"></a>args.main(args)</span></code></pre>
 </div>
 <p>Here, we used <code>set_defaults()</code> to assign each model’s
 <code>main()</code> function to the variable <code>main</code> within
@@ -1116,8 +1116,8 @@ different models, each with their own command line interface!</p>
 <div class="codewrapper sourceCode" id="cb38">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> epi_models SIR <span class="at">--pop_size</span><span class="op">=</span>300 <span class="at">--output</span><span class="op">=</span><span class="st">"SIR.png"</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> epi_models SEIR <span class="at">--alpha</span><span class="op">=</span>1</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> epi_models SIR <span class="at">--pop_size</span><span class="op">=</span>300 <span class="at">--output</span><span class="op">=</span><span class="st">"SIR.png"</span></span>
+<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> epi_models SEIR <span class="at">--alpha</span><span class="op">=</span>1</span></code></pre>
 </div>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
@@ -1205,7 +1205,7 @@ any links that you are not going to use.
   "identifier": "https://carpentries-incubator.github.io/python_packaging/instructor/02-packages.html",
   "dateCreated": "2023-07-04",
   "dateModified": "2023-11-21",
-  "datePublished": "2024-02-27"
+  "datePublished": "2024-03-05"
 }
 
   </script><script>

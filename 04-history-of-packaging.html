@@ -347,18 +347,18 @@ look like this:</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: setup.py</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> distutils.core <span class="im">import</span> setup</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>setup(</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span><span class="st">"epi_models"</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    version<span class="op">=</span><span class="st">"1.0"</span>,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    description<span class="op">=</span><span class="st">"Epidemiology modelling tools in Python"</span>,</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    author<span class="op">=</span><span class="st">"Jordan Smith"</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    author_email<span class="op">=</span><span class="st">"jsmith@email.net"</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    url<span class="op">=</span><span class="st">"https://github.com/jsmith1234/epi_models"</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    packages<span class="op">=</span>[<span class="st">"epi_models"</span>, <span class="st">"epi_models.models"</span>, <span class="st">"epi_models.plotting"</span>],</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># file: setup.py</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="im">from</span> distutils.core <span class="im">import</span> setup</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>setup(</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>    name<span class="op">=</span><span class="st">"epi_models"</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>    version<span class="op">=</span><span class="st">"1.0"</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>    description<span class="op">=</span><span class="st">"Epidemiology modelling tools in Python"</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>    author<span class="op">=</span><span class="st">"Jordan Smith"</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>    author_email<span class="op">=</span><span class="st">"jsmith@email.net"</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>    url<span class="op">=</span><span class="st">"https://github.com/jsmith1234/epi_models"</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>    packages<span class="op">=</span>[<span class="st">"epi_models"</span>, <span class="st">"epi_models.models"</span>, <span class="st">"epi_models.plotting"</span>],</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>)</span></code></pre>
 </div>
 <p>Note that each subpackage is explicitly listed, unlike modern systems
 that make assumptions about your directory structure and perform
@@ -368,15 +368,14 @@ argument <code>install</code>:</p>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 setup.py install</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">$</span> python3 setup.py install</span></code></pre>
 </div>
-<div id="callout1" class="callout callout">
+<div id="callout1" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="callout-inner">
-<h3 class="callout-title">Callout<a class="anchor" aria-label="anchor" href="#callout1"></a>
-</h3>
+<div class="section level3 callout-title callout-inner">
+<h3 class="callout-title">Callout</h3>
 <div class="callout-content">
 <p>Installing by running <code>setup.py</code> as a script is highly
 discouraged. If you’re using a package that still uses
@@ -438,7 +437,7 @@ file <code>requirements.txt</code>:</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip <span class="at">-r</span> requirements.txt</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip <span class="at">-r</span> requirements.txt</span></code></pre>
 </div>
 <p>It is not recommended to use <code>distutils</code> for new projects,
 and it will be removed from standard Python distributions in version
@@ -459,19 +458,19 @@ better support across multiple Python versions. It has since superceded
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: setup.py</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> setuptools <span class="im">import</span> setup</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>setup(</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span><span class="st">"epi_models"</span>,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    version<span class="op">=</span><span class="st">"1.0"</span>,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    description<span class="op">=</span><span class="st">"Epidemiology modelling tools in Python"</span>,</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    author<span class="op">=</span><span class="st">"Jordan Smith"</span>,</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    author_email<span class="op">=</span><span class="st">"jsmith@email.net"</span>,</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    url<span class="op">=</span><span class="st">"https://github.com/jsmith1234/epi_models"</span>,</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    packages<span class="op">=</span>[<span class="st">"epi_models"</span>, <span class="st">"epi_models.models"</span>, <span class="st">"epi_models.plotting"</span>],</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    install_requires<span class="op">=</span>[<span class="st">"matplotlib&gt;=3.6"</span>],</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># file: setup.py</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="im">from</span> setuptools <span class="im">import</span> setup</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>setup(</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>    name<span class="op">=</span><span class="st">"epi_models"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>    version<span class="op">=</span><span class="st">"1.0"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>    description<span class="op">=</span><span class="st">"Epidemiology modelling tools in Python"</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>    author<span class="op">=</span><span class="st">"Jordan Smith"</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>    author_email<span class="op">=</span><span class="st">"jsmith@email.net"</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>    url<span class="op">=</span><span class="st">"https://github.com/jsmith1234/epi_models"</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>    packages<span class="op">=</span>[<span class="st">"epi_models"</span>, <span class="st">"epi_models.models"</span>, <span class="st">"epi_models.plotting"</span>],</span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>    install_requires<span class="op">=</span>[<span class="st">"matplotlib&gt;=3.6"</span>],</span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>)</span></code></pre>
 </div>
 <p>Note the addition of an extra field, <code>install_requires</code>.
 This allows us to specify the dependencies without the extra file
@@ -481,7 +480,7 @@ alongside our package when we install it.</p>
 <div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 setup.py install</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="ex">$</span> python3 setup.py install</span></code></pre>
 </div>
 <p>Again, this will create a new directory <code>./build</code>, but it
 will also create a directory <code>./dist</code>. Much as before,
@@ -497,8 +496,8 @@ systems using the <code>unzip</code> command line utility:</p>
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> unzip dist/epi_models-1.0-py3.8.egg <span class="at">-d</span> test</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls test</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="ex">$</span> unzip dist/epi_models-1.0-py3.8.egg <span class="at">-d</span> test</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="ex">$</span> ls test</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -530,7 +529,7 @@ file, we find:</p>
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cat /path/to/my/env/lib/python3.8/site-packages/easy-install.pth</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="ex">$</span> cat /path/to/my/env/lib/python3.8/site-packages/easy-install.pth</span></code></pre>
 </div>
 <pre class="result"><code><span><span class="va">.</span><span class="op">/</span><span class="va">epi_models</span><span class="op">-</span><span class="fl">1.0</span><span class="op">-</span><span class="va">py3.8.egg</span></span></code></pre>
 <p>Therefore, rather than copying our source distribution into
@@ -545,7 +544,7 @@ way using pip:</p>
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip uninstall epi_models</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip uninstall epi_models</span></code></pre>
 </div>
 </section><section id="using-pip-instead-of-running-setup.py"><h2 class="section-heading">Using <code>pip</code> instead of running <code>setup.py</code><a class="anchor" aria-label="anchor" href="#using-pip-instead-of-running-setup.py"></a>
 </h2>
@@ -559,14 +558,14 @@ benefits:</p>
 <div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip install .</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip install .</span></code></pre>
 </div>
 <p>This will install the library to the current Python environment. It
 can then be uninstalled using:</p>
 <div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip uninstall epi_models</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip uninstall epi_models</span></code></pre>
 </div>
 <p>When installing with <code>pip</code> instead of running
 <code>setup.py</code>, no <code>./build</code> or <code>./dist</code>
@@ -594,7 +593,7 @@ picked up and there is no need to reinstall:</p>
 <div class="codewrapper sourceCode" id="cb17">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip install <span class="at">-e</span> .</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip install <span class="at">-e</span> .</span></code></pre>
 </div>
 <p>This works simply by adding the path of our working directory into
 <code>easy-install.pth</code> within the <code>site-packages</code>
@@ -628,30 +627,30 @@ very simple form:</p>
 <div class="codewrapper sourceCode" id="cb18">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: setup.py</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> setuptools <span class="im">import</span> setup</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>setup()</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="co"># file: setup.py</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="im">from</span> setuptools <span class="im">import</span> setup</span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>setup()</span></code></pre>
 </div>
 <p>The <code>setup.py</code> files we used earlier can be easily adapted
 to a corresponding <code>setup.cfg</code>:</p>
 <div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">INI<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode ini" tabindex="0"><code class="sourceCode ini"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">; file: setup.cfg</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[metadata]</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="dt">name </span><span class="ot">=</span><span class="st"> epi_models</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="dt">version </span><span class="ot">=</span><span class="st"> </span><span class="fl">1.0</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="dt">description </span><span class="ot">=</span><span class="st"> Epidemiology modelling tools in Python</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="dt">author </span><span class="ot">=</span><span class="st"> Jordan Smith</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="dt">author_email </span><span class="ot">=</span><span class="st"> jsmith@email.net</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="dt">url </span><span class="ot">=</span><span class="st"> "https://github.com/jsmith1234/epi_models"</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="kw">[options]</span></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="dt">packages </span><span class="ot">=</span><span class="st"> find:</span></span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="dt">install_requires </span><span class="ot">=</span></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="dt">    matplotlib &gt;</span><span class="ot">=</span><span class="st"> </span><span class="fl">3.6</span></span></code></pre>
+<pre class="sourceCode ini" tabindex="0"><code class="sourceCode ini"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="co">; file: setup.cfg</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="kw">[metadata]</span></span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a><span class="dt">name </span><span class="ot">=</span><span class="st"> epi_models</span></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="dt">version </span><span class="ot">=</span><span class="st"> </span><span class="fl">1.0</span></span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a><span class="dt">description </span><span class="ot">=</span><span class="st"> Epidemiology modelling tools in Python</span></span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="dt">author </span><span class="ot">=</span><span class="st"> Jordan Smith</span></span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="dt">author_email </span><span class="ot">=</span><span class="st"> jsmith@email.net</span></span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a><span class="dt">url </span><span class="ot">=</span><span class="st"> "https://github.com/jsmith1234/epi_models"</span></span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a><span class="kw">[options]</span></span>
+<span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a><span class="dt">packages </span><span class="ot">=</span><span class="st"> find:</span></span>
+<span id="cb19-13"><a href="#cb19-13" tabindex="-1"></a><span class="dt">install_requires </span><span class="ot">=</span></span>
+<span id="cb19-14"><a href="#cb19-14" tabindex="-1"></a><span class="dt">    matplotlib &gt;</span><span class="ot">=</span><span class="st"> </span><span class="fl">3.6</span></span></code></pre>
 </div>
 <p>Note that the values on the right hand side of each equals sign are
 all intepretted as strings by default, and double quotes are only needed
@@ -672,17 +671,17 @@ subpackage, and instead we are using the line:</p>
 <div class="codewrapper sourceCode" id="cb20">
 <h3 class="code-label">INI<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode ini" tabindex="0"><code class="sourceCode ini"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="dt">packages </span><span class="ot">=</span><span class="st"> find:</span></span></code></pre>
+<pre class="sourceCode ini" tabindex="0"><code class="sourceCode ini"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="dt">packages </span><span class="ot">=</span><span class="st"> find:</span></span></code></pre>
 </div>
 <p>This instructs <code>setuptools</code> to detect packages itself. We
 could instead specify this manually using:</p>
 <div class="codewrapper sourceCode" id="cb21">
 <h3 class="code-label">INI<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode ini" tabindex="0"><code class="sourceCode ini"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="dt">packages </span><span class="ot">=</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="dt">    epi_models</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="dt">    epi_models.models</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="dt">    epi_models.plotting</span></span></code></pre>
+<pre class="sourceCode ini" tabindex="0"><code class="sourceCode ini"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="dt">packages </span><span class="ot">=</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="dt">    epi_models</span></span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a><span class="dt">    epi_models.models</span></span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a><span class="dt">    epi_models.plotting</span></span></code></pre>
 </div>
 <p>A common alternative project layout is to place the top-level package
 in a directory <code>src</code>:</p>
@@ -695,34 +694,33 @@ plotting<br></code></p>
 <div class="codewrapper sourceCode" id="cb22">
 <h3 class="code-label">INI<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode ini" tabindex="0"><code class="sourceCode ini"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[options]</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="dt">package_dir </span><span class="ot">=</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="dt">    </span><span class="ot">=</span><span class="st">src</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="dt">packages </span><span class="ot">=</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="dt">    epi_models</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="dt">    epi_models.models</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="dt">    epi_models.plotting</span></span></code></pre>
+<pre class="sourceCode ini" tabindex="0"><code class="sourceCode ini"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="kw">[options]</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="dt">package_dir </span><span class="ot">=</span></span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="dt">    </span><span class="ot">=</span><span class="st">src</span></span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="dt">packages </span><span class="ot">=</span></span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="dt">    epi_models</span></span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="dt">    epi_models.models</span></span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="dt">    epi_models.plotting</span></span></code></pre>
 </div>
 <p>We can also continue using <code>packages = find:</code> by adding an
 extra heading to our config file:</p>
 <div class="codewrapper sourceCode" id="cb23">
 <h3 class="code-label">INI<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode ini" tabindex="0"><code class="sourceCode ini"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[options]</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="dt">package_dir </span><span class="ot">=</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="dt">    </span><span class="ot">=</span><span class="st">src</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="dt">packages </span><span class="ot">=</span><span class="st"> find:</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="kw">[options.packages.find]</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="dt">where </span><span class="ot">=</span><span class="st"> src</span></span></code></pre>
+<pre class="sourceCode ini" tabindex="0"><code class="sourceCode ini"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="kw">[options]</span></span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="dt">package_dir </span><span class="ot">=</span></span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a><span class="dt">    </span><span class="ot">=</span><span class="st">src</span></span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a><span class="dt">packages </span><span class="ot">=</span><span class="st"> find:</span></span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a><span class="kw">[options.packages.find]</span></span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a><span class="dt">where </span><span class="ot">=</span><span class="st"> src</span></span></code></pre>
 </div>
-<div id="callout2" class="callout callout">
+<div id="callout2" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div class="callout-inner">
-<h3 class="callout-title">Callout<a class="anchor" aria-label="anchor" href="#callout2"></a>
-</h3>
+<div class="section level3 callout-title callout-inner">
+<h3 class="callout-title">Callout</h3>
 <div class="callout-content">
 <p>Recent versions of <code>setuptools</code> can handle either the
 ‘flat’ layout or the <code>src</code>-layout using just
@@ -767,10 +765,10 @@ models<br>      |____📁 plotting<br></code></p>
 <div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">build-system</span><span class="kw">]</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span><span class="st">"setuptools &gt;= 61"</span><span class="op">]</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a><span class="kw">[build-system]</span></span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span><span class="st">"setuptools &gt;= 61"</span><span class="op">]</span></span></code></pre>
 </div>
 <p>Following this, we may install our package using <code>pip</code>
 without first having <code>setuptools</code> installed. If we have an
@@ -781,7 +779,7 @@ prior to building our project.</p>
 <div class="codewrapper sourceCode" id="cb25">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip install .</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="ex">$</span> python3 <span class="at">-m</span> pip install .</span></code></pre>
 </div>
 <pre class="result"><code>WARNING: Missing build requirements in pyproject.toml for file:///my/file/path.
 WARNING: The project does not specify a build backend, and pip cannot fall back to setuptools without 'wheel'.</code></pre>
@@ -795,14 +793,14 @@ also provide a <code>build-backend</code>:</p>
 <div class="codewrapper sourceCode" id="cb27">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dt">build-system</span><span class="kw">]</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"setuptools &gt;= 65"</span><span class="op">,</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"wheel &gt;= 0.38,</span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="dt">build-backend</span> <span class="op">=</span> <span class="st">"setuptools.build_meta"</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="co"># file: pyproject.toml</span></span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a><span class="kw">[build-system]</span></span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a>    <span class="st">"setuptools &gt;= 65"</span><span class="op">,</span></span>
+<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a>    <span class="st">"wheel &gt;= 0.38,</span></span>
+<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a><span class="op">]</span></span>
+<span id="cb27-8"><a href="#cb27-8" tabindex="-1"></a><span class="dt">build-backend</span> <span class="op">=</span> <span class="st">"setuptools.build_meta"</span></span></code></pre>
 </div>
 </section><section id="moving-to-pyproject.toml-only-builds"><h2 class="section-heading">Moving to <code>pyproject.toml</code>-only builds<a class="anchor" aria-label="anchor" href="#moving-to-pyproject.toml-only-builds"></a>
 </h2>
@@ -839,7 +837,7 @@ feature:</p>
 <div class="codewrapper sourceCode" id="cb28">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install <span class="at">--upgrade</span> pip</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="ex">$</span> pip install <span class="at">--upgrade</span> pip</span></code></pre>
 </div>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
@@ -921,7 +919,7 @@ any links that you are not going to use.
   "identifier": "https://carpentries-incubator.github.io/python_packaging/04-history-of-packaging.html",
   "dateCreated": "2023-07-04",
   "dateModified": "2023-11-21",
-  "datePublished": "2024-02-27"
+  "datePublished": "2024-03-05"
 }
 
   </script><script>
