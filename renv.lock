@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.3.2",
+    "Version": "4.3.3",
     "Repositories": [
       {
         "Name": "carpentries",
@@ -539,7 +539,6 @@
       "Package": "openssl",
       "Version": "2.0.6",
       "Source": "Repository",
-      "Repository": "https://carpentries.r-universe.dev",
       "RemoteType": "repository",
       "RemoteUrl": "https://github.com/jeroen/openssl",
       "RemoteRef": "v2.0.6",
