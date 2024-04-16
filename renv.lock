@@ -1057,12 +1057,16 @@
       "Package": "xslt",
       "Version": "1.4.4",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "https://carpentries.r-universe.dev",
+      "RemoteType": "repository",
+      "RemoteUrl": "https://github.com/ropensci/xslt",
+      "RemoteRef": "v1.4.4",
+      "RemoteSha": "56ceeeaee604fa872bb3f161d52a6b4b6a82796d",
       "Requirements": [
         "Rcpp",
         "xml2"
       ],
-      "Hash": "e2c9cc5c470a5a3a4c1d458404f1a034"
+      "Hash": "695c4068b8b5b0a22ace20d8037063c2"
     },
     "yaml": {
       "Package": "yaml",
